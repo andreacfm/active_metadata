@@ -11,6 +11,7 @@ describe ActiveMetadata do
   # pr.nome_note
 
   context "model methods" do
+
     before(:each) do
       @document = Document.create(:name => "John" )
     end
