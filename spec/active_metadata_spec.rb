@@ -21,9 +21,8 @@ describe ActiveMetadata do
     end
                                    
     context "managing notes" do
-      it "should respond to name_create_nota" do       
-        pending
-        @document.respond_to?(:name_create_nota).should be_true      
+      it "should respond to create_nota_for_name" do
+        @document.respond_to?(:create_nota_for_name).should be_true
       end
 
       it "should respond to name_update_nota" do       
