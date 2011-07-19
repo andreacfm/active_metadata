@@ -5,8 +5,8 @@ require "active_metadata/version"
 Gem::Specification.new do |s|
   s.name        = "active_metadata"
   s.version     = ActiveMetadata::VERSION
-  s.authors     = ["Andrea Campolonghi"]
-  s.email       = ["acampolonghi@gmail.com"]
+  s.authors     = ["Andrea Campolonghi", "Gian Carlo Pace"]
+  s.email       = ["acampolonghi@gmail.com", "giancarlo.pace@gmail.com"]
   s.homepage    = ""
   s.summary     = %q{Add metadata to fields in an active record model}
   s.description = %q{First implementation will write metadata on mongodb}
