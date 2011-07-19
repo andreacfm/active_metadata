@@ -34,7 +34,7 @@ RSpec.configure do |config|
 
   config.before(:suite) do  
     ActiveRecord::Base.establish_connection YAML.load_file("config/database.yml")[ENV["DATABASE_ENV"]]
-    ActiveRecord::Base.logger = Logger.new STDOUT
+    ActiveRecord::Base.logger = Logger.new "log/test.log"
   end
 
   config.after(:each) do   
