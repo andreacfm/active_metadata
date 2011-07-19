@@ -17,11 +17,11 @@ describe ActiveMetadata do
     end
 
     it "should exist a method act_as_metadata in the model" do
-      @document.respond_to?(:act_as_metadata).should be_true
+      Document.respond_to?(:act_as_metadata).should be_true
     end
                                    
     context "managing notes" do
-      it "should respond to create_nota_for_name" do 
+      it "should respond to create_nota_for_name" do        
         pending
         @document.respond_to?(:create_nota_for_name).should be_true
       end

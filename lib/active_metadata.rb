@@ -1,26 +1,24 @@
 require "active_metadata/version"
+
 require "mongo"
 
 module ActiveMetadata
 
+  def self.included(klazz)
+    klazz.after_initialize :initialize_metadata
+  end
+  
   #TODO add a configure routine
   MONGO = Mongo::Connection.new.db "metadata"
 
-  def self.included(base)
-    base.extend ClassMethods
+  def initialize_metadata
+    puts "#{attributes}"
   end
-
-  module ClassMethods
-    def act_as_metadata
-      p self.class
-    end
-  end
-
+  
 end
 
-module ActiveRecord
-  class Base
+class ActiveRecord::Base      
+  def self.act_as_metadata
     include ActiveMetadata
   end
 end
-
