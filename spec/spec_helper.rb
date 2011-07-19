@@ -1,23 +1,23 @@
 # encoding: utf-8
 require 'rubygems'
-require 'rspec/core'
-require 'active_record'
+require "logger"
+require 'rspec/core'  
+require "sqlite3"
+require "active_record"
+
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["DATABASE_ENV"] ||= 'test'
 ENV["ACTIVE_METADATA_ENV"] ||= 'test'
-
+                                                                      
+# loading ruby files
 Dir["lib/*.rb"].each { |f| require File.basename(f, File.extname(f)) }
-
 Dir["spec/support/*.rb"].each {|f| require "support/#{(File.basename(f, File.extname(f)) )}"}
 
+ActiveRecord::Base.establish_connection YAML.load_file("config/database.yml")[ENV["DATABASE_ENV"]]
+ActiveRecord::Base.logger = Logger.new STDOUT
 
-
-include ActiveMetadata
-          
-def read_resource(filename)
-  IO.read("spec/resources/#{filename}")  
-end
+include ActiveMetadata                      
 
 RSpec.configure do |config|
   # == Mock Framework

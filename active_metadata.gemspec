@@ -14,7 +14,10 @@ Gem::Specification.new do |s|
   s.rubyforge_project = "active_metadata"
 
   s.add_development_dependency "rspec"
-  s.add_development_dependency "activerecord"    
+  s.add_development_dependency "sqlite3"
+  s.add_development_dependency "sqlite3-ruby"
+  s.add_development_dependency "activerecord", "3.0.9"
+  
   s.add_dependency "mongo"
   s.add_dependency "bson_ext"
 
