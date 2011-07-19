@@ -1,12 +1,18 @@
 # encoding: utf-8
 require 'rubygems'
+require 'rspec/core'
+require 'active_record'
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-ENV["ACTIVEMETADATA_ENV"] ||= 'test'
+ENV["DATABASE_ENV"] ||= 'test'
+ENV["ACTIVE_METADATA_ENV"] ||= 'test'
 
-Dir["lib/*.rb", "spec/support/*.rb"].each { |f| require File.basename(f, File.extname(f)) }
+Dir["lib/*.rb"].each { |f| require File.basename(f, File.extname(f)) }
 
-require 'rspec/core'
+Dir["spec/support/*.rb"].each {|f| require "support/#{(File.basename(f, File.extname(f)) )}"}
+
+
+
 include ActiveMetadata
           
 def read_resource(filename)
