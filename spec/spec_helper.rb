@@ -31,7 +31,7 @@ RSpec.configure do |config|
   # instead of true.
   # config.use_transactional_fixtures = true
 
-<<<<<<< Updated upstream
+
   config.before(:suite) do  
     ActiveRecord::Base.establish_connection YAML.load_file("config/database.yml")[ENV["DATABASE_ENV"]]
     ActiveRecord::Base.logger = Logger.new STDOUT
@@ -39,20 +39,10 @@ RSpec.configure do |config|
 
   config.after(:each) do   
     Document.delete_all
+    ActiveMetadata::MONGO.collections.each { |coll| coll.drop() }
   end
 
   config.after(:suite) do  
     # seems that closing the established connection isn't really necessary
-=======
-  # config.before(:suite) do  
-  # end
-  # 
-  config.after(:each) do
-    Document.delete_all
-    ActiveMetadata::MONGO.collections.each do |coll|
-      coll.drop()
-    end
->>>>>>> Stashed changes
   end
-
 end
