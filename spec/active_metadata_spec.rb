@@ -12,7 +12,7 @@ describe ActiveMetadata do
 
   context "model methods" do
     before(:each) do
-      @document = Document.new(:name => "John" )
+      @document = Document.create(:name => "John" )
     end
 
     it "should exist a method act_as_metadata in the model" do
