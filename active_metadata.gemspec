@@ -8,10 +8,14 @@ Gem::Specification.new do |s|
   s.authors     = ["Andrea Campolonghi"]
   s.email       = ["acampolonghi@gmail.com"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{Add metadata to fields in an active record model}
+  s.description = %q{First implementation will write metadata on mongodb}
 
   s.rubyforge_project = "active_metadata"
+
+  s.add_development_dependency "rspec"
+  s.add_dependency "mongo"
+  s.add_dependency "bson_ext"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

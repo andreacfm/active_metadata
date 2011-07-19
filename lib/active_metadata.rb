@@ -8,7 +8,6 @@ module ActiveMetadata
 
   def act_as_metadata
 
-
   end
 
 end
