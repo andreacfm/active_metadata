@@ -23,8 +23,10 @@ module ActiveMetadata
     cursor = coll.find({:id => self.id, :field => field}).to_a
   end
 
-  def notes_for= field, notes
-
+  def create_notes_for field, notes
+    notes.each do |note|
+      create_note_for field,note
+    end
   end
 
 end

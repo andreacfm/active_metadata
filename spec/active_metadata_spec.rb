@@ -61,6 +61,14 @@ describe ActiveMetadata do
         @document.notes_for(:surname).last["note"].should eq "Note on surname attribute!"
       end
 
+      it "should save multiple notes" do
+        notes = ["note number 1","note number 2"]
+        @document.create_notes_for(:name,notes)
+        @document.notes_for(:name).should have(2).record
+        @document.notes_for(:name)[0]["note"].should eq "note number 1"
+        @document.notes_for(:name)[1]["note"].should eq "note number 2"
+      end
+
       it "should save the creator id in metadata"
       it "should save the updater id in metadata"
       it "should save the created_at datetime in metadata"
