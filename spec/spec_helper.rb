@@ -40,7 +40,7 @@ RSpec.configure do |config|
 
   config.after(:each) do   
     Document.delete_all
-    ActiveMetadata::MONGO.collections.each { |coll| coll.drop() }
+    ActiveMetadata::MONGO["notes"].drop
   end
 
   config.after(:suite) do  
