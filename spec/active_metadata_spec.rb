@@ -65,6 +65,18 @@ describe ActiveMetadata do
 
       end
 
+      it "should update a note using update_not_for_name" do
+        @document.create_note_for_name("Very important note!")
+        id = @document.notes_for_name.last["_id"]
+        @document.update_note_for_name(id, "New note value!")
+        @document.notes_for_name.last["note"].should eq "New note value!"
+      end
+
+      it "should save the creator id in metadata"
+      it "should save the updater id in metadata"
+      it "should save the created_at datetime in metadata"
+      it "should save the updated_at datetime in metadata"
+
     end
   end
 end
