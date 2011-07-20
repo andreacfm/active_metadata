@@ -1,6 +1,7 @@
 require "active_metadata/version"
-
 require "mongo"
+require "active_metadata/railtie" if defined?(Rails)
+
 
 module ActiveMetadata
 
