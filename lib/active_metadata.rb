@@ -10,12 +10,12 @@ module ActiveMetadata
   def create_note_for field, note
     coll = MONGO["notes"]
     raise RuntimeError, "The object id MUST be valued" unless self.id
-    coll.insert :note => note, :id => self.id, :field => field
+    coll.insert :note => note, :id => self.id, :field => field , :created_at => Time.now.utc, :updated_at => Time.now.utc
   end
 
   def update_note id, note
     coll = MONGO["notes"]
-    coll.update({:_id => id}, {"$set" => {:note => note}})
+    coll.update({:_id => id}, {"$set" => {:note => note, :updated_at => Time.now.utc}})
   end
 
   def notes_for field
