@@ -21,55 +21,36 @@ describe ActiveMetadata do
       Document.respond_to?(:act_as_metadata).should be_true
     end
 
-    context "definig notes methods" do
-
-      it "should respond to create_note_for_name" do
-        @document.respond_to?(:create_note_for_name).should be_true
-      end
-
-      it "should respond to update_note_for_name" do
-        @document.respond_to?(:update_note_for_name).should be_true
-      end
-
-      it "should respond to notes_for_name" do
-        @document.respond_to?(:notes_for_name).should be_true
-      end
-
-      it "should respond to notes_for_name=" do
-        @document.respond_to?(:notes_for_name=).should be_true
-      end
-    end
-
     context "saving and quering notes" do
       it "should create a new note for a given field" do
-        @document.create_note_for_name("Very important note!")
-        @document.notes_for_name.should have(1).record
+        @document.create_note_for(:name,"Very important note!")
+        @document.notes_for(:name).should have(1).record
       end
 
       it "should verify the content of a note created" do
-        @document.create_note_for_name("Very important note!")
-        @document.notes_for_name.last["note"].should eq "Very important note!"
+        @document.create_note_for(:name,"Very important note!")
+        @document.notes_for(:name).last["note"].should eq "Very important note!"
       end
 
       it "should verify that notes_for_name return only notes for the self Document" do
         # fixtures
         @another_doc = Document.create :name => "Andrea"
-        @another_doc.create_note_for_name("Very important note for doc2!")
+        @another_doc.create_note_for(:name,"Very important note for doc2!")
         @another_doc.reload
-        @document.create_note_for_name("Very important note!")
+        @document.create_note_for(:name,"Very important note!")
 
         # expectations
-        @document.notes_for_name.count.should eq(1)
-        @document.notes_for_name.last["note"].should eq "Very important note!"
-        @another_doc.notes_for_name.last["note"].should eq "Very important note for doc2!"
+        @document.notes_for(:name).count.should eq(1)
+        @document.notes_for(:name).last["note"].should eq "Very important note!"
+        @another_doc.notes_for(:name).last["note"].should eq "Very important note for doc2!"
 
       end
 
       it "should update a note using update_not_for_name" do
-        @document.create_note_for_name("Very important note!")
-        id = @document.notes_for_name.last["_id"]
-        @document.update_note_for_name(id, "New note value!")
-        @document.notes_for_name.last["note"].should eq "New note value!"
+        @document.create_note_for(:name,"Very important note!")
+        id = @document.notes_for(:name).last["_id"]
+        @document.update_note(id, "New note value!")
+        @document.notes_for(:name).last["note"].should eq "New note value!"
       end
 
       it "should save the creator id in metadata"

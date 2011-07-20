@@ -4,39 +4,29 @@ require "mongo"
 
 module ActiveMetadata
 
-  def self.included(klazz)
-    klazz.after_initialize :initialize_metadata
-  end
-  
   #TODO add a configure routine
   MONGO = Mongo::Connection.new.db "metadata"
 
-  def initialize_metadata
-    attributes.each do |key,value|
+    def create_note_for field,note
+      coll = MONGO["notes"]
+      raise RuntimeError, "The object id MUST be valued" unless self.id
+      coll.insert :note => note, :id => self.id
+    end
 
-      self.class.send(:define_method,"create_note_for_#{key}") do |note|
-        coll = MONGO["notes"]
-        raise RuntimeError, "The object id MUST be valued" unless self.id
-        coll.insert :note => note, :id => self.id
+    def update_note id,note
+      coll = MONGO["notes"]
+      coll.update({:_id => id},{"$set" => {:note => note}})
+    end
 
-      end
+    def notes_for field
+      coll = MONGO["notes"]
+      cursor = coll.find(:id => self.id).to_a
+    end
 
-      self.class.send(:define_method,"update_note_for_#{key}") do |id,note|
-        coll = MONGO["notes"]
-        coll.update({:_id => id},{"$set" => {:note => note}})
-      end
-
-      self.class.send(:define_method,"notes_for_#{key}") do
-        coll = MONGO["notes"]
-        cursor = coll.find(:id => self.id).to_a
-      end
-
-      self.class.send(:define_method,"notes_for_#{key}=") do
-
-      end
+    def notes_for= field,notes
 
     end
-  end
+
 end
 
 class ActiveRecord::Base      
