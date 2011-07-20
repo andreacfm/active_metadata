@@ -71,8 +71,25 @@ describe ActiveMetadata do
 
       it "should save the creator id in metadata"
       it "should save the updater id in metadata"
-      it "should save the created_at datetime in metadata"
-      it "should save the updated_at datetime in metadata"
+
+      it "should save the created_at datetime in metadata" do
+        @document.create_note_for(:name,"Very important note!")
+        @document.notes_for(:name).last["created_at"].should be_a_kind_of Time
+      end
+
+      it "should save the updated_at datetime in metadata" do
+        @document.create_note_for(:name,"Very important note!")
+        @document.notes_for(:name).last["updated_at"].should be_a_kind_of Time
+      end
+
+      it "should update the updated_at field when a note is updated" do
+        @document.create_note_for(:name,"Very important note!")
+        id = @document.notes_for(:name).last["_id"]
+        sleep 0.1.seconds
+        @document.update_note id,"new note value"
+        note = @document.notes_for(:name).last
+        note["updated_at"].should > note["created_at"]
+      end
 
     end
   end
