@@ -4,11 +4,11 @@ require "mongo"
 
 module ActiveMetadata
 
-  Config = YAML.load_file('config/mongo.yml')[ENV['DATABASE_ENV']]
-  Connection = Mongo::Connection.new(Config['host'],Config['port']).db Config['database']
+  CONFIG = YAML.load_file('config/mongo.yml')[ENV['DATABASE_ENV']]
+  CONNECTION = Mongo::Connection.new(CONFIG['host'],CONFIG['port']).db CONFIG['database']
 
   def self.notes
-    Connection['notes']
+    CONNECTION['notes']
   end
 
   def create_note_for(field, note, created_by=nil)    
