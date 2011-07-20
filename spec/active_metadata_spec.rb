@@ -53,6 +53,14 @@ describe ActiveMetadata do
         @document.notes_for(:name).last["note"].should eq "New note value!"
       end
 
+      it "should verify the content of a note created for a second attribute" do
+        @document.create_note_for(:name,"Very important note!")
+        @document.create_note_for(:surname,"Note on surname attribute!")
+
+        @document.notes_for(:name).last["note"].should eq "Very important note!"
+        @document.notes_for(:surname).last["note"].should eq "Note on surname attribute!"
+      end
+
       it "should save the creator id in metadata"
       it "should save the updater id in metadata"
       it "should save the created_at datetime in metadata"
