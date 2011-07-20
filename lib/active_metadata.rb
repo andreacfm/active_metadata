@@ -12,9 +12,28 @@ module ActiveMetadata
   MONGO = Mongo::Connection.new.db "metadata"
 
   def initialize_metadata
-    puts "#{attributes}"
+    p attributes
+    attributes.each do |key,value|
+
+      self.class.send(:define_method,"create_nota_for_#{key}") do |note|
+        coll = MONGO["note"]
+        coll.insert :note => note
+      end
+
+      self.class.send(:define_method,"update_nota_for_#{key}") do
+
+      end
+
+      self.class.send(:define_method,"note_for_#{key}") do
+        ["0"]
+      end
+
+      self.class.send(:define_method,"note_for_#{key}=") do
+
+      end
+
+    end
   end
-  
 end
 
 class ActiveRecord::Base      
