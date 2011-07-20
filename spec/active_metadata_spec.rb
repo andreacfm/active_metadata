@@ -58,9 +58,11 @@ describe ActiveMetadata do
         @another_doc.reload
         @document.create_note_for_name("Very important note!")
 
-          # expectations
+        # expectations
         @document.notes_for_name.count.should eq(1)
         @document.notes_for_name.last["note"].should eq "Very important note!"
+        @another_doc.notes_for_name.last["note"].should eq "Very important note for doc2!"
+
       end
 
     end
