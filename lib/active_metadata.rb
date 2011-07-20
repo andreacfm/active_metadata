@@ -5,7 +5,7 @@ require "active_metadata/railtie" if defined?(Rails)
 
 module ActiveMetadata
 
-  env = defined?(Rails) ? ENV['RAILS_ENV'] : ENV['DATABASE_ENV']
+  env = defined?(Rails) ? Rails.env : ENV['DATABASE_ENV']
   unless env.nil?
     CONFIG = YAML.load_file('config/mongo.yml')[env]
     CONNECTION = Mongo::Connection.new(CONFIG['host'],CONFIG['port']).db CONFIG['database']
