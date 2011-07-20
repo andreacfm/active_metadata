@@ -16,7 +16,7 @@ module ActiveMetadata
     attributes.each do |key,value|
 
       self.class.send(:define_method,"create_nota_for_#{key}") do |note|
-        coll = MONGO["note"]
+        coll = MONGO["notes"]
         coll.insert :note => note
       end
 
@@ -25,7 +25,8 @@ module ActiveMetadata
       end
 
       self.class.send(:define_method,"note_for_#{key}") do
-        ["0"]
+        coll = MONGO["notes"]
+        cursor = coll.find.to_a
       end
 
       self.class.send(:define_method,"note_for_#{key}=") do
