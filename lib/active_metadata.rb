@@ -15,21 +15,21 @@ module ActiveMetadata
     p attributes
     attributes.each do |key,value|
 
-      self.class.send(:define_method,"create_nota_for_#{key}") do |note|
+      self.class.send(:define_method,"create_note_for_#{key}") do |note|
         coll = MONGO["notes"]
         coll.insert :note => note
       end
 
-      self.class.send(:define_method,"update_nota_for_#{key}") do
+      self.class.send(:define_method,"update_note_for_#{key}") do
 
       end
 
-      self.class.send(:define_method,"note_for_#{key}") do
+      self.class.send(:define_method,"notes_for_#{key}") do
         coll = MONGO["notes"]
         cursor = coll.find.to_a
       end
 
-      self.class.send(:define_method,"note_for_#{key}=") do
+      self.class.send(:define_method,"notes_for_#{key}=") do
 
       end
 
