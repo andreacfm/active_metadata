@@ -653,3 +653,418 @@ D, [2011-07-20T15:24:57.486683 #1358] DEBUG -- :   [1m[35mAREL (2.3ms)[0m  DE
 D, [2011-07-20T15:24:57.490777 #1358] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:24:57.489911', '2011-07-20 15:24:57.489911', NULL)[0m
 D, [2011-07-20T15:24:57.493872 #1358] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 228 LIMIT 1
 D, [2011-07-20T15:24:57.599197 #1358] DEBUG -- :   [1m[36mAREL (2.5ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T15:35:38.804231 #1449] DEBUG -- :   [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+D, [2011-07-20T15:35:38.861865 #1449] DEBUG -- :   [1m[35mAREL (0.4ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:35:38.803758', '2011-07-20 15:35:38.803758', NULL)
+D, [2011-07-20T15:35:38.866555 #1449] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 229 LIMIT 1[0m
+D, [2011-07-20T15:35:38.869423 #1449] DEBUG -- :   [1m[35mAREL (2.0ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T15:35:38.884379 #1449] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:35:38.883403', '2011-07-20 15:35:38.883403', NULL)[0m
+D, [2011-07-20T15:35:38.887345 #1449] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 230 LIMIT 1
+D, [2011-07-20T15:35:38.890203 #1449] DEBUG -- :   [1m[36mAREL (2.2ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T15:35:38.900826 #1449] DEBUG -- :   [1m[35mAREL (0.4ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:35:38.899785', '2011-07-20 15:35:38.899785', NULL)
+D, [2011-07-20T15:35:38.903549 #1449] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 231 LIMIT 1[0m
+D, [2011-07-20T15:35:38.906581 #1449] DEBUG -- :   [1m[35mAREL (1.9ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T15:35:38.918410 #1449] DEBUG -- :   [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:35:38.917443', '2011-07-20 15:35:38.917443', NULL)[0m
+D, [2011-07-20T15:35:38.921214 #1449] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 232 LIMIT 1
+D, [2011-07-20T15:35:38.922723 #1449] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('Andrea', '2011-07-20 15:35:38.921980', '2011-07-20 15:35:38.921980', NULL)[0m
+D, [2011-07-20T15:35:38.927345 #1449] DEBUG -- :   [1m[35mAREL (1.8ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T15:35:38.938598 #1449] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:35:38.937497', '2011-07-20 15:35:38.937497', NULL)[0m
+D, [2011-07-20T15:35:38.942200 #1449] DEBUG -- :   [1m[35mDocument Load (0.4ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 234 LIMIT 1
+D, [2011-07-20T15:35:38.945016 #1449] DEBUG -- :   [1m[36mAREL (2.1ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T15:35:38.957802 #1449] DEBUG -- :   [1m[35mAREL (0.8ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:35:38.956310', '2011-07-20 15:35:38.956310', NULL)
+D, [2011-07-20T15:35:38.961115 #1449] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 235 LIMIT 1[0m
+D, [2011-07-20T15:35:38.963545 #1449] DEBUG -- :   [1m[35mAREL (1.9ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T15:35:38.975157 #1449] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:35:38.974226', '2011-07-20 15:35:38.974226', NULL)[0m
+D, [2011-07-20T15:35:38.993562 #1449] DEBUG -- :   [1m[35mDocument Load (0.3ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 236 LIMIT 1
+D, [2011-07-20T15:35:38.996175 #1449] DEBUG -- :   [1m[36mAREL (1.9ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T15:35:39.007533 #1449] DEBUG -- :   [1m[35mAREL (0.4ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:35:39.006443', '2011-07-20 15:35:39.006443', NULL)
+D, [2011-07-20T15:35:39.011304 #1449] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 237 LIMIT 1[0m
+D, [2011-07-20T15:35:39.013917 #1449] DEBUG -- :   [1m[35mAREL (1.7ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T15:35:39.024883 #1449] DEBUG -- :   [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:35:39.023778', '2011-07-20 15:35:39.023778', NULL)[0m
+D, [2011-07-20T15:35:39.027955 #1449] DEBUG -- :   [1m[35mDocument Load (0.3ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 238 LIMIT 1
+D, [2011-07-20T15:35:39.031098 #1449] DEBUG -- :   [1m[36mAREL (1.7ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T15:35:39.041912 #1449] DEBUG -- :   [1m[35mAREL (0.3ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:35:39.040974', '2011-07-20 15:35:39.040974', NULL)
+D, [2011-07-20T15:35:39.044865 #1449] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 239 LIMIT 1[0m
+D, [2011-07-20T15:35:39.048007 #1449] DEBUG -- :   [1m[35mAREL (1.8ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T15:35:39.060557 #1449] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:35:39.059586', '2011-07-20 15:35:39.059586', NULL)[0m
+D, [2011-07-20T15:35:39.063388 #1449] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 240 LIMIT 1
+D, [2011-07-20T15:35:39.066173 #1449] DEBUG -- :   [1m[36mAREL (1.6ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T15:35:39.077694 #1449] DEBUG -- :   [1m[35mAREL (0.3ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:35:39.076737', '2011-07-20 15:35:39.076737', NULL)
+D, [2011-07-20T15:35:39.080564 #1449] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 241 LIMIT 1[0m
+D, [2011-07-20T15:35:39.083527 #1449] DEBUG -- :   [1m[35mAREL (1.8ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T15:36:29.132412 #1487] DEBUG -- :   [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+D, [2011-07-20T15:36:29.207357 #1487] DEBUG -- :   [1m[35mAREL (0.4ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:36:29.131843', '2011-07-20 15:36:29.131843', NULL)
+D, [2011-07-20T15:36:29.212177 #1487] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 242 LIMIT 1[0m
+D, [2011-07-20T15:36:29.214442 #1487] DEBUG -- :   [1m[35mAREL (1.5ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T15:36:29.225158 #1487] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:36:29.224209', '2011-07-20 15:36:29.224209', NULL)[0m
+D, [2011-07-20T15:36:29.228527 #1487] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 243 LIMIT 1
+D, [2011-07-20T15:36:29.231189 #1487] DEBUG -- :   [1m[36mAREL (2.0ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T15:36:29.237615 #1487] DEBUG -- :   [1m[35mAREL (0.6ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:36:29.236334', '2011-07-20 15:36:29.236334', NULL)
+D, [2011-07-20T15:36:29.240899 #1487] DEBUG -- :   [1m[36mDocument Load (0.3ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 244 LIMIT 1[0m
+D, [2011-07-20T15:36:29.245132 #1487] DEBUG -- :   [1m[35mAREL (2.9ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T15:36:29.251543 #1487] DEBUG -- :   [1m[36mAREL (0.5ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:36:29.249214', '2011-07-20 15:36:29.249214', NULL)[0m
+D, [2011-07-20T15:36:29.254625 #1487] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 245 LIMIT 1
+D, [2011-07-20T15:36:29.256106 #1487] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('Andrea', '2011-07-20 15:36:29.255295', '2011-07-20 15:36:29.255295', NULL)[0m
+D, [2011-07-20T15:36:29.260812 #1487] DEBUG -- :   [1m[35mAREL (1.5ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T15:36:29.267429 #1487] DEBUG -- :   [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:36:29.266332', '2011-07-20 15:36:29.266332', NULL)[0m
+D, [2011-07-20T15:36:29.270305 #1487] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 247 LIMIT 1
+D, [2011-07-20T15:36:29.272648 #1487] DEBUG -- :   [1m[36mAREL (1.7ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T15:36:29.282374 #1487] DEBUG -- :   [1m[35mAREL (0.3ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:36:29.281413', '2011-07-20 15:36:29.281413', NULL)
+D, [2011-07-20T15:36:29.286086 #1487] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 248 LIMIT 1[0m
+D, [2011-07-20T15:36:29.301115 #1487] DEBUG -- :   [1m[35mAREL (14.3ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T15:36:29.304966 #1487] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:36:29.304061', '2011-07-20 15:36:29.304061', NULL)[0m
+D, [2011-07-20T15:36:29.308659 #1487] DEBUG -- :   [1m[35mDocument Load (0.4ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 249 LIMIT 1
+D, [2011-07-20T15:36:29.314798 #1487] DEBUG -- :   [1m[36mAREL (5.0ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T15:36:29.319683 #1487] DEBUG -- :   [1m[35mAREL (0.3ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:36:29.318769', '2011-07-20 15:36:29.318769', NULL)
+D, [2011-07-20T15:36:29.327458 #1487] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 250 LIMIT 1[0m
+D, [2011-07-20T15:36:29.330958 #1487] DEBUG -- :   [1m[35mAREL (1.6ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T15:36:29.344197 #1487] DEBUG -- :   [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:36:29.342211', '2011-07-20 15:36:29.342211', NULL)[0m
+D, [2011-07-20T15:36:29.348705 #1487] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 251 LIMIT 1
+D, [2011-07-20T15:36:29.351209 #1487] DEBUG -- :   [1m[36mAREL (1.9ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T15:36:29.355809 #1487] DEBUG -- :   [1m[35mAREL (0.3ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:36:29.354816', '2011-07-20 15:36:29.354816', NULL)
+D, [2011-07-20T15:36:29.358988 #1487] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 252 LIMIT 1[0m
+D, [2011-07-20T15:36:29.362336 #1487] DEBUG -- :   [1m[35mAREL (2.2ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T15:36:29.366111 #1487] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:36:29.365213', '2011-07-20 15:36:29.365213', NULL)[0m
+D, [2011-07-20T15:36:29.370138 #1487] DEBUG -- :   [1m[35mDocument Load (0.7ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 253 LIMIT 1
+D, [2011-07-20T15:36:29.379759 #1487] DEBUG -- :   [1m[36mAREL (8.1ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T15:36:29.405644 #1487] DEBUG -- :   [1m[35mAREL (0.4ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:36:29.404512', '2011-07-20 15:36:29.404512', NULL)
+D, [2011-07-20T15:36:29.410650 #1487] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 254 LIMIT 1[0m
+D, [2011-07-20T15:36:29.414250 #1487] DEBUG -- :   [1m[35mAREL (2.1ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T15:36:56.174153 #1523] DEBUG -- :   [1m[36mSQL (0.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+D, [2011-07-20T15:36:56.227619 #1523] DEBUG -- :   [1m[35mAREL (0.4ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:36:56.173702', '2011-07-20 15:36:56.173702', NULL)
+D, [2011-07-20T15:36:56.232015 #1523] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 255 LIMIT 1[0m
+D, [2011-07-20T15:36:56.234808 #1523] DEBUG -- :   [1m[35mAREL (2.0ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T15:36:56.248883 #1523] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:36:56.247949', '2011-07-20 15:36:56.247949', NULL)[0m
+D, [2011-07-20T15:36:56.251799 #1523] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 256 LIMIT 1
+D, [2011-07-20T15:36:56.261871 #1523] DEBUG -- :   [1m[36mAREL (2.1ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T15:36:56.275246 #1523] DEBUG -- :   [1m[35mAREL (0.3ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:36:56.274242', '2011-07-20 15:36:56.274242', NULL)
+D, [2011-07-20T15:36:56.278556 #1523] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 257 LIMIT 1[0m
+D, [2011-07-20T15:36:56.288205 #1523] DEBUG -- :   [1m[35mAREL (2.4ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T15:36:56.302019 #1523] DEBUG -- :   [1m[36mAREL (0.5ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:36:56.300460', '2011-07-20 15:36:56.300460', NULL)[0m
+D, [2011-07-20T15:36:56.304969 #1523] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 258 LIMIT 1
+D, [2011-07-20T15:36:56.306529 #1523] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('Andrea', '2011-07-20 15:36:56.305729', '2011-07-20 15:36:56.305729', NULL)[0m
+D, [2011-07-20T15:36:56.318017 #1523] DEBUG -- :   [1m[35mAREL (1.7ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T15:36:56.331110 #1523] DEBUG -- :   [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:36:56.330146', '2011-07-20 15:36:56.330146', NULL)[0m
+D, [2011-07-20T15:36:56.334628 #1523] DEBUG -- :   [1m[35mDocument Load (0.4ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 260 LIMIT 1
+D, [2011-07-20T15:36:56.345848 #1523] DEBUG -- :   [1m[36mAREL (1.9ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T15:36:56.359998 #1523] DEBUG -- :   [1m[35mAREL (0.4ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:36:56.359028', '2011-07-20 15:36:56.359028', NULL)
+D, [2011-07-20T15:36:56.362948 #1523] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 261 LIMIT 1[0m
+D, [2011-07-20T15:36:56.372064 #1523] DEBUG -- :   [1m[35mAREL (2.0ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T15:36:56.386025 #1523] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:36:56.385154', '2011-07-20 15:36:56.385154', NULL)[0m
+D, [2011-07-20T15:36:56.390032 #1523] DEBUG -- :   [1m[35mDocument Load (0.3ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 262 LIMIT 1
+D, [2011-07-20T15:36:56.400645 #1523] DEBUG -- :   [1m[36mAREL (1.9ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T15:36:56.414184 #1523] DEBUG -- :   [1m[35mAREL (0.4ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:36:56.413076', '2011-07-20 15:36:56.413076', NULL)
+D, [2011-07-20T15:36:56.417050 #1523] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 263 LIMIT 1[0m
+D, [2011-07-20T15:36:56.427316 #1523] DEBUG -- :   [1m[35mAREL (2.0ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T15:36:56.441024 #1523] DEBUG -- :   [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:36:56.438771', '2011-07-20 15:36:56.438771', NULL)[0m
+D, [2011-07-20T15:36:56.444196 #1523] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 264 LIMIT 1
+D, [2011-07-20T15:36:56.454526 #1523] DEBUG -- :   [1m[36mAREL (2.6ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T15:36:56.468081 #1523] DEBUG -- :   [1m[35mAREL (0.4ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:36:56.466831', '2011-07-20 15:36:56.466831', NULL)
+D, [2011-07-20T15:36:56.471103 #1523] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 265 LIMIT 1[0m
+D, [2011-07-20T15:36:56.508190 #1523] DEBUG -- :   [1m[35mAREL (2.3ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T15:36:56.521180 #1523] DEBUG -- :   [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:36:56.520092', '2011-07-20 15:36:56.520092', NULL)[0m
+D, [2011-07-20T15:36:56.524156 #1523] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 266 LIMIT 1
+D, [2011-07-20T15:36:56.533803 #1523] DEBUG -- :   [1m[36mAREL (2.0ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T15:36:56.546807 #1523] DEBUG -- :   [1m[35mAREL (0.3ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 15:36:56.545950', '2011-07-20 15:36:56.545950', NULL)
+D, [2011-07-20T15:36:56.550038 #1523] DEBUG -- :   [1m[36mDocument Load (0.3ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 267 LIMIT 1[0m
+D, [2011-07-20T15:36:56.574080 #1523] DEBUG -- :   [1m[35mAREL (17.0ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:04:14.861679 #1745] DEBUG -- :   [1m[36mSQL (0.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+D, [2011-07-20T16:04:14.915434 #1745] DEBUG -- :   [1m[35mAREL (0.4ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:04:14.861233', '2011-07-20 16:04:14.861233', NULL)
+D, [2011-07-20T16:04:14.919861 #1745] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 268 LIMIT 1[0m
+D, [2011-07-20T16:04:14.922665 #1745] DEBUG -- :   [1m[35mAREL (2.0ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:04:14.929395 #1745] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:04:14.928456', '2011-07-20 16:04:14.928456', NULL)[0m
+D, [2011-07-20T16:04:14.932091 #1745] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 269 LIMIT 1
+D, [2011-07-20T16:04:16.135065 #1745] DEBUG -- :   [1m[36mAREL (2.0ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:04:16.156645 #1745] DEBUG -- :   [1m[35mAREL (0.5ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:04:16.155379', '2011-07-20 16:04:16.155379', NULL)
+D, [2011-07-20T16:04:16.162108 #1745] DEBUG -- :   [1m[36mDocument Load (1.8ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 270 LIMIT 1[0m
+D, [2011-07-20T16:04:16.173887 #1745] DEBUG -- :   [1m[35mAREL (6.8ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:04:16.180541 #1745] DEBUG -- :   [1m[36mAREL (0.5ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:04:16.179357', '2011-07-20 16:04:16.179357', NULL)[0m
+D, [2011-07-20T16:04:16.187869 #1745] DEBUG -- :   [1m[35mDocument Load (3.8ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 271 LIMIT 1
+D, [2011-07-20T16:04:16.191988 #1745] DEBUG -- :   [1m[36mAREL (0.6ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('Andrea', '2011-07-20 16:04:16.189034', '2011-07-20 16:04:16.189034', NULL)[0m
+D, [2011-07-20T16:04:16.196451 #1745] DEBUG -- :   [1m[35mDocument Load (0.3ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 272 LIMIT 1
+D, [2011-07-20T16:04:16.204208 #1745] DEBUG -- :   [1m[36mAREL (2.7ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:04:16.209315 #1745] DEBUG -- :   [1m[35mAREL (0.4ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:04:16.208263', '2011-07-20 16:04:16.208263', NULL)
+D, [2011-07-20T16:04:16.213263 #1745] DEBUG -- :   [1m[36mDocument Load (0.3ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 273 LIMIT 1[0m
+D, [2011-07-20T16:04:16.219450 #1745] DEBUG -- :   [1m[35mAREL (1.6ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:04:16.229046 #1745] DEBUG -- :   [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:04:16.227983', '2011-07-20 16:04:16.227983', NULL)[0m
+D, [2011-07-20T16:04:16.232188 #1745] DEBUG -- :   [1m[35mDocument Load (0.3ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 274 LIMIT 1
+D, [2011-07-20T16:04:16.238610 #1745] DEBUG -- :   [1m[36mAREL (1.7ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:04:16.245685 #1745] DEBUG -- :   [1m[35mAREL (0.4ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:04:16.244695', '2011-07-20 16:04:16.244695', NULL)
+D, [2011-07-20T16:04:16.378797 #1745] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 275 LIMIT 1[0m
+D, [2011-07-20T16:04:16.560880 #1745] DEBUG -- :   [1m[35mAREL (179.1ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:04:16.564816 #1745] DEBUG -- :   [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:04:16.563686', '2011-07-20 16:04:16.563686', NULL)[0m
+D, [2011-07-20T16:04:16.745333 #1745] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 276 LIMIT 1
+D, [2011-07-20T16:04:16.926489 #1745] DEBUG -- :   [1m[36mAREL (177.3ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:04:16.932847 #1745] DEBUG -- :   [1m[35mAREL (0.4ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:04:16.931859', '2011-07-20 16:04:16.931859', NULL)
+D, [2011-07-20T16:04:17.117101 #1745] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 277 LIMIT 1[0m
+D, [2011-07-20T16:04:17.269766 #1745] DEBUG -- :   [1m[35mAREL (150.3ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:04:17.272916 #1745] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:04:17.271968', '2011-07-20 16:04:17.271968', NULL)[0m
+D, [2011-07-20T16:04:17.471877 #1745] DEBUG -- :   [1m[35mDocument Load (0.3ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 278 LIMIT 1
+D, [2011-07-20T16:04:17.640070 #1745] DEBUG -- :   [1m[36mAREL (166.0ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:04:17.646064 #1745] DEBUG -- :   [1m[35mAREL (0.4ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:04:17.644982', '2011-07-20 16:04:17.644982', NULL)
+D, [2011-07-20T16:04:17.800790 #1745] DEBUG -- :   [1m[36mDocument Load (0.3ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 279 LIMIT 1[0m
+D, [2011-07-20T16:04:17.955819 #1745] DEBUG -- :   [1m[35mAREL (149.2ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:04:17.960089 #1745] DEBUG -- :   [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:04:17.958851', '2011-07-20 16:04:17.958851', NULL)[0m
+D, [2011-07-20T16:04:18.110750 #1745] DEBUG -- :   [1m[35mDocument Load (0.3ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 280 LIMIT 1
+D, [2011-07-20T16:04:18.411638 #1745] DEBUG -- :   [1m[36mAREL (151.2ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:06:24.815716 #1843] DEBUG -- :   [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+D, [2011-07-20T16:06:24.871056 #1843] DEBUG -- :   [1m[35mAREL (0.4ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:06:24.815221', '2011-07-20 16:06:24.815221', NULL)
+D, [2011-07-20T16:06:24.875865 #1843] DEBUG -- :   [1m[36mDocument Load (0.3ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 281 LIMIT 1[0m
+D, [2011-07-20T16:06:24.878702 #1843] DEBUG -- :   [1m[35mAREL (2.0ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:06:24.884540 #1843] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:06:24.883598', '2011-07-20 16:06:24.883598', NULL)[0m
+D, [2011-07-20T16:06:24.887292 #1843] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 282 LIMIT 1
+D, [2011-07-20T16:06:26.105437 #1843] DEBUG -- :   [1m[36mAREL (2.8ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:06:26.124166 #1843] DEBUG -- :   [1m[35mAREL (0.4ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:06:26.123152', '2011-07-20 16:06:26.123152', NULL)
+D, [2011-07-20T16:06:26.127770 #1843] DEBUG -- :   [1m[36mDocument Load (0.5ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 283 LIMIT 1[0m
+D, [2011-07-20T16:06:26.133893 #1843] DEBUG -- :   [1m[35mAREL (1.9ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:06:26.144256 #1843] DEBUG -- :   [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:06:26.143058', '2011-07-20 16:06:26.143058', NULL)[0m
+D, [2011-07-20T16:06:26.147809 #1843] DEBUG -- :   [1m[35mDocument Load (0.3ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 284 LIMIT 1
+D, [2011-07-20T16:06:26.151489 #1843] DEBUG -- :   [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('Andrea', '2011-07-20 16:06:26.150284', '2011-07-20 16:06:26.150284', NULL)[0m
+D, [2011-07-20T16:06:26.159144 #1843] DEBUG -- :   [1m[35mDocument Load (0.3ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 285 LIMIT 1
+D, [2011-07-20T16:06:26.167758 #1843] DEBUG -- :   [1m[36mAREL (1.9ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:06:26.176914 #1843] DEBUG -- :   [1m[35mAREL (0.5ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:06:26.175650', '2011-07-20 16:06:26.175650', NULL)
+D, [2011-07-20T16:06:26.180466 #1843] DEBUG -- :   [1m[36mDocument Load (0.3ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 286 LIMIT 1[0m
+D, [2011-07-20T16:06:26.188185 #1843] DEBUG -- :   [1m[35mAREL (2.9ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:06:26.195956 #1843] DEBUG -- :   [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:06:26.194739', '2011-07-20 16:06:26.194739', NULL)[0m
+D, [2011-07-20T16:06:26.202474 #1843] DEBUG -- :   [1m[35mDocument Load (0.3ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 287 LIMIT 1
+D, [2011-07-20T16:06:26.211328 #1843] DEBUG -- :   [1m[36mAREL (3.9ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:06:26.214919 #1843] DEBUG -- :   [1m[35mAREL (0.4ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:06:26.213955', '2011-07-20 16:06:26.213955', NULL)
+D, [2011-07-20T16:06:26.385136 #1843] DEBUG -- :   [1m[36mDocument Load (0.3ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 288 LIMIT 1[0m
+D, [2011-07-20T16:06:26.559566 #1843] DEBUG -- :   [1m[35mAREL (170.7ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:06:26.563572 #1843] DEBUG -- :   [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:06:26.562473', '2011-07-20 16:06:26.562473', NULL)[0m
+D, [2011-07-20T16:06:26.738388 #1843] DEBUG -- :   [1m[35mDocument Load (0.3ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 289 LIMIT 1
+D, [2011-07-20T16:06:26.892341 #1843] DEBUG -- :   [1m[36mAREL (149.1ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:06:26.897320 #1843] DEBUG -- :   [1m[35mAREL (0.4ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:06:26.896231', '2011-07-20 16:06:26.896231', NULL)
+D, [2011-07-20T16:06:27.065062 #1843] DEBUG -- :   [1m[36mDocument Load (0.3ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 290 LIMIT 1[0m
+D, [2011-07-20T16:06:27.247253 #1843] DEBUG -- :   [1m[35mAREL (176.8ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:06:27.251256 #1843] DEBUG -- :   [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:06:27.250165', '2011-07-20 16:06:27.250165', NULL)[0m
+D, [2011-07-20T16:06:27.431475 #1843] DEBUG -- :   [1m[35mDocument Load (0.3ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 291 LIMIT 1
+D, [2011-07-20T16:06:27.567543 #1843] DEBUG -- :   [1m[36mAREL (133.8ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:06:27.571297 #1843] DEBUG -- :   [1m[35mAREL (0.4ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:06:27.570219', '2011-07-20 16:06:27.570219', NULL)
+D, [2011-07-20T16:06:27.779527 #1843] DEBUG -- :   [1m[36mDocument Load (0.3ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 292 LIMIT 1[0m
+D, [2011-07-20T16:06:27.926626 #1843] DEBUG -- :   [1m[35mAREL (144.6ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:06:27.933279 #1843] DEBUG -- :   [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:06:27.932197', '2011-07-20 16:06:27.932197', NULL)[0m
+D, [2011-07-20T16:06:28.097655 #1843] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 293 LIMIT 1
+D, [2011-07-20T16:06:28.381315 #1843] DEBUG -- :   [1m[36mAREL (176.9ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:09:39.550135 #1988] DEBUG -- :   [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+D, [2011-07-20T16:09:39.603688 #1988] DEBUG -- :   [1m[35mAREL (0.4ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:09:39.549660', '2011-07-20 16:09:39.549660', NULL)
+D, [2011-07-20T16:09:39.607986 #1988] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 294 LIMIT 1[0m
+D, [2011-07-20T16:09:39.610659 #1988] DEBUG -- :   [1m[35mAREL (1.9ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:09:39.615192 #1988] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:09:39.612551', '2011-07-20 16:09:39.612551', NULL)[0m
+D, [2011-07-20T16:09:39.619018 #1988] DEBUG -- :   [1m[35mDocument Load (0.3ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 295 LIMIT 1
+D, [2011-07-20T16:09:39.627283 #1988] DEBUG -- :   [1m[36mAREL (2.1ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:09:39.632452 #1988] DEBUG -- :   [1m[35mAREL (0.5ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:09:39.631217', '2011-07-20 16:09:39.631217', NULL)
+D, [2011-07-20T16:09:39.635532 #1988] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 296 LIMIT 1[0m
+D, [2011-07-20T16:09:39.639750 #1988] DEBUG -- :   [1m[35mAREL (2.1ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:09:39.643078 #1988] DEBUG -- :   [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:09:39.642032', '2011-07-20 16:09:39.642032', NULL)[0m
+D, [2011-07-20T16:09:39.645868 #1988] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 297 LIMIT 1
+D, [2011-07-20T16:09:39.647195 #1988] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('Andrea', '2011-07-20 16:09:39.646521', '2011-07-20 16:09:39.646521', NULL)[0m
+D, [2011-07-20T16:09:39.650767 #1988] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 298 LIMIT 1
+D, [2011-07-20T16:09:39.655520 #1988] DEBUG -- :   [1m[36mAREL (2.1ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:09:39.658517 #1988] DEBUG -- :   [1m[35mAREL (0.3ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:09:39.657603', '2011-07-20 16:09:39.657603', NULL)
+D, [2011-07-20T16:09:39.661379 #1988] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 299 LIMIT 1[0m
+D, [2011-07-20T16:09:39.666013 #1988] DEBUG -- :   [1m[35mAREL (2.1ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:09:39.669310 #1988] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:09:39.668377', '2011-07-20 16:09:39.668377', NULL)[0m
+D, [2011-07-20T16:09:39.672112 #1988] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 300 LIMIT 1
+D, [2011-07-20T16:09:39.676534 #1988] DEBUG -- :   [1m[36mAREL (1.8ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:09:39.679538 #1988] DEBUG -- :   [1m[35mAREL (0.3ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:09:39.678607', '2011-07-20 16:09:39.678607', NULL)
+D, [2011-07-20T16:09:39.682699 #1988] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 301 LIMIT 1[0m
+D, [2011-07-20T16:09:39.688999 #1988] DEBUG -- :   [1m[35mAREL (2.2ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:09:39.692110 #1988] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:09:39.691206', '2011-07-20 16:09:39.691206', NULL)[0m
+D, [2011-07-20T16:09:39.695425 #1988] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 302 LIMIT 1
+D, [2011-07-20T16:09:39.699245 #1988] DEBUG -- :   [1m[36mAREL (1.8ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:09:39.702509 #1988] DEBUG -- :   [1m[35mAREL (0.3ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:09:39.701595', '2011-07-20 16:09:39.701595', NULL)
+D, [2011-07-20T16:09:39.706222 #1988] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 303 LIMIT 1[0m
+D, [2011-07-20T16:09:39.711573 #1988] DEBUG -- :   [1m[35mAREL (2.1ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:09:39.714623 #1988] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:09:39.713718', '2011-07-20 16:09:39.713718', NULL)[0m
+D, [2011-07-20T16:09:39.717515 #1988] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 304 LIMIT 1
+D, [2011-07-20T16:09:39.722587 #1988] DEBUG -- :   [1m[36mAREL (3.1ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:09:39.725613 #1988] DEBUG -- :   [1m[35mAREL (0.3ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:09:39.724687', '2011-07-20 16:09:39.724687', NULL)
+D, [2011-07-20T16:09:39.728904 #1988] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 305 LIMIT 1[0m
+D, [2011-07-20T16:09:39.733136 #1988] DEBUG -- :   [1m[35mAREL (2.0ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:09:39.736400 #1988] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:09:39.735477', '2011-07-20 16:09:39.735477', NULL)[0m
+D, [2011-07-20T16:09:39.739345 #1988] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 306 LIMIT 1
+D, [2011-07-20T16:09:39.844853 #1988] DEBUG -- :   [1m[36mAREL (2.6ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:09:45.483349 #2019] DEBUG -- :   [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+D, [2011-07-20T16:09:45.536957 #2019] DEBUG -- :   [1m[35mAREL (0.4ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:09:45.482884', '2011-07-20 16:09:45.482884', NULL)
+D, [2011-07-20T16:09:45.542021 #2019] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 307 LIMIT 1[0m
+D, [2011-07-20T16:09:45.544871 #2019] DEBUG -- :   [1m[35mAREL (2.1ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:09:45.547787 #2019] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:09:45.546794', '2011-07-20 16:09:45.546794', NULL)[0m
+D, [2011-07-20T16:09:45.550983 #2019] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 308 LIMIT 1
+D, [2011-07-20T16:09:45.558630 #2019] DEBUG -- :   [1m[36mAREL (1.7ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:09:45.562482 #2019] DEBUG -- :   [1m[35mAREL (0.3ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:09:45.561547', '2011-07-20 16:09:45.561547', NULL)
+D, [2011-07-20T16:09:45.566103 #2019] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 309 LIMIT 1[0m
+D, [2011-07-20T16:09:45.571036 #2019] DEBUG -- :   [1m[35mAREL (2.6ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:09:45.574015 #2019] DEBUG -- :   [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:09:45.573050', '2011-07-20 16:09:45.573050', NULL)[0m
+D, [2011-07-20T16:09:45.577475 #2019] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 310 LIMIT 1
+D, [2011-07-20T16:09:45.579337 #2019] DEBUG -- :   [1m[36mAREL (0.5ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('Andrea', '2011-07-20 16:09:45.578208', '2011-07-20 16:09:45.578208', NULL)[0m
+D, [2011-07-20T16:09:45.583321 #2019] DEBUG -- :   [1m[35mDocument Load (0.3ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 311 LIMIT 1
+D, [2011-07-20T16:09:45.588455 #2019] DEBUG -- :   [1m[36mAREL (2.0ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:09:45.592554 #2019] DEBUG -- :   [1m[35mAREL (0.4ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:09:45.591563', '2011-07-20 16:09:45.591563', NULL)
+D, [2011-07-20T16:09:45.595888 #2019] DEBUG -- :   [1m[36mDocument Load (0.4ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 312 LIMIT 1[0m
+D, [2011-07-20T16:09:45.600358 #2019] DEBUG -- :   [1m[35mAREL (1.6ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:09:45.603453 #2019] DEBUG -- :   [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:09:45.602443', '2011-07-20 16:09:45.602443', NULL)[0m
+D, [2011-07-20T16:09:45.606145 #2019] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 313 LIMIT 1
+D, [2011-07-20T16:09:45.610584 #2019] DEBUG -- :   [1m[36mAREL (1.9ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:09:45.613923 #2019] DEBUG -- :   [1m[35mAREL (0.5ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:09:45.612661', '2011-07-20 16:09:45.612661', NULL)
+D, [2011-07-20T16:09:45.617829 #2019] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 314 LIMIT 1[0m
+D, [2011-07-20T16:09:45.622836 #2019] DEBUG -- :   [1m[35mAREL (2.0ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:09:45.626527 #2019] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:09:45.625598', '2011-07-20 16:09:45.625598', NULL)[0m
+D, [2011-07-20T16:09:45.630100 #2019] DEBUG -- :   [1m[35mDocument Load (0.3ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 315 LIMIT 1
+D, [2011-07-20T16:09:45.634213 #2019] DEBUG -- :   [1m[36mAREL (2.1ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:09:45.637310 #2019] DEBUG -- :   [1m[35mAREL (0.5ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:09:45.636183', '2011-07-20 16:09:45.636183', NULL)
+D, [2011-07-20T16:09:45.640502 #2019] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 316 LIMIT 1[0m
+D, [2011-07-20T16:09:45.644753 #2019] DEBUG -- :   [1m[35mAREL (1.8ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:09:45.648821 #2019] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:09:45.647901', '2011-07-20 16:09:45.647901', NULL)[0m
+D, [2011-07-20T16:09:45.652259 #2019] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 317 LIMIT 1
+D, [2011-07-20T16:09:45.656375 #2019] DEBUG -- :   [1m[36mAREL (2.1ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:09:45.660440 #2019] DEBUG -- :   [1m[35mAREL (0.3ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:09:45.659419', '2011-07-20 16:09:45.659419', NULL)
+D, [2011-07-20T16:09:45.663826 #2019] DEBUG -- :   [1m[36mDocument Load (0.3ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 318 LIMIT 1[0m
+D, [2011-07-20T16:09:45.668090 #2019] DEBUG -- :   [1m[35mAREL (2.0ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:09:45.671248 #2019] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:09:45.670252', '2011-07-20 16:09:45.670252', NULL)[0m
+D, [2011-07-20T16:09:45.674877 #2019] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 319 LIMIT 1
+D, [2011-07-20T16:09:45.782357 #2019] DEBUG -- :   [1m[36mAREL (2.6ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:10:43.965068 #2057] DEBUG -- :   [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+D, [2011-07-20T16:10:44.019586 #2057] DEBUG -- :   [1m[35mAREL (0.4ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:10:43.964601', '2011-07-20 16:10:43.964601', NULL)
+D, [2011-07-20T16:10:44.024510 #2057] DEBUG -- :   [1m[36mDocument Load (0.3ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 320 LIMIT 1[0m
+D, [2011-07-20T16:10:44.027437 #2057] DEBUG -- :   [1m[35mAREL (2.0ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:10:44.030084 #2057] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:10:44.029044', '2011-07-20 16:10:44.029044', NULL)[0m
+D, [2011-07-20T16:10:44.033902 #2057] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 321 LIMIT 1
+D, [2011-07-20T16:10:44.041973 #2057] DEBUG -- :   [1m[36mAREL (1.8ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:10:44.045870 #2057] DEBUG -- :   [1m[35mAREL (0.3ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:10:44.044937', '2011-07-20 16:10:44.044937', NULL)
+D, [2011-07-20T16:10:44.048855 #2057] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 322 LIMIT 1[0m
+D, [2011-07-20T16:10:44.052893 #2057] DEBUG -- :   [1m[35mAREL (1.9ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:10:44.056411 #2057] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:10:44.055500', '2011-07-20 16:10:44.055500', NULL)[0m
+D, [2011-07-20T16:10:44.060174 #2057] DEBUG -- :   [1m[35mDocument Load (0.3ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 323 LIMIT 1
+D, [2011-07-20T16:10:44.062046 #2057] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('Andrea', '2011-07-20 16:10:44.061177', '2011-07-20 16:10:44.061177', NULL)[0m
+D, [2011-07-20T16:10:44.066318 #2057] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 324 LIMIT 1
+D, [2011-07-20T16:10:44.070856 #2057] DEBUG -- :   [1m[36mAREL (2.0ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:10:44.074166 #2057] DEBUG -- :   [1m[35mAREL (0.3ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:10:44.073230', '2011-07-20 16:10:44.073230', NULL)
+D, [2011-07-20T16:10:44.077594 #2057] DEBUG -- :   [1m[36mDocument Load (0.3ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 325 LIMIT 1[0m
+D, [2011-07-20T16:10:44.082039 #2057] DEBUG -- :   [1m[35mAREL (1.9ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:10:44.085775 #2057] DEBUG -- :   [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:10:44.084483', '2011-07-20 16:10:44.084483', NULL)[0m
+D, [2011-07-20T16:10:44.089303 #2057] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 326 LIMIT 1
+D, [2011-07-20T16:10:44.093486 #2057] DEBUG -- :   [1m[36mAREL (1.7ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:10:44.097018 #2057] DEBUG -- :   [1m[35mAREL (0.3ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:10:44.095443', '2011-07-20 16:10:44.095443', NULL)
+D, [2011-07-20T16:10:44.101270 #2057] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 327 LIMIT 1[0m
+D, [2011-07-20T16:10:44.107041 #2057] DEBUG -- :   [1m[35mAREL (2.3ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:10:44.110638 #2057] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:10:44.109740', '2011-07-20 16:10:44.109740', NULL)[0m
+D, [2011-07-20T16:10:44.114122 #2057] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 328 LIMIT 1
+D, [2011-07-20T16:10:44.118424 #2057] DEBUG -- :   [1m[36mAREL (2.2ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:10:44.121888 #2057] DEBUG -- :   [1m[35mAREL (0.3ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:10:44.120862', '2011-07-20 16:10:44.120862', NULL)
+D, [2011-07-20T16:10:44.125076 #2057] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 329 LIMIT 1[0m
+D, [2011-07-20T16:10:44.129261 #2057] DEBUG -- :   [1m[35mAREL (1.8ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:10:44.132846 #2057] DEBUG -- :   [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:10:44.131651', '2011-07-20 16:10:44.131651', NULL)[0m
+D, [2011-07-20T16:10:44.135834 #2057] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 330 LIMIT 1
+D, [2011-07-20T16:10:44.140533 #2057] DEBUG -- :   [1m[36mAREL (2.2ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:10:44.144432 #2057] DEBUG -- :   [1m[35mAREL (0.9ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:10:44.142912', '2011-07-20 16:10:44.142912', NULL)
+D, [2011-07-20T16:10:44.147958 #2057] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 331 LIMIT 1[0m
+D, [2011-07-20T16:10:44.152622 #2057] DEBUG -- :   [1m[35mAREL (2.4ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:10:44.157300 #2057] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:10:44.156434', '2011-07-20 16:10:44.156434', NULL)[0m
+D, [2011-07-20T16:10:44.160425 #2057] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 332 LIMIT 1
+D, [2011-07-20T16:10:44.268106 #2057] DEBUG -- :   [1m[36mAREL (2.5ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:10:59.653376 #2088] DEBUG -- :   [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+D, [2011-07-20T16:10:59.708183 #2088] DEBUG -- :   [1m[35mAREL (0.4ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:10:59.652909', '2011-07-20 16:10:59.652909', NULL)
+D, [2011-07-20T16:10:59.712713 #2088] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 333 LIMIT 1[0m
+D, [2011-07-20T16:10:59.715096 #2088] DEBUG -- :   [1m[35mAREL (1.7ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:10:59.718830 #2088] DEBUG -- :   [1m[36mAREL (1.0ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:10:59.717157', '2011-07-20 16:10:59.717157', NULL)[0m
+D, [2011-07-20T16:10:59.722710 #2088] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 334 LIMIT 1
+D, [2011-07-20T16:10:59.725340 #2088] DEBUG -- :   [1m[36mAREL (2.0ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:10:59.733834 #2088] DEBUG -- :   [1m[35mAREL (0.4ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:10:59.732839', '2011-07-20 16:10:59.732839', NULL)
+D, [2011-07-20T16:10:59.737835 #2088] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 335 LIMIT 1[0m
+D, [2011-07-20T16:10:59.740287 #2088] DEBUG -- :   [1m[35mAREL (1.9ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:10:59.748048 #2088] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:10:59.747122', '2011-07-20 16:10:59.747122', NULL)[0m
+D, [2011-07-20T16:10:59.751210 #2088] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 336 LIMIT 1
+D, [2011-07-20T16:10:59.752712 #2088] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('Andrea', '2011-07-20 16:10:59.751961', '2011-07-20 16:10:59.751961', NULL)[0m
+D, [2011-07-20T16:10:59.757341 #2088] DEBUG -- :   [1m[35mAREL (1.7ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:10:59.765784 #2088] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:10:59.764838', '2011-07-20 16:10:59.764838', NULL)[0m
+D, [2011-07-20T16:10:59.768927 #2088] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 338 LIMIT 1
+D, [2011-07-20T16:10:59.771326 #2088] DEBUG -- :   [1m[36mAREL (1.9ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:10:59.776660 #2088] DEBUG -- :   [1m[35mAREL (0.5ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:10:59.775502', '2011-07-20 16:10:59.775502', NULL)
+D, [2011-07-20T16:10:59.781567 #2088] DEBUG -- :   [1m[36mDocument Load (0.3ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 339 LIMIT 1[0m
+D, [2011-07-20T16:10:59.783918 #2088] DEBUG -- :   [1m[35mAREL (1.7ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:10:59.790081 #2088] DEBUG -- :   [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:10:59.788908', '2011-07-20 16:10:59.788908', NULL)[0m
+D, [2011-07-20T16:10:59.793207 #2088] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 340 LIMIT 1
+D, [2011-07-20T16:10:59.795412 #2088] DEBUG -- :   [1m[36mAREL (1.6ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:10:59.802059 #2088] DEBUG -- :   [1m[35mAREL (0.3ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:10:59.801057', '2011-07-20 16:10:59.801057', NULL)
+D, [2011-07-20T16:10:59.805133 #2088] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 341 LIMIT 1[0m
+D, [2011-07-20T16:10:59.809043 #2088] DEBUG -- :   [1m[35mAREL (2.1ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:10:59.817274 #2088] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:10:59.816326', '2011-07-20 16:10:59.816326', NULL)[0m
+D, [2011-07-20T16:10:59.820437 #2088] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 342 LIMIT 1
+D, [2011-07-20T16:10:59.822968 #2088] DEBUG -- :   [1m[36mAREL (2.0ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:10:59.828037 #2088] DEBUG -- :   [1m[35mAREL (0.3ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:10:59.827050', '2011-07-20 16:10:59.827050', NULL)
+D, [2011-07-20T16:10:59.831514 #2088] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 343 LIMIT 1[0m
+D, [2011-07-20T16:10:59.833884 #2088] DEBUG -- :   [1m[35mAREL (1.8ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:10:59.841918 #2088] DEBUG -- :   [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:10:59.840844', '2011-07-20 16:10:59.840844', NULL)[0m
+D, [2011-07-20T16:10:59.845944 #2088] DEBUG -- :   [1m[35mDocument Load (0.3ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 344 LIMIT 1
+D, [2011-07-20T16:10:59.848327 #2088] DEBUG -- :   [1m[36mAREL (1.7ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:10:59.853463 #2088] DEBUG -- :   [1m[35mAREL (0.4ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:10:59.852473', '2011-07-20 16:10:59.852473', NULL)
+D, [2011-07-20T16:10:59.856457 #2088] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 345 LIMIT 1[0m
+D, [2011-07-20T16:10:59.859042 #2088] DEBUG -- :   [1m[35mAREL (1.9ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:11:11.103707 #2118] DEBUG -- :   [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+D, [2011-07-20T16:11:11.160228 #2118] DEBUG -- :   [1m[35mAREL (0.4ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:11:11.103232', '2011-07-20 16:11:11.103232', NULL)
+D, [2011-07-20T16:11:11.165285 #2118] DEBUG -- :   [1m[36mDocument Load (0.3ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 346 LIMIT 1[0m
+D, [2011-07-20T16:11:11.168389 #2118] DEBUG -- :   [1m[35mAREL (2.0ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:11:11.172390 #2118] DEBUG -- :   [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:11:11.170340', '2011-07-20 16:11:11.170340', NULL)[0m
+D, [2011-07-20T16:11:11.175974 #2118] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 347 LIMIT 1
+D, [2011-07-20T16:11:11.178670 #2118] DEBUG -- :   [1m[36mAREL (1.9ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:11:11.186069 #2118] DEBUG -- :   [1m[35mAREL (0.3ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:11:11.185147', '2011-07-20 16:11:11.185147', NULL)
+D, [2011-07-20T16:11:11.188999 #2118] DEBUG -- :   [1m[36mDocument Load (0.3ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 348 LIMIT 1[0m
+D, [2011-07-20T16:11:11.191362 #2118] DEBUG -- :   [1m[35mAREL (1.7ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:11:11.198230 #2118] DEBUG -- :   [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:11:11.197202', '2011-07-20 16:11:11.197202', NULL)[0m
+D, [2011-07-20T16:11:11.201654 #2118] DEBUG -- :   [1m[35mDocument Load (0.3ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 349 LIMIT 1
+D, [2011-07-20T16:11:11.203086 #2118] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('Andrea', '2011-07-20 16:11:11.202369', '2011-07-20 16:11:11.202369', NULL)[0m
+D, [2011-07-20T16:11:11.208070 #2118] DEBUG -- :   [1m[35mAREL (2.4ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:11:11.213471 #2118] DEBUG -- :   [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:11:11.212544', '2011-07-20 16:11:11.212544', NULL)[0m
+D, [2011-07-20T16:11:11.216155 #2118] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 351 LIMIT 1
+D, [2011-07-20T16:11:11.218239 #2118] DEBUG -- :   [1m[36mAREL (1.6ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:11:11.224573 #2118] DEBUG -- :   [1m[35mAREL (0.4ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:11:11.223428', '2011-07-20 16:11:11.223428', NULL)
+D, [2011-07-20T16:11:11.227997 #2118] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 352 LIMIT 1[0m
+D, [2011-07-20T16:11:11.230315 #2118] DEBUG -- :   [1m[35mAREL (1.8ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:11:11.235609 #2118] DEBUG -- :   [1m[36mAREL (0.8ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:11:11.234001', '2011-07-20 16:11:11.234001', NULL)[0m
+D, [2011-07-20T16:11:11.239246 #2118] DEBUG -- :   [1m[35mDocument Load (0.2ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 353 LIMIT 1
+D, [2011-07-20T16:11:11.241923 #2118] DEBUG -- :   [1m[36mAREL (1.9ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:11:11.246943 #2118] DEBUG -- :   [1m[35mAREL (0.3ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:11:11.245998', '2011-07-20 16:11:11.245998', NULL)
+D, [2011-07-20T16:11:11.250550 #2118] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 354 LIMIT 1[0m
+D, [2011-07-20T16:11:11.252902 #2118] DEBUG -- :   [1m[35mAREL (1.9ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:11:11.257758 #2118] DEBUG -- :   [1m[36mAREL (0.6ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:11:11.256380', '2011-07-20 16:11:11.256380', NULL)[0m
+D, [2011-07-20T16:11:11.261327 #2118] DEBUG -- :   [1m[35mDocument Load (0.3ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 355 LIMIT 1
+D, [2011-07-20T16:11:11.263805 #2118] DEBUG -- :   [1m[36mAREL (1.8ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:11:11.268782 #2118] DEBUG -- :   [1m[35mAREL (0.6ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:11:11.267440', '2011-07-20 16:11:11.267440', NULL)
+D, [2011-07-20T16:11:11.271815 #2118] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 356 LIMIT 1[0m
+D, [2011-07-20T16:11:11.274141 #2118] DEBUG -- :   [1m[35mAREL (1.8ms)[0m  DELETE FROM "documents" WHERE 1=1
+D, [2011-07-20T16:11:11.279048 #2118] DEBUG -- :   [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:11:11.277837', '2011-07-20 16:11:11.277837', NULL)[0m
+D, [2011-07-20T16:11:11.282958 #2118] DEBUG -- :   [1m[35mDocument Load (0.3ms)[0m  SELECT "documents".* FROM "documents" WHERE "documents"."id" = 357 LIMIT 1
+D, [2011-07-20T16:11:11.285230 #2118] DEBUG -- :   [1m[36mAREL (1.7ms)[0m  [1mDELETE FROM "documents" WHERE 1=1[0m
+D, [2011-07-20T16:11:11.290713 #2118] DEBUG -- :   [1m[35mAREL (1.1ms)[0m  INSERT INTO "documents" ("name", "created_at", "updated_at", "surname") VALUES ('John', '2011-07-20 16:11:11.288739', '2011-07-20 16:11:11.288739', NULL)
+D, [2011-07-20T16:11:11.294363 #2118] DEBUG -- :   [1m[36mDocument Load (0.2ms)[0m  [1mSELECT "documents".* FROM "documents" WHERE "documents"."id" = 358 LIMIT 1[0m
+D, [2011-07-20T16:11:11.296720 #2118] DEBUG -- :   [1m[35mAREL (1.8ms)[0m  DELETE FROM "documents" WHERE 1=1
