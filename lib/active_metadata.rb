@@ -16,14 +16,14 @@ module ActiveMetadata
 
       self.class.send(:define_method,"create_note_for_#{key}") do |note|
         coll = MONGO["notes"]
-
         raise RuntimeError, "The object id MUST be valued" unless self.id
         coll.insert :note => note, :id => self.id
 
       end
 
-      self.class.send(:define_method,"update_note_for_#{key}") do
-
+      self.class.send(:define_method,"update_note_for_#{key}") do |id,note|
+        coll = MONGO["notes"]
+        coll.update({:_id => id},{"$set" => {:note => note}})
       end
 
       self.class.send(:define_method,"notes_for_#{key}") do
