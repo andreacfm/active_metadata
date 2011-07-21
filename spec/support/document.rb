@@ -2,6 +2,6 @@
 class Document < ActiveRecord::Base  
   set_table_name :documents
 
-  act_as_metadata
+  acts_as_metadata
 
 end
