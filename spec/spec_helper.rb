@@ -41,6 +41,7 @@ RSpec.configure do |config|
   config.after(:each) do   
     Document.delete_all
     ActiveMetadata.notes.drop
+    ActiveMetadata.history.drop
   end
 
   config.after(:suite) do  
