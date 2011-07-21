@@ -8,6 +8,20 @@ describe ActiveMetadata do
       Document.respond_to?(:acts_as_metadata).should be_true
     end
 
+    it "should find the metadata id if no metadata_id_from params has been provided" do
+      @document = Document.create! { |d| d.name = "John" }
+      @document.reload
+      @document.metadata_id.should eq @document.id
+    end
+
+    it "should find the metadata id if a metadata_id_from params has been specified" do
+      @document = Document.create! { |d| d.name = "John" }
+      @document.reload
+      @section = @document.create_section :title => "new section"
+      @section.reload
+      @section.metadata_id.should eq @document.id
+    end
+
   end
 
   context "saving and quering notes" do
@@ -95,6 +109,18 @@ describe ActiveMetadata do
       note["updated_at"].should > note["created_at"]
     end
 
+    it "should verify that note are saved with the correct model id if metadata_id_from is defined" do
+      # fixtures
+      @document.create_note_for(:name, "Very important note!")
+      @section = @document.create_section :title => "new section"
+      @section.reload
+      @section.create_note_for(:title, "Very important note for section!")
+
+      # expectations
+      @document.notes_for(:name).last["id"].should eq @document.id
+      @section.notes_for(:title).last["id"].should eq @document.id
+    end
+
   end
 
   context "history" do
@@ -116,7 +142,7 @@ describe ActiveMetadata do
       @document.history_for(:name)[0]["created_at"].should be_a_kind_of Time
     end
 
-    it "should verify that hsitory for only return history related to the self document" do
+    it "should verify that history return records only for the self document" do
       # fixtures
       @another_doc = Document.create :name => "Andrea"
       @another_doc.reload
@@ -129,6 +155,18 @@ describe ActiveMetadata do
       @another_doc.history_for(:name).last["value"].should eq @another_doc.name
     end
 
+    it "should verify that history is saved with the correct model id if metadata_id_from is defined" do
+      # fixtures
+      @section = @document.create_section :title => "new section"
+      @section.reload
+
+        # expectations
+      @document.history_for(:name).count.should eq(1)
+      @document.history_for(:name).last["id"].should eq @document.id
+
+      @section.history_for(:title).count.should eq(1)
+      @section.history_for(:title).last["id"].should eq @document.id
+    end
 
   end
 
