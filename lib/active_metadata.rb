@@ -47,13 +47,17 @@ module ActiveMetadata
   end
 
   def notes_for field
-    ActiveMetadata.notes.find({:id => metadata_id, :field => field}).to_a
+    ActiveMetadata.notes.find({:id => metadata_id, :field => field},{:sort => [[:updated_at , 'descending']]}).to_a
   end
 
   def create_notes_for field, notes
     notes.each do |note|
       create_note_for field,note
     end
+  end
+
+  def delete_note id
+    ActiveMetadata.notes.remove({:_id => id})
   end
 
   # History
@@ -64,7 +68,7 @@ module ActiveMetadata
   end
 
   def history_for field
-    ActiveMetadata.history.find({:id => metadata_id, :field => field}).to_a
+    ActiveMetadata.history.find({:id => metadata_id, :field => field}, {:sort => [[:created_at,'descending']]}).to_a
   end
 
 end
