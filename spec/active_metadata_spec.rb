@@ -4,8 +4,8 @@ describe ActiveMetadata do
 
   context "model methods" do
 
-    it "should exist a method act_as_metadata in the model" do
-      Document.respond_to?(:act_as_metadata).should be_true
+    it "should exist a method acts_as_metadata in the model" do
+      Document.respond_to?(:acts_as_metadata).should be_true
     end
 
   end

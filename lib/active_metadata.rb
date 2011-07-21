@@ -60,7 +60,7 @@ module ActiveMetadata
 end
 
 class ActiveRecord::Base
-  def self.act_as_metadata
+  def self.acts_as_metadata
     include ActiveMetadata
   end
 end
