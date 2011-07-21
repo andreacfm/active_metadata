@@ -74,8 +74,6 @@ describe ActiveMetadata do
       notes = ["note number 1", "note number 2"]
       @document.create_notes_for(:name, notes)
       @document.notes_for(:name).should have(2).record
-      @document.notes_for(:name)[0]["note"].should eq "note number 1"
-      @document.notes_for(:name)[1]["note"].should eq "note number 2"
     end
 
     it "should save the creator id in metadata" do
@@ -119,6 +117,33 @@ describe ActiveMetadata do
       # expectations
       @document.notes_for(:name).last["id"].should eq @document.id
       @section.notes_for(:title).last["id"].should eq @document.id
+    end
+
+    it "should delete a note" do
+      #fixtures
+      3.times do |i|
+        @document.create_note_for(:name, "Note number #{i}")
+      end
+
+      #expectations
+      notes = @document.notes_for(:name)
+      notes.count.should eq 3
+      @document.delete_note(notes[0]["_id"])
+      @document.notes_for(:name)
+      @document.notes_for(:name).count.should eq 2
+
+    end
+
+    it "should verify that notes_for sort by updated_at descending" do
+      #fixtures
+      3.times do |i|
+        sleep 0.1.seconds
+        @document.create_note_for(:name, "Note number #{i}")
+      end
+
+      #expectations
+      @document.notes_for(:name).first["note"].should eq "Note number 2"
+      @document.notes_for(:name).last["note"].should eq "Note number 0"
     end
 
   end
@@ -167,6 +192,20 @@ describe ActiveMetadata do
       @section.history_for(:title).count.should eq(1)
       @section.history_for(:title).last["id"].should eq @document.id
     end
+
+    it "should verify that history_for sort by created_at descending" do
+      #fixtures
+      3.times do |i|
+        sleep 0.1.seconds
+        @document.name = "name #{i}"
+        @document.save
+      end
+
+      #expectations
+      @document.history_for(:name).first["value"].should eq "name 2"
+      @document.history_for(:name).last["value"].should eq "John"
+    end
+
 
   end
 
