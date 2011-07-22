@@ -7,7 +7,6 @@ module ActiveMetadata
   class Engine < Rails::Engine
 
     # Config defaults
-    config.widget_factory_name = "default factory name"
     config.mount_at = '/'
     
     # Load rake tasks
