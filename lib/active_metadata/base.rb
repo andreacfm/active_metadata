@@ -16,6 +16,10 @@ module ActiveMetadata
     CONNECTION['history']
   end
 
+  def self.attachments
+    CONNECTION['attachments']
+  end
+
     ## Define ModelMethods
   module Base
 
@@ -82,6 +86,20 @@ module ActiveMetadata
 
       def history_for field
         ActiveMetadata.history.find({:id => metadata_id, :field => field}, {:sort => [[:created_at, 'descending']]}).to_a
+      end
+
+      #Attachments
+      def save_attachment_for field,file
+        ActiveMetadata.attachments.insert({
+          :id => metadata_id,
+          :field => field ,
+          :attachment_file_name => file.original_filename,
+          :attachment_content_type => file.content_type
+        })
+      end
+
+      def attachments_for field
+        ActiveMetadata.attachments.find({:field => field}).to_a
       end
 
     end # InstanceMethods
