@@ -1,0 +1,4 @@
+<blockquote><h4>History</h4>
+<% @document.history_for(:name).each do |entry| %>
+	<%= entry['value'] %> | <%= entry['created_at'] %><br/>
+<% end %></blockquote>
