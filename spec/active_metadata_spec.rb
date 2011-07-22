@@ -1,4 +1,5 @@
 require "spec_helper"
+require "rack/test/uploaded_file"
 
 describe ActiveMetadata do
 
@@ -206,6 +207,46 @@ describe ActiveMetadata do
       @document.history_for(:name).last["value"].should eq "John"
     end
 
+    it "should save the correct creator when a history is created" do
+      pending
+    end
+
+  end
+
+  context "attachments" do
+
+    before(:each) do
+      @document = Document.create! { |d| d.name = "John" }
+      @document.reload
+      doc = File.expand_path('../support/pdf_test.pdf',__FILE__)
+      @attachment = Rack::Test::UploadedFile.new(doc, "application/pdf")
+    end
+
+    it "should save attachment for a given attribute" do
+      @document.save_attachment_for(:name,@attachment)
+      @document.attachments_for(:name).should have(1).record
+    end
+
+    it "should verify that the attachment metadata id refers to the correct self id" do
+      @document.save_attachment_for(:name,@attachment)
+      @document.attachments_for(:name).last["id"].should eq @document.id
+    end
+
+    it "should verify that the attachment file name is correctly saved" do
+      @document.save_attachment_for(:name,@attachment)
+      @document.attachments_for(:name).last["attachment_file_name"].should eq @attachment.original_filename
+    end
+
+    it "should verify that the attachment content type is correctly saved" do
+      @document.save_attachment_for(:name,@attachment)
+      @document.attachments_for(:name).last["attachment_content_type"].should eq @attachment.content_type
+    end
+
+    it "should verify that the attachment size is correctly saved"
+
+    it "should verify that the attachment path is correctly saved"
+
+    it "should verify that the attachment updated_at is correctly saved"
 
   end
 

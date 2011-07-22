@@ -62,6 +62,7 @@ RSpec.configure do |config|
     Document.delete_all
     ActiveMetadata.notes.drop
     ActiveMetadata.history.drop
+    ActiveMetadata.attachments.drop
   end
 
   config.after(:suite) do  
