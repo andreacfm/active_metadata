@@ -4,9 +4,10 @@ module ActiveMetadata
 
   env = Rails.env
   unless env.nil?
-    CONFIG = YAML.load_file('config/mongo.yml')[env]
-    CONNECTION = Mongo::ReplSetConnection.new(['localhost', 27017], ['localhost', 27018], ['localhost', 27019]).db CONFIG['database']
-    #CONNECTION = Mongo::Connection.new(CONFIG['host'], CONFIG['port']).db CONFIG['database']
+    CONFIG = YAML.load_file('config/active_metadata.yml')[env]
+    DB_CONFIG = YAML.load_file('config/mongo.yml')[env]
+    #CONNECTION = Mongo::ReplSetConnection.new(['localhost', 27017], ['localhost', 27018], ['localhost', 27019]).db CONFIG['database']
+    CONNECTION = Mongo::Connection.new(DB_CONFIG['host'], DB_CONFIG['port']).db DB_CONFIG['database']
   end
 
   def self.notes
@@ -100,7 +101,7 @@ module ActiveMetadata
         # History
       def save_history
         self.changes.each do |key, value|
-          next if ActiveMetadata::HISTORY_SKIPS.include?(key)
+          next if ActiveMetadata::CONFIG['history_skip_fields'].include?(key)
           ActiveMetadata.safe_connection do
             ActiveMetadata.history.insert :id => metadata_id, :field => key, :value => value[1], :created_at => Time.now.utc
           end
