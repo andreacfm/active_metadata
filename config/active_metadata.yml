@@ -1,0 +1,13 @@
+development:
+    history_skip_fields:
+      - 'id'
+      - 'created_at'
+      - 'updated_at'
+    attachment_base_path:
+
+test:
+    history_skip_fields:
+      - 'id'
+      - 'created_at'
+      - 'updated_at'
+    attachment_base_path: "support/attachments/"
