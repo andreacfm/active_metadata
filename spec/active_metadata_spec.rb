@@ -242,11 +242,25 @@ describe ActiveMetadata do
       @document.attachments_for(:name).last["attachment_content_type"].should eq @attachment.content_type
     end
 
-    it "should verify that the attachment size is correctly saved"
+    it "should verify that the attachment size is correctly saved" do
+      @document.save_attachment_for(:name,@attachment)
+      @document.attachments_for(:name).last["attachment_size"].should eq @attachment.size
+    end
 
-    it "should verify that the attachment path is correctly saved"
+    it "should verify that the attachment path is correctly saved" do
+      @document.save_attachment_for(:name,@attachment)
+      @document.attachments_for(:name).last["attachment_relative_path"].should eq "/#{@document.id}/#{:name}"
+    end
 
-    it "should verify that the attachment updated_at is correctly saved"
+    it "should verify that the attachment updated_at is correctly saved" do
+      @document.save_attachment_for(:name,@attachment)
+      @document.attachments_for(:name).last["attachment_updated_at"].should be_a_kind_of Time
+    end
+
+    it "should verify that the document has been saved in the correct position on filesystem" do
+      @document.save_attachment_for(:name,@attachment)
+      @document.attachments_for(:name).last["attachment_updated_at"].should be_a_kind_of Time
+    end
 
   end
 

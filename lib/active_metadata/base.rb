@@ -117,11 +117,14 @@ module ActiveMetadata
       def save_attachment_for field, file
         ActiveMetadata.safe_connection do
           ActiveMetadata.attachments.insert({
-                                                :id => metadata_id,
-                                                :field => field,
-                                                :attachment_file_name => file.original_filename,
-                                                :attachment_content_type => file.content_type
-                                            })
+              :id => metadata_id,
+              :field => field,
+              :attachment_file_name => file.original_filename,
+              :attachment_content_type => file.content_type,
+              :attachment_size => file.size,
+              :attachment_updated_at => Time.now.utc,
+              :attachment_relative_path => "/#{metadata_id}/#{field.to_s}"
+          })
         end
       end
 
