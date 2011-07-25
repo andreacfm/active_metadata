@@ -29,10 +29,6 @@ require "#{File.dirname(__FILE__)}/../lib/engine.rb"
 # require "/opt/code/fractalgarden/active_metadata/app/controllers/active_metadata/metadata_controller.rb"
 Dir["spec/support/*.rb"].each {|f| require "support/#{(File.basename(f, File.extname(f)) )}"}
 
-
-
-
-
 ActiveRecord::Base.establish_connection YAML.load_file("config/database.yml")[ENV["RAILS_ENV"]]
 ActiveRecord::Base.logger = Logger.new "log/test.log"
 
@@ -63,6 +59,7 @@ RSpec.configure do |config|
     ActiveMetadata.notes.drop
     ActiveMetadata.history.drop
     ActiveMetadata.attachments.drop
+    FileUtils.remove_dir File.expand_path('attachments/') if Dir.exist?(File.expand_path('attachments/'))
   end
 
   config.after(:suite) do  
