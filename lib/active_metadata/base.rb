@@ -136,7 +136,9 @@ module ActiveMetadata
 
       def attachments_for field
         ActiveMetadata.safe_connection do
-        to_open_struct  ActiveMetadata.attachments.find({:field => field}).to_a
+        to_open_struct  ActiveMetadata.attachments.find({:field => field}).to_a do |os|
+          os.send :extend,ActiveMetadata::Attachment
+        end
         end
       end
 
@@ -172,10 +174,11 @@ module ActiveMetadata
         File.open("#{path}/#{file.original_filename}",'wb'){|f| f.write file.read}
       end
 
-      def to_open_struct arr
+      def to_open_struct arr, &block
         res = []
         arr.each do |item|
           os = OpenStruct.new item
+          block.call os if block_given?
           res.push(os)
         end
         res
