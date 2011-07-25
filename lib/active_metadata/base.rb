@@ -1,4 +1,7 @@
 require "mongo"
+require "fileutils"
+require "ostruct"
+
 module ActiveMetadata
   HISTORY_SKIPS = ['id', 'created_at', 'updated_at']
 
@@ -82,7 +85,7 @@ module ActiveMetadata
 
       def notes_for field
         ActiveMetadata.safe_connection do
-          ActiveMetadata.notes.find({:id => metadata_id, :field => field}, {:sort => [[:updated_at, 'descending']]}).to_a
+          to_open_struct ActiveMetadata.notes.find({:id => metadata_id, :field => field}, {:sort => [[:updated_at, 'descending']]}).to_a
         end
       end
 
@@ -110,12 +113,13 @@ module ActiveMetadata
 
       def history_for field
         ActiveMetadata.safe_connection do
-          ActiveMetadata.history.find({:id => metadata_id, :field => field}, {:sort => [[:created_at, 'descending']]}).to_a
+        to_open_struct  ActiveMetadata.history.find({:id => metadata_id, :field => field}, {:sort => [[:created_at, 'descending']]}).to_a
         end
       end
 
         #Attachments
       def save_attachment_for field, file
+        relative_path = "#{metadata_id}/#{field.to_s}"
         ActiveMetadata.safe_connection do
           ActiveMetadata.attachments.insert({
               :id => metadata_id,
@@ -124,15 +128,57 @@ module ActiveMetadata
               :attachment_content_type => file.content_type,
               :attachment_size => file.size,
               :attachment_updated_at => Time.now.utc,
-              :attachment_relative_path => "/#{metadata_id}/#{field.to_s}"
+              :attachment_relative_path => relative_path
           })
         end
+        write_attachment(relative_path,file)
       end
 
       def attachments_for field
         ActiveMetadata.safe_connection do
-          ActiveMetadata.attachments.find({:field => field}).to_a
+        to_open_struct  ActiveMetadata.attachments.find({:field => field}).to_a
         end
+      end
+
+      def delete_attachment id
+        attachment = nil
+        ActiveMetadata.safe_connection do
+          attachment = ActiveMetadata.attachments.find_one({:_id => id})
+          ActiveMetadata.attachments.remove({:_id => id})
+        end
+        File.delete File.expand_path "#{ActiveMetadata::CONFIG['attachment_base_path']}/#{attachment['attachment_relative_path']}/#{attachment['attachment_file_name']}"
+      end
+
+      def update_attachment id,newfile
+        attachment = nil
+        ActiveMetadata.safe_connection do
+          attachment = ActiveMetadata.attachments.find_one({:_id => id})
+          ActiveMetadata.attachments.update({:_id => id},{"$set" => {
+              :attachment_file_name => newfile.original_filename,
+              :attachment_content_type => newfile.content_type,
+              :attachment_size => newfile.size,
+              :attachment_updated_at => Time.now.utc
+          }})
+        end
+        File.delete File.expand_path "#{ActiveMetadata::CONFIG['attachment_base_path']}/#{attachment['attachment_relative_path']}/#{attachment['attachment_file_name']}"
+        write_attachment attachment['attachment_relative_path'],newfile
+      end
+
+      private
+
+      def write_attachment relative_path,file
+        path = File.expand_path "#{ActiveMetadata::CONFIG['attachment_base_path']}/#{relative_path}"
+        FileUtils.mkdir_p path
+        File.open("#{path}/#{file.original_filename}",'wb'){|f| f.write file.read}
+      end
+
+      def to_open_struct arr
+        res = []
+        arr.each do |item|
+          os = OpenStruct.new item
+          res.push(os)
+        end
+        res
       end
 
     end # InstanceMethods

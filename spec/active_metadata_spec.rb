@@ -39,7 +39,7 @@ describe ActiveMetadata do
 
     it "should verify the content of a note created" do
       @document.create_note_for(:name, "Very important note!")
-      @document.notes_for(:name).last["note"].should eq "Very important note!"
+      @document.notes_for(:name).last.note.should eq "Very important note!"
     end
 
     it "should verify that notes_for_name return only notes for the self Document" do
@@ -51,24 +51,24 @@ describe ActiveMetadata do
 
         # expectations
       @document.notes_for(:name).count.should eq(1)
-      @document.notes_for(:name).last["note"].should eq "Very important note!"
-      @another_doc.notes_for(:name).last["note"].should eq "Very important note for doc2!"
+      @document.notes_for(:name).last.note.should eq "Very important note!"
+      @another_doc.notes_for(:name).last.note.should eq "Very important note for doc2!"
 
     end
 
     it "should update a note using update_not_for_name" do
       @document.create_note_for(:name, "Very important note!")
-      id = @document.notes_for(:name).last["_id"]
+      id = @document.notes_for(:name).last._id
       @document.update_note(id, "New note value!")
-      @document.notes_for(:name).last["note"].should eq "New note value!"
+      @document.notes_for(:name).last.note.should eq "New note value!"
     end
 
     it "should verify the content of a note created for a second attribute" do
       @document.create_note_for(:name, "Very important note!")
       @document.create_note_for(:surname, "Note on surname attribute!")
 
-      @document.notes_for(:name).last["note"].should eq "Very important note!"
-      @document.notes_for(:surname).last["note"].should eq "Note on surname attribute!"
+      @document.notes_for(:name).last.note.should eq "Very important note!"
+      @document.notes_for(:surname).last.note.should eq "Note on surname attribute!"
     end
 
     it "should save multiple notes" do
@@ -79,33 +79,33 @@ describe ActiveMetadata do
 
     it "should save the creator id in metadata" do
       @document.create_note_for(:name, "Very important note!", "current_user")
-      @document.notes_for(:name).last["created_by"].should eq "current_user"
+      @document.notes_for(:name).last.created_by.should eq "current_user"
     end
 
     it "should save the updater id in metadata" do
       @document.create_note_for(:name, "Very important note!", "current_user")
-      id = @document.notes_for(:name).last["_id"]
+      id = @document.notes_for(:name).last._id
       @document.update_note id, "new note value", "another_user"
-      @document.notes_for(:name).last["updated_by"].should eq "another_user"
+      @document.notes_for(:name).last.updated_by.should eq "another_user"
     end
 
     it "should save the created_at datetime in metadata" do
       @document.create_note_for(:name, "Very important note!")
-      @document.notes_for(:name).last["created_at"].should be_a_kind_of Time
+      @document.notes_for(:name).last.created_at.should be_a_kind_of Time
     end
 
     it "should save the updated_at datetime in metadata" do
       @document.create_note_for(:name, "Very important note!")
-      @document.notes_for(:name).last["updated_at"].should be_a_kind_of Time
+      @document.notes_for(:name).last.updated_at.should be_a_kind_of Time
     end
 
     it "should update the updated_at field when a note is updated" do
       @document.create_note_for(:name, "Very important note!")
-      id = @document.notes_for(:name).last["_id"]
+      id = @document.notes_for(:name).last._id
       sleep 0.1.seconds
       @document.update_note id, "new note value"
       note = @document.notes_for(:name).last
-      note["updated_at"].should > note["created_at"]
+      note.updated_at.should > note.created_at
     end
 
     it "should verify that note are saved with the correct model id if metadata_id_from is defined" do
@@ -116,8 +116,8 @@ describe ActiveMetadata do
       @section.create_note_for(:title, "Very important note for section!")
 
       # expectations
-      @document.notes_for(:name).last["id"].should eq @document.id
-      @section.notes_for(:title).last["id"].should eq @document.id
+      @document.notes_for(:name).last.id.should eq @document.id
+      @section.notes_for(:title).last.id.should eq @document.id
     end
 
     it "should delete a note" do
@@ -129,7 +129,7 @@ describe ActiveMetadata do
       #expectations
       notes = @document.notes_for(:name)
       notes.count.should eq 3
-      @document.delete_note(notes[0]["_id"])
+      @document.delete_note(notes[0]._id)
       @document.notes_for(:name)
       @document.notes_for(:name).count.should eq 2
 
@@ -143,8 +143,8 @@ describe ActiveMetadata do
       end
 
       #expectations
-      @document.notes_for(:name).first["note"].should eq "Note number 2"
-      @document.notes_for(:name).last["note"].should eq "Note number 0"
+      @document.notes_for(:name).first.note.should eq "Note number 2"
+      @document.notes_for(:name).last.note.should eq "Note number 0"
     end
 
   end
@@ -161,11 +161,11 @@ describe ActiveMetadata do
     end
 
     it "should create history for a defined field when a document is created" do
-      @document.history_for(:name)[0]["value"].should eq(@document.name)
+      @document.history_for(:name)[0].value.should eq(@document.name)
     end
 
     it "should save the craeted_at datetime anytime an history entry is created" do
-      @document.history_for(:name)[0]["created_at"].should be_a_kind_of Time
+      @document.history_for(:name)[0].created_at.should be_a_kind_of Time
     end
 
     it "should verify that history return records only for the self document" do
@@ -177,8 +177,8 @@ describe ActiveMetadata do
       @document.history_for(:name).count.should eq(1)
       @another_doc.history_for(:name).count.should eq(1)
 
-      @document.history_for(:name).last["value"].should eq @document.name
-      @another_doc.history_for(:name).last["value"].should eq @another_doc.name
+      @document.history_for(:name).last.value.should eq @document.name
+      @another_doc.history_for(:name).last.value.should eq @another_doc.name
     end
 
     it "should verify that history is saved with the correct model id if metadata_id_from is defined" do
@@ -188,10 +188,10 @@ describe ActiveMetadata do
 
         # expectations
       @document.history_for(:name).count.should eq(1)
-      @document.history_for(:name).last["id"].should eq @document.id
+      @document.history_for(:name).last.id.should eq @document.id
 
       @section.history_for(:title).count.should eq(1)
-      @section.history_for(:title).last["id"].should eq @document.id
+      @section.history_for(:title).last.id.should eq @document.id
     end
 
     it "should verify that history_for sort by created_at descending" do
@@ -203,8 +203,8 @@ describe ActiveMetadata do
       end
 
       #expectations
-      @document.history_for(:name).first["value"].should eq "name 2"
-      @document.history_for(:name).last["value"].should eq "John"
+      @document.history_for(:name).first.value.should eq "name 2"
+      @document.history_for(:name).last.value.should eq "John"
     end
 
     it "should save the correct creator when a history is created" do
@@ -220,6 +220,8 @@ describe ActiveMetadata do
       @document.reload
       doc = File.expand_path('../support/pdf_test.pdf',__FILE__)
       @attachment = Rack::Test::UploadedFile.new(doc, "application/pdf")
+      doc2 = File.expand_path('../support/pdf_test_2.pdf',__FILE__)
+      @attachment2 = Rack::Test::UploadedFile.new(doc2, "application/pdf")
     end
 
     it "should save attachment for a given attribute" do
@@ -229,37 +231,83 @@ describe ActiveMetadata do
 
     it "should verify that the attachment metadata id refers to the correct self id" do
       @document.save_attachment_for(:name,@attachment)
-      @document.attachments_for(:name).last["id"].should eq @document.id
+      @document.attachments_for(:name).last.id.should eq @document.id
     end
 
     it "should verify that the attachment file name is correctly saved" do
       @document.save_attachment_for(:name,@attachment)
-      @document.attachments_for(:name).last["attachment_file_name"].should eq @attachment.original_filename
+      @document.attachments_for(:name).last.attachment_file_name.should eq @attachment.original_filename
     end
 
     it "should verify that the attachment content type is correctly saved" do
       @document.save_attachment_for(:name,@attachment)
-      @document.attachments_for(:name).last["attachment_content_type"].should eq @attachment.content_type
+      @document.attachments_for(:name).last.attachment_content_type.should eq @attachment.content_type
     end
 
     it "should verify that the attachment size is correctly saved" do
       @document.save_attachment_for(:name,@attachment)
-      @document.attachments_for(:name).last["attachment_size"].should eq @attachment.size
+      @document.attachments_for(:name).last.attachment_size.should eq @attachment.size
     end
 
     it "should verify that the attachment path is correctly saved" do
       @document.save_attachment_for(:name,@attachment)
-      @document.attachments_for(:name).last["attachment_relative_path"].should eq "/#{@document.id}/#{:name}"
+      @document.attachments_for(:name).last.attachment_relative_path.should eq "#{@document.id}/#{:name}"
     end
 
     it "should verify that the attachment updated_at is correctly saved" do
       @document.save_attachment_for(:name,@attachment)
-      @document.attachments_for(:name).last["attachment_updated_at"].should be_a_kind_of Time
+      @document.attachments_for(:name).last.attachment_updated_at.should be_a_kind_of Time
     end
 
     it "should verify that the document has been saved in the correct position on filesystem" do
       @document.save_attachment_for(:name,@attachment)
-      @document.attachments_for(:name).last["attachment_updated_at"].should be_a_kind_of Time
+      expected_path = File.expand_path "#{ActiveMetadata::CONFIG['attachment_base_path']}/#{@document.id}/#{:name.to_s}"
+      File.exists?(expected_path).should be_true
+    end
+
+    it "should delete an attachment" do
+      @document.save_attachment_for(:name,@attachment)
+      att = @document.attachments_for(:name).last
+      path = "#{ActiveMetadata::CONFIG['attachment_base_path']}/#{att.attachment_relative_path}/#{att.attachment_file_name}"
+      File.exists?(path).should be_true
+
+      @document.delete_attachment(att._id)
+      File.exists?(path).should be_false
+    end
+
+    it "should update an attachment" do
+      @document.save_attachment_for(:name,@attachment)
+      att = @document.attachments_for(:name).last
+
+      @document.update_attachment att._id,@attachment2
+      att2 = @document.attachments_for(:name).last
+
+      path = "#{ActiveMetadata::CONFIG['attachment_base_path']}/#{att.attachment_relative_path}/#{att.attachment_file_name}"
+      File.exists?(path).should be_false
+
+      path2 = "#{ActiveMetadata::CONFIG['attachment_base_path']}/#{att2.attachment_relative_path}/#{att2.attachment_file_name}"
+      File.exists?(path2).should be_true
+    end
+
+    it "should verify that field attachment_updated_at is modified after an update" do
+      @document.save_attachment_for(:name,@attachment)
+      att = @document.attachments_for(:name).last
+
+      sleep 0.1.seconds
+
+      @document.update_attachment att._id,@attachment2
+      att2 = @document.attachments_for(:name).last
+
+      att2.attachment_updated_at.should be > att.attachment_updated_at
+    end
+
+    it "should verify that attachment_relative_path is preserved after an update" do
+      @document.save_attachment_for(:name,@attachment)
+      att = @document.attachments_for(:name).last
+      @document.update_attachment att._id,@attachment2
+      att2 = @document.attachments_for(:name).last
+
+      att2.attachment_relative_path.should eq att.attachment_relative_path
     end
 
   end
