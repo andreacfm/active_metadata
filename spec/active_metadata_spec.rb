@@ -268,11 +268,10 @@ describe ActiveMetadata do
     it "should delete an attachment" do
       @document.save_attachment_for(:name,@attachment)
       att = @document.attachments_for(:name).last
-      path = "#{ActiveMetadata::CONFIG['attachment_base_path']}/#{att.attachment_relative_path}/#{att.attachment_file_name}"
-      File.exists?(path).should be_true
+      File.exists?(att.path).should be_true
 
       @document.delete_attachment(att._id)
-      File.exists?(path).should be_false
+      File.exists?(att.path).should be_false
     end
 
     it "should update an attachment" do
@@ -282,11 +281,8 @@ describe ActiveMetadata do
       @document.update_attachment att._id,@attachment2
       att2 = @document.attachments_for(:name).last
 
-      path = "#{ActiveMetadata::CONFIG['attachment_base_path']}/#{att.attachment_relative_path}/#{att.attachment_file_name}"
-      File.exists?(path).should be_false
-
-      path2 = "#{ActiveMetadata::CONFIG['attachment_base_path']}/#{att2.attachment_relative_path}/#{att2.attachment_file_name}"
-      File.exists?(path2).should be_true
+      File.exists?(att.path).should be_false
+      File.exists?(att2.path).should be_true
     end
 
     it "should verify that field attachment_updated_at is modified after an update" do
