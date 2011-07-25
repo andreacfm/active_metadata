@@ -20,7 +20,7 @@ rescue Bundler::GemNotFound => e
 end if File.exist?(gemfile)
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-ENV["DATABASE_ENV"] ||= 'test'
+ENV["RAILS_ENV"] ||= 'test'
 ENV["ACTIVE_METADATA_ENV"] ||= 'test'
                                                                       
 # loading ruby files
@@ -33,7 +33,7 @@ Dir["spec/support/*.rb"].each {|f| require "support/#{(File.basename(f, File.ext
 
 
 
-ActiveRecord::Base.establish_connection YAML.load_file("config/database.yml")[ENV["DATABASE_ENV"]]
+ActiveRecord::Base.establish_connection YAML.load_file("config/database.yml")[ENV["RAILS_ENV"]]
 ActiveRecord::Base.logger = Logger.new "log/test.log"
 
 RSpec.configure do |config|

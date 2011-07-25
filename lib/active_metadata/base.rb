@@ -2,10 +2,11 @@ require "mongo"
 module ActiveMetadata
   HISTORY_SKIPS = ['id', 'created_at', 'updated_at']
 
-  env = defined?(Rails) ? Rails.env : ENV['DATABASE_ENV']
+  env = Rails.env
   unless env.nil?
     CONFIG = YAML.load_file('config/mongo.yml')[env]
-    CONNECTION = Mongo::Connection.new(CONFIG['host'], CONFIG['port']).db CONFIG['database']
+    CONNECTION = Mongo::ReplSetConnection.new(['localhost', 27017], ['localhost', 27018], ['localhost', 27019]).db CONFIG['database']
+    #CONNECTION = Mongo::Connection.new(CONFIG['host'], CONFIG['port']).db CONFIG['database']
   end
 
   def self.notes
@@ -18,6 +19,19 @@ module ActiveMetadata
 
   def self.attachments
     CONNECTION['attachments']
+  end
+
+    # Ensure retry upon failure
+  def self.safe_connection(max_retries=60)
+    retries = 0
+    begin
+      yield
+    rescue Mongo::ConnectionFailure => ex
+      retries += 1
+      raise ex if retries > max_retries
+      sleep(1.second)
+      retry
+    end
   end
 
     ## Define ModelMethods
@@ -54,16 +68,21 @@ module ActiveMetadata
         # NOTES
       def create_note_for(field, note, created_by=nil)
         raise RuntimeError, "The object id MUST be valued" unless self.id
-
-        ActiveMetadata.notes.insert :note => note, :id => metadata_id, :field => field, :created_at => Time.now.utc, :created_by => created_by, :updated_at => Time.now.utc
+        ActiveMetadata.safe_connection do
+          ActiveMetadata.notes.insert :note => note, :id => metadata_id, :field => field, :created_at => Time.now.utc, :created_by => created_by, :updated_at => Time.now.utc
+        end
       end
 
       def update_note id, note, updated_by=nil
-        ActiveMetadata.notes.update({:_id => id}, {"$set" => {:note => note, :updated_at => Time.now.utc, :updated_by => updated_by}})
+        ActiveMetadata.safe_connection do
+          ActiveMetadata.notes.update({:_id => id}, {"$set" => {:note => note, :updated_at => Time.now.utc, :updated_by => updated_by}})
+        end
       end
 
       def notes_for field
-        ActiveMetadata.notes.find({:id => metadata_id, :field => field}, {:sort => [[:updated_at, 'descending']]}).to_a
+        ActiveMetadata.safe_connection do
+          ActiveMetadata.notes.find({:id => metadata_id, :field => field}, {:sort => [[:updated_at, 'descending']]}).to_a
+        end
       end
 
       def create_notes_for field, notes
@@ -73,33 +92,43 @@ module ActiveMetadata
       end
 
       def delete_note id
-        ActiveMetadata.notes.remove({:_id => id})
+        ActiveMetadata.safe_connection do
+          ActiveMetadata.notes.remove({:_id => id})
+        end
       end
 
         # History
       def save_history
         self.changes.each do |key, value|
           next if ActiveMetadata::HISTORY_SKIPS.include?(key)
-          ActiveMetadata.history.insert :id => metadata_id, :field => key, :value => value[1], :created_at => Time.now.utc
+          ActiveMetadata.safe_connection do
+            ActiveMetadata.history.insert :id => metadata_id, :field => key, :value => value[1], :created_at => Time.now.utc
+          end
         end
       end
 
       def history_for field
-        ActiveMetadata.history.find({:id => metadata_id, :field => field}, {:sort => [[:created_at, 'descending']]}).to_a
+        ActiveMetadata.safe_connection do
+          ActiveMetadata.history.find({:id => metadata_id, :field => field}, {:sort => [[:created_at, 'descending']]}).to_a
+        end
       end
 
-      #Attachments
-      def save_attachment_for field,file
-        ActiveMetadata.attachments.insert({
-          :id => metadata_id,
-          :field => field ,
-          :attachment_file_name => file.original_filename,
-          :attachment_content_type => file.content_type
-        })
+        #Attachments
+      def save_attachment_for field, file
+        ActiveMetadata.safe_connection do
+          ActiveMetadata.attachments.insert({
+                                                :id => metadata_id,
+                                                :field => field,
+                                                :attachment_file_name => file.original_filename,
+                                                :attachment_content_type => file.content_type
+                                            })
+        end
       end
 
       def attachments_for field
-        ActiveMetadata.attachments.find({:field => field}).to_a
+        ActiveMetadata.safe_connection do
+          ActiveMetadata.attachments.find({:field => field}).to_a
+        end
       end
 
     end # InstanceMethods
@@ -108,3 +137,5 @@ module ActiveMetadata
 end
 
 ::ActiveRecord::Base.send :include, ActiveMetadata::Base
+
+
