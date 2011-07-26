@@ -5,10 +5,9 @@ require "ostruct"
 module ActiveMetadata
   HISTORY_SKIPS = ['id', 'created_at', 'updated_at']
 
-  env = Rails.env
-  unless env.nil?
-    CONFIG = YAML.load_file('config/active_metadata.yml')[env]
-    DB_CONFIG = YAML.load_file('config/mongo.yml')[env]
+  if File.exists? 'config/active_metadata.yml' #this allows install task to run
+    CONFIG = YAML.load_file('config/active_metadata.yml')[Rails.env]
+    DB_CONFIG = YAML.load_file('config/mongo.yml')[Rails.env]
     #CONNECTION = Mongo::ReplSetConnection.new(['localhost', 27017], ['localhost', 27018], ['localhost', 27019]).db CONFIG['database']
     CONNECTION = Mongo::Connection.new(DB_CONFIG['host'], DB_CONFIG['port']).db DB_CONFIG['database']
   end
