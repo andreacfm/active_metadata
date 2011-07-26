@@ -20,7 +20,7 @@ rescue Bundler::GemNotFound => e
 end if File.exist?(gemfile)
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-ENV["DATABASE_ENV"] ||= 'test'
+ENV["RAILS_ENV"] ||= 'test'
 ENV["ACTIVE_METADATA_ENV"] ||= 'test'
                                                                       
 # loading ruby files
@@ -29,11 +29,7 @@ require "#{File.dirname(__FILE__)}/../lib/engine.rb"
 # require "/opt/code/fractalgarden/active_metadata/app/controllers/active_metadata/metadata_controller.rb"
 Dir["spec/support/*.rb"].each {|f| require "support/#{(File.basename(f, File.extname(f)) )}"}
 
-
-
-
-
-ActiveRecord::Base.establish_connection YAML.load_file("config/database.yml")[ENV["DATABASE_ENV"]]
+ActiveRecord::Base.establish_connection YAML.load_file("config/database.yml")[ENV["RAILS_ENV"]]
 ActiveRecord::Base.logger = Logger.new "log/test.log"
 
 RSpec.configure do |config|
@@ -62,6 +58,8 @@ RSpec.configure do |config|
     Document.delete_all
     ActiveMetadata.notes.drop
     ActiveMetadata.history.drop
+    ActiveMetadata.attachments.drop
+    FileUtils.remove_dir File.expand_path('attachments/') if Dir.exist?(File.expand_path('attachments/'))
   end
 
   config.after(:suite) do  
