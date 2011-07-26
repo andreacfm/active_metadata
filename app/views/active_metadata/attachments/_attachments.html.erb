@@ -1,0 +1,7 @@
+<%# coding: utf-8 %>
+<% @document.attachments_for(field_name).each do |attach| %>
+	<%= note.note %><br/>
+	<%= "Creatore: #{note.created_by}" unless note.created_by %>
+	Data Creazione: <%= note.created_at %>
+	<hr>
+<% end %>
