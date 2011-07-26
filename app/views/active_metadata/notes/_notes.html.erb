@@ -1,0 +1,6 @@
+<% @document.notes_for(field_name).each do |note| %>
+	<%= note.note %><br/>
+	<%= "Creatore: #{note.created_by}" unless note.created_by %>
+	Data Creazione: <%= note.created_at %>
+	<hr>
+<% end %>
