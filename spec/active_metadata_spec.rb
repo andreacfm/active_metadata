@@ -120,7 +120,7 @@ describe ActiveMetadata do
       @section.notes_for(:title).last.id.should eq @document.id
     end
 
-    it "should delete a note" do
+    it "should delete a note passing a bson object as id" do
       #fixtures
       3.times do |i|
         @document.create_note_for(:name, "Note number #{i}")
@@ -130,6 +130,22 @@ describe ActiveMetadata do
       notes = @document.notes_for(:name)
       notes.count.should eq 3
       @document.delete_note(notes[0]._id)
+      @document.notes_for(:name)
+      @document.notes_for(:name).count.should eq 2
+
+    end
+
+    it "should delete a note passing a string as id" do
+      #fixtures
+      3.times do |i|
+        @document.create_note_for(:name, "Note number #{i}")
+      end
+
+      #expectations
+      notes = @document.notes_for(:name)
+      notes.count.should eq 3
+      id = notes[0]._id.to_s
+      @document.delete_note(id)
       @document.notes_for(:name)
       @document.notes_for(:name).count.should eq 2
 
@@ -265,12 +281,21 @@ describe ActiveMetadata do
       File.exists?(expected_path).should be_true
     end
 
-    it "should delete an attachment" do
+    it "should delete an attachment passing a bson object as id" do
       @document.save_attachment_for(:name,@attachment)
       att = @document.attachments_for(:name).last
       File.exists?(att.path).should be_true
 
       @document.delete_attachment(att._id)
+      File.exists?(att.path).should be_false
+    end
+
+    it "should delete an attachment passing a string as id" do
+      @document.save_attachment_for(:name,@attachment)
+      att = @document.attachments_for(:name).last
+      File.exists?(att.path).should be_true
+
+      @document.delete_attachment(att._id.to_s)
       File.exists?(att.path).should be_false
     end
 
