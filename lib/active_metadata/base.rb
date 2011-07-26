@@ -95,8 +95,9 @@ module ActiveMetadata
       end
 
       def delete_note id
+        _id = id.class == String ? BSON::ObjectId(id) : id
         ActiveMetadata.safe_connection do
-          ActiveMetadata.notes.remove({:_id => id})
+          ActiveMetadata.notes.remove({:_id => _id})
         end
       end
 
@@ -143,9 +144,10 @@ module ActiveMetadata
 
       def delete_attachment id
         attachment = nil
+        _id = id.class == String ? BSON::ObjectId(id) : id
         ActiveMetadata.safe_connection do
-          attachment = ActiveMetadata.attachments.find_one({:_id => id})
-          ActiveMetadata.attachments.remove({:_id => id})
+          attachment = ActiveMetadata.attachments.find_one({:_id => _id})
+          ActiveMetadata.attachments.remove({:_id => _id})
         end
         File.delete File.expand_path "#{ActiveMetadata::CONFIG['attachment_base_path']}/#{attachment['attachment_relative_path']}/#{attachment['attachment_file_name']}"
       end
