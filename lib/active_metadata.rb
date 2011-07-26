@@ -4,4 +4,5 @@ module ActiveMetadata
   require "active_metadata/railtie" if defined?(Rails)
   require 'application_controller'
   require "active_metadata/version"
+  require "active_metadata/attachment"
 end
