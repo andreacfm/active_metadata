@@ -1,6 +1,10 @@
-<% @document.notes_for(field_name).each do |note| %>
-	<%= note.note %><br/>
-	<%= "Creatore: #{note.created_by}" unless note.created_by %>
-	Data Creazione: <%= note.created_at %>
-	<hr>
-<% end %>
+<ul>
+    <% @document.notes_for(field_name).each do |note| %>
+        <li>
+        <b><%= note.note %></b><br/>
+        <%= "Inserita da: #{note.created_by}<br/>" unless note.created_by.nil? %>
+        Il: <%= note.created_at.strftime("%m/%d/%Y at %I:%M:%S") %>   <br/>
+        <%= link_to "Elimina", metadata_notes_path(:model_name => @document.class,:id => note._id, :model_id => @document.id), :method => :delete, :remote => true %>
+        </li>
+    <% end %>
+</ul>
