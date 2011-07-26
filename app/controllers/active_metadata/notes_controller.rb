@@ -13,7 +13,6 @@ module ActiveMetadata
     end
 
     def destroy
-      p "***************"
       @document = eval(params[:model_name]).find params[:model_id]
       @document.delete_note(params[:id])
       @document.reload
