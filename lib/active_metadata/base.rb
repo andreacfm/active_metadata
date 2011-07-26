@@ -2,6 +2,8 @@ require "mongo"
 require "fileutils"
 require "ostruct"
 require "active_metadata/attachment"
+require "active_metadata/note"
+require "active_metadata/history"
 
 module ActiveMetadata
 
@@ -55,6 +57,8 @@ module ActiveMetadata
         class_variable_set("@@metadata_id_from", args.empty? ? nil : args[0][:metadata_id_from])
         include ActiveMetadata::Base::InstanceMethods
         include ActiveMetadata::Attachment::InstanceMethods
+        include ActiveMetadata::Note::InstanceMethods
+        include ActiveMetadata::History::InstanceMethods
       end
 
     end
@@ -69,55 +73,6 @@ module ActiveMetadata
           receiver = receiver.send item
         end
         receiver.id
-      end
-
-        # NOTES
-      def create_note_for(field, note, created_by=nil)
-        raise RuntimeError, "The object id MUST be valued" unless self.id
-        ActiveMetadata.safe_connection do
-          ActiveMetadata.notes.insert :note => note, :id => metadata_id, :field => field, :created_at => Time.now.utc, :created_by => created_by, :updated_at => Time.now.utc
-        end
-      end
-
-      def update_note id, note, updated_by=nil
-        ActiveMetadata.safe_connection do
-          ActiveMetadata.notes.update({:_id => id}, {"$set" => {:note => note, :updated_at => Time.now.utc, :updated_by => updated_by}})
-        end
-      end
-
-      def notes_for field
-        ActiveMetadata.safe_connection do
-          to_open_struct ActiveMetadata.notes.find({:id => metadata_id, :field => field}, {:sort => [[:updated_at, 'descending']]}).to_a
-        end
-      end
-
-      def create_notes_for field, notes
-        notes.each do |note|
-          create_note_for field, note
-        end
-      end
-
-      def delete_note id
-        _id = id.class == String ? BSON::ObjectId(id) : id
-        ActiveMetadata.safe_connection do
-          ActiveMetadata.notes.remove({:_id => _id})
-        end
-      end
-
-        # History
-      def save_history
-        self.changes.each do |key, value|
-          next if ActiveMetadata::CONFIG['history_skip_fields'].include?(key)
-          ActiveMetadata.safe_connection do
-            ActiveMetadata.history.insert :id => metadata_id, :field => key, :value => value[1], :created_at => Time.now.utc
-          end
-        end
-      end
-
-      def history_for field
-        ActiveMetadata.safe_connection do
-        to_open_struct  ActiveMetadata.history.find({:id => metadata_id, :field => field}, {:sort => [[:created_at, 'descending']]}).to_a
-        end
       end
 
       private
