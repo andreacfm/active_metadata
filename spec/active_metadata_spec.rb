@@ -116,8 +116,8 @@ describe ActiveMetadata do
       @section.create_note_for(:title, "Very important note for section!")
 
       # expectations
-      @document.notes_for(:name).last.id.should eq @document.id
-      @section.notes_for(:title).last.id.should eq @document.id
+      @document.notes_for(:name).last.label.active_meta.document_id.should eq @document.id
+      @section.notes_for(:title).last.label.active_meta.document_id.should eq @document.id
     end
 
     it "should delete a note passing a bson object as id" do

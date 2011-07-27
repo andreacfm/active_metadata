@@ -1,9 +1,6 @@
 class Label
   include Mongoid::Document
-  embedded_in :metadata
-
-#  embeds_many :notes
-
-  field :name, type: String
-
+  embedded_in :active_meta
+  embeds_many :notes, :class_name => "Note"
+  field :name
 end

@@ -1,10 +1,10 @@
 development:
   host: localhost
-  database: vir_test_development
+  database: metadata_d
 
 test:
   host: localhost
-  database: vir_test_test
+  database: metadata_t
 
 # set these environment variables on your prod server
 production:
