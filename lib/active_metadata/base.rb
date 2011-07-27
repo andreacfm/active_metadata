@@ -1,9 +1,12 @@
-require "mongo"
+require "mongoid"
 require "fileutils"
 require "ostruct"
 require "active_metadata/attachment"
 require "active_metadata/note"
 require "active_metadata/history"
+require "model/active_meta"
+require "model/label"
+require "model/note"
 
 module ActiveMetadata
 

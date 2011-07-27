@@ -6,6 +6,7 @@ require "rails/all"
 require "logger"
 require 'rspec/core'
 require "sqlite3"
+require "mongoid"
 
 gemfile = File.expand_path('../Gemfile', __FILE__)
 
@@ -32,6 +33,9 @@ Dir["spec/support/*.rb"].each {|f| require "support/#{(File.basename(f, File.ext
 ActiveRecord::Base.establish_connection YAML.load_file("config/database.yml")[ENV["RAILS_ENV"]]
 ActiveRecord::Base.logger = Logger.new "log/test.log"
 
+Mongoid.load!("config/mongoid.yml")
+Mongoid.logger = Logger.new "log/test.log"
+
 RSpec.configure do |config|
   # == Mock Framework
   #
@@ -56,9 +60,7 @@ RSpec.configure do |config|
 
   config.after(:each) do   
     Document.delete_all
-    ActiveMetadata.notes.drop
-    ActiveMetadata.history.drop
-    ActiveMetadata.attachments.drop
+    ActiveMetadata.active_meta.drop
     FileUtils.remove_dir File.expand_path('attachments/') if Dir.exist?(File.expand_path('attachments/'))
   end
 
