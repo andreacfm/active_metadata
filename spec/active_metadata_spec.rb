@@ -165,6 +165,7 @@ describe ActiveMetadata do
 
   end
 
+=begin
   context "history" do
 
     before(:each) do
@@ -332,5 +333,6 @@ describe ActiveMetadata do
     end
 
   end
+=end
 
 end
