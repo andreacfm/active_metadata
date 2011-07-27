@@ -60,7 +60,7 @@ RSpec.configure do |config|
 
   config.after(:each) do   
     Document.delete_all
-    #ActiveMeta.delete_all
+    ActiveMeta.delete_all
     FileUtils.remove_dir File.expand_path('attachments/') if Dir.exist?(File.expand_path('attachments/'))
   end
 

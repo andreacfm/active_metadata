@@ -4,9 +4,8 @@ module ActiveMetadata::Note
 
     def create_note_for(field, note, created_by=nil)
       raise RuntimeError, "The object id MUST be valued" unless self.id
-      metadata = ActiveMeta.find_or_create_by(:document_id => metadata_id)
-      metadata.labels.find_or_create_by(:name => field.to_s)
-      metadata.labels.where(:name => field.to_s).first.notes.create!(:note => note, :created_at => Time.now.utc, :updated_at => Time.now.utc, :created_by => created_by)
+      label = ActiveMeta.find_or_create_by(:document_id => metadata_id).labels.find_or_create_by(:name => field.to_s)
+      label.notes.create!(:note => note, :created_at => Time.now.utc, :updated_at => Time.now.utc, :created_by => created_by)
     end
 
     def update_note id, note, updated_by=nil
@@ -15,7 +14,8 @@ module ActiveMetadata::Note
     end
 
     def notes_for field
-      ActiveMeta.where(:document_id => metadata_id).first.labels.where(:name => field.to_s).first.notes.desc(:updated_at).to_a
+      label = ActiveMeta.find_or_create_by(:document_id => metadata_id).labels.find_or_create_by(:name => field.to_s)
+      label.notes.desc(:updated_at).to_a
     end
 
     def create_notes_for field, notes
