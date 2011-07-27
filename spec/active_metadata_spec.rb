@@ -1,5 +1,6 @@
 require "spec_helper"
 require "rack/test/uploaded_file"
+require "time"
 
 describe ActiveMetadata do
 
@@ -247,56 +248,51 @@ describe ActiveMetadata do
 
     it "should verify that the attachment metadata id refers to the correct self id" do
       @document.save_attachment_for(:name,@attachment)
-      @document.attachments_for(:name).last.id.should eq @document.id
+      @document.attachments_for(:name).last.label.active_meta.document_id.should eq @document.id
     end
 
     it "should verify that the attachment file name is correctly saved" do
       @document.save_attachment_for(:name,@attachment)
-      @document.attachments_for(:name).last.attachment_file_name.should eq @attachment.original_filename
+      @document.attachments_for(:name).last.attach.original_filename.should eq @attachment.original_filename
     end
 
     it "should verify that the attachment content type is correctly saved" do
       @document.save_attachment_for(:name,@attachment)
-      @document.attachments_for(:name).last.attachment_content_type.should eq @attachment.content_type
+      @document.attachments_for(:name).last.attach.content_type.should eq @attachment.content_type
     end
 
     it "should verify that the attachment size is correctly saved" do
       @document.save_attachment_for(:name,@attachment)
-      @document.attachments_for(:name).last.attachment_size.should eq @attachment.size
-    end
-
-    it "should verify that the attachment path is correctly saved" do
-      @document.save_attachment_for(:name,@attachment)
-      @document.attachments_for(:name).last.attachment_relative_path.should eq "#{@document.id}/#{:name}"
+      @document.attachments_for(:name).last.attach.size.should eq @attachment.size
     end
 
     it "should verify that the attachment updated_at is correctly saved" do
       @document.save_attachment_for(:name,@attachment)
-      @document.attachments_for(:name).last.attachment_updated_at.should be_a_kind_of Time
+      @document.attachments_for(:name).last.attach.instance_read(:updated_at).should be_a_kind_of DateTime
     end
 
     it "should verify that the document has been saved in the correct position on filesystem" do
       @document.save_attachment_for(:name,@attachment)
-      expected_path = File.expand_path "#{ActiveMetadata::CONFIG['attachment_base_path']}/#{@document.id}/#{:name.to_s}"
+      expected_path = File.expand_path "#{ActiveMetadata::CONFIG['attachment_base_path']}/#{@document.id}/#{:name.to_s}/#{@attachment.original_filename}"
       File.exists?(expected_path).should be_true
     end
 
     it "should delete an attachment passing a bson object as id" do
       @document.save_attachment_for(:name,@attachment)
       att = @document.attachments_for(:name).last
-      File.exists?(att.path).should be_true
+      File.exists?(att.attach.path).should be_true
 
-      @document.delete_attachment(att._id)
-      File.exists?(att.path).should be_false
+      @document.delete_attachment(att.id)
+      File.exists?(att.attach.path).should be_false
     end
 
     it "should delete an attachment passing a string as id" do
       @document.save_attachment_for(:name,@attachment)
       att = @document.attachments_for(:name).last
-      File.exists?(att.path).should be_true
+      File.exists?(att.attach.path).should be_true
 
-      @document.delete_attachment(att._id.to_s)
-      File.exists?(att.path).should be_false
+      @document.delete_attachment(att.id.to_s)
+      File.exists?(att.attach.path).should be_false
     end
 
     it "should update an attachment" do
@@ -306,30 +302,30 @@ describe ActiveMetadata do
       @document.update_attachment att._id,@attachment2
       att2 = @document.attachments_for(:name).last
 
-      File.exists?(att.path).should be_false
-      File.exists?(att2.path).should be_true
+      File.exists?(att.attach.path).should be_false
+      File.exists?(att2.attach.path).should be_true
     end
 
     it "should verify that field attachment_updated_at is modified after an update" do
       @document.save_attachment_for(:name,@attachment)
       att = @document.attachments_for(:name).last
 
-      sleep 0.1.seconds
+      sleep 1.seconds
 
       @document.update_attachment att._id,@attachment2
       att2 = @document.attachments_for(:name).last
 
-      att2.attachment_updated_at.should be > att.attachment_updated_at
+      att2.attach.instance_read(:updated_at).should be > att.attach.instance_read(:updated_at)
     end
 
-    it "should verify that attachment_relative_path is preserved after an update" do
-      @document.save_attachment_for(:name,@attachment)
-      att = @document.attachments_for(:name).last
-      @document.update_attachment att._id,@attachment2
-      att2 = @document.attachments_for(:name).last
-
-      att2.attachment_relative_path.should eq att.attachment_relative_path
+    it "should save the correct creator when an attachment is created" do
+      pending
     end
+
+    it "should save the correct creator when anttachment is updated" do
+      pending
+    end
+
 
   end
 
