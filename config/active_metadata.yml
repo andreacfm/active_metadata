@@ -3,11 +3,11 @@ development:
       - 'id'
       - 'created_at'
       - 'updated_at'
-    attachment_base_path: "#{Rails.root}/public/system/attachments_pratica/"
+    attachment_base_path: "public/system/metadata_attachments/"
 
 test:
     history_skip_fields:
       - 'id'
       - 'created_at'
       - 'updated_at'
-    attachment_base_path: "attachments"
+    attachment_base_path: "public/system/metadata_attachments/"

@@ -34,7 +34,7 @@ ActiveRecord::Base.establish_connection YAML.load_file("config/database.yml")[EN
 ActiveRecord::Base.logger = Logger.new "log/test.log"
 
 Mongoid.load!("config/mongoid.yml")
-Mongoid.logger = Logger.new($stdout)
+Mongoid.logger = Logger.new "log/test.log"
 
 RSpec.configure do |config|
   # == Mock Framework
@@ -61,7 +61,7 @@ RSpec.configure do |config|
   config.after(:each) do   
     Document.delete_all
     ActiveMeta.delete_all
-    FileUtils.remove_dir File.expand_path('attachments/') if Dir.exist?(File.expand_path('attachments/'))
+    FileUtils.remove_dir File.expand_path('public/system/') if Dir.exist?(File.expand_path('public/system/'))
   end
 
   config.after(:suite) do  
