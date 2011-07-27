@@ -165,7 +165,6 @@ describe ActiveMetadata do
 
   end
 
-=begin
   context "history" do
 
     before(:each) do
@@ -205,10 +204,10 @@ describe ActiveMetadata do
 
         # expectations
       @document.history_for(:name).count.should eq(1)
-      @document.history_for(:name).last.id.should eq @document.id
+      @document.history_for(:name).last.label.active_meta.document_id.should eq @document.id
 
       @section.history_for(:title).count.should eq(1)
-      @section.history_for(:title).last.id.should eq @document.id
+      @section.history_for(:title).last.label.active_meta.document_id.should eq @document.id
     end
 
     it "should verify that history_for sort by created_at descending" do
@@ -333,6 +332,5 @@ describe ActiveMetadata do
     end
 
   end
-=end
 
 end
