@@ -6,6 +6,7 @@ require 'rspec/core'
 require "sqlite3"
 require "mongoid"
 
+$: << File.expand_path(File.dirname(__FILE__) + "/../app")
 gemfile = File.expand_path('../Gemfile', __FILE__)
 
 begin
@@ -27,6 +28,10 @@ require "#{File.dirname(__FILE__)}/../lib/engine.rb"
 # Dir["lib/*.rb"].each { |f| require File.basename(f, File.extname(f)) }
 # require "/opt/code/fractalgarden/active_metadata/app/controllers/active_metadata/metadata_controller.rb"
 Dir["spec/support/*.rb"].each {|f| require "support/#{(File.basename(f, File.extname(f)) )}"}
+Dir["app/models/*.rb"].each {|f| require "models/#{(File.basename(f, File.extname(f)) )}"}
+
+
+require 'models/inbox'
 
 ActiveRecord::Base.establish_connection YAML.load_file("config/database.yml")[ENV["RAILS_ENV"]]
 ActiveRecord::Base.logger = Logger.new "log/test.log"
