@@ -4,18 +4,19 @@ module ActiveMetadata
     CONFIG = YAML.load_file('config/active_metadata.yml')[Rails.env]
   end
 
-
   ## Define ModelMethods
   module Base
 
     require "active_metadata/attachment"
     require "active_metadata/note"
     require "active_metadata/history"
+    require "active_metadata/watcher"
     require "model/active_meta"
     require "model/label"
     require "model/note"
     require "model/history"
     require "model/attachment"
+    require "model/watcher"
 
     def self.included(klass)
       klass.class_eval do
@@ -27,11 +28,14 @@ module ActiveMetadata
 
       def acts_as_metadata *args
         after_save :save_history
+        
         class_variable_set("@@metadata_id_from", args.empty? ? nil : args[0][:metadata_id_from])
+        
         include ActiveMetadata::Base::InstanceMethods
         include ActiveMetadata::Attachment::InstanceMethods
         include ActiveMetadata::Note::InstanceMethods
         include ActiveMetadata::History::InstanceMethods
+        include ActiveMetadata::Watcher::InstanceMethods
       end
 
     end
