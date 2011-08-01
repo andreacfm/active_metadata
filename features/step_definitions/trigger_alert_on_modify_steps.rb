@@ -15,5 +15,5 @@ When /^saving a new value on the "([^"]*)" field$/ do |attribute|
 end
 
 Then /^a new alert should be found in the inbox of the user$/ do
-  @current_user.inbox.alerts.should have(1).record
+  @current_user.inbox.should have(1).record
 end
