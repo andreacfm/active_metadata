@@ -130,7 +130,7 @@ describe ActiveMetadata do
       #expectations
       notes = @document.notes_for(:name)
       notes.count.should eq 3
-      @document.delete_note(notes[0]._id)
+      @document.delete_note_for(:name,notes[0]._id)
       @document.notes_for(:name)
       @document.notes_for(:name).count.should eq 2
 
@@ -146,7 +146,7 @@ describe ActiveMetadata do
       notes = @document.notes_for(:name)
       notes.count.should eq 3
       id = notes[0]._id.to_s
-      @document.delete_note(id)
+      @document.delete_note_for(:name,id)
       @document.notes_for(:name)
       @document.notes_for(:name).count.should eq 2
 
