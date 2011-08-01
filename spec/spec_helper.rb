@@ -1,8 +1,6 @@
 # encoding: utf-8
 require 'rubygems'
 require "rails/all"
-#require "active_record"
-#require "action_pack"
 require "logger"
 require 'rspec/core'
 require "sqlite3"
