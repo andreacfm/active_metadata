@@ -24,9 +24,8 @@ module ActiveMetadata::Note
       end
     end
 
-    def delete_note id
-      n = ActiveMeta.where("labels.notes._id" => id).first.labels.first.notes.first
-      n.delete
+    def delete_note_for field,id
+      ActiveMeta.find_or_create_by(:document_id => metadata_id).labels.find_or_create_by(:name => field.to_s).notes.find(id).destroy
     end
 
   end
