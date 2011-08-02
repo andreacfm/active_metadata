@@ -4,6 +4,7 @@ development:
       - 'created_at'
       - 'updated_at'
     attachment_base_path: "public/system/metadata_attachments"
+    attachment_base_url: "/system/metadata_attachments"
 
 test:
     history_skip_fields:
@@ -11,3 +12,4 @@ test:
       - 'created_at'
       - 'updated_at'
     attachment_base_path: "public/system/metadata_attachments"
+    attachment_base_url: "/system/metadata_attachments"
