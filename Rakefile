@@ -1,6 +1,7 @@
 require 'bundler/gem_tasks'
 require 'rake/active_record_tasks'  
 require 'ci/reporter/rake/rspec'
+require 'ci/reporter/rake/cucumber' 
 
 namespace :ci do
   namespace :setup do
