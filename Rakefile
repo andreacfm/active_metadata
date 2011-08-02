@@ -1,3 +1,4 @@
+require 'rake'
 require 'bundler/gem_tasks'
 require 'rake/active_record_tasks'  
 require 'ci/reporter/rake/rspec'
