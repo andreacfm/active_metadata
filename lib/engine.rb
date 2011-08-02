@@ -2,7 +2,6 @@ require 'active_metadata'
 require 'rails'
 require 'action_controller'
 require 'application_helper' 
-#require '../app/controllers/active_metadata/metadata_controller.rb' 
 
 module ActiveMetadata
   class Engine < Rails::Engine

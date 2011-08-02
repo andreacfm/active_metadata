@@ -1,0 +1,5 @@
+<ul>
+    <% @histories.each do |history| %>
+    	<li><span><%= history.created_at.strftime("%m/%d/%Y at %I:%M:%S") %></span> <%= history.value %></li>
+    <% end %>
+</ul>

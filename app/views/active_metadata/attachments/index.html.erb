@@ -1,0 +1,7 @@
+<% @attachments.each do |item| %>
+	<%= "File: #{item.attach.original_filename}" %><br/>
+	<%= "Path: #{item.attach.path}"%>
+    <%= "Size: #{item.attach.size}"%>
+    <%= "Updated at: #{item.attach.instance_read(:updated_at)}"%>
+	<hr>
+<% end %>
