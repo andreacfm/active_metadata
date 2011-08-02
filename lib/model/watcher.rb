@@ -5,33 +5,22 @@ class Watcher
 
   field :owner_id, :type => Integer
 
-  # t.string :label
-  # t.string :object_class
-  # t.integer :object_id
-  # t.string :alert_type
-  # t.string :old_value
-  # t.string :new_value
-  # t.text :content
-  # t.integer :user_id
-  # t.timestamps
-
-
-  def notify_changes(matched_label, values)
+  def notify_changes(matched_label, values)    
     return unless label.name == matched_label
 
-    create_inbox_alert(User.find(owner_id), matched_label, values)
+    create_inbox_alert(User.find(owner_id).inbox, matched_label, values)
   end
 
-  def create_inbox_alert(user, label, values)      
-    Inbox.create do |inbox|
-      inbox.label = label
-      inbox.model_class = self.class
-      inbox.model_id = self.id
-      inbox.alert_type = :model_value_changed
-      inbox.old_value = values.first
-      inbox.new_value = values.last
-      inbox.content = nil?
-      inbox.user_id = self.owner_id
+  def create_inbox_alert(inbox, label, values)      
+    Message.create do |message|
+      message.label = label
+      message.model_class = self.class
+      message.model_id = self.id
+      message.alert_type = :model_value_changed
+      message.old_value = values.first
+      message.new_value = values.last
+      message.content = nil?
+      message.inbox_id = inbox.id
     end 
   end
 end

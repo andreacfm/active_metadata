@@ -5,6 +5,9 @@ module ActiveMetadata::Watcher
       raise RuntimeError, "The object id MUST be valued" unless self.id
       
       label_path(field).watchers.create!(:owner_id => owner.id, :created_at => Time.now.utc, :updated_at => Time.now.utc)
+      
+      owner.create_inbox unless owner.inbox # ensure that an inbox is present
+      
     end                      
 
     def watchers_for(field)
