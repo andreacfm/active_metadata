@@ -10,8 +10,18 @@ module ActiveMetadata::Watcher
     def watchers_for(field)
       label_path(field).watchers.asc(:updated_at).to_a
     end
-    
-    private    
+                        
+    # This is a callback method of the after_save of the ActiveRecord
+    # object. 
+    # TODO: It should definetly be decoupled in time from the save of
+    # the alerting system
+    def watcher_callback
+      self.changes.each do |label, values|
+        watchers_for(label).each { |watch| watch.notify_changes(label,values) }
+      end
+    end
+        
+    private       
     def label_path(field_name)
       ActiveMeta.find_or_create_by(:document_id => metadata_id).labels.find_or_create_by(:name => field_name.to_s)
     end

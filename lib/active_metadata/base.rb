@@ -16,7 +16,8 @@ module ActiveMetadata
     require "model/note"
     require "model/history"
     require "model/attachment"
-    require "model/watcher"
+    require "model/watcher"   
+    require 'observer'
 
     def self.included(klass)
       klass.class_eval do
@@ -27,7 +28,7 @@ module ActiveMetadata
     module Config
 
       def acts_as_metadata *args
-        after_save :save_history
+        after_save :save_history, :watcher_callback
         
         class_variable_set("@@metadata_id_from", args.empty? ? nil : args[0][:metadata_id_from])
         
