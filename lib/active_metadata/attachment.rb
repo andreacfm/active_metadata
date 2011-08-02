@@ -4,7 +4,8 @@ module ActiveMetadata::Attachment
 
     def save_attachment_for field, file
       label = ActiveMeta.find_or_create_by(:document_id => metadata_id).labels.find_or_create_by(:name => field.to_s)
-      attachment = Attachment.new :attach => file
+      counter = label.attachments.count > 0 ? label.attachments.last.counter : 0
+      attachment = Attachment.new :attach => file, :counter => (counter + 1)
       label.attachments << attachment
       label.save
     end
@@ -14,13 +15,12 @@ module ActiveMetadata::Attachment
       label.attachments.desc(:attach_updated_at).to_a
     end
 
-    def delete_attachment id
-      a = ActiveMeta.where("labels.attachments._id" => id).first.labels.first.attachments.first
-      a.destroy
+    def delete_attachment_for field,id
+      ActiveMeta.find_or_create_by(:document_id => metadata_id).labels.find_or_create_by(:name => field.to_s).attachments.find(id).destroy
     end
 
-    def update_attachment id, newfile
-      a = ActiveMeta.where("labels.attachments._id" => id).first.labels.first.attachments.first
+    def update_attachment_for field, id, newfile
+      a = ActiveMeta.find_or_create_by(:document_id => metadata_id).labels.find_or_create_by(:name => field.to_s).attachments.find(id)
       a.attach = newfile
       a.save
     end

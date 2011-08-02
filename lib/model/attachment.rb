@@ -6,10 +6,11 @@ class Attachment
 
   embedded_in :label
   has_mongoid_attached_file :attach,
-      :path  => "#{ActiveMetadata::CONFIG['attachment_base_path']}/:document_id/:label/:basename.:extension"
+      :path  => "#{ActiveMetadata::CONFIG['attachment_base_path']}/:document_id/:label/:counter/:basename.:extension",
+      :url  => "#{ActiveMetadata::CONFIG['attachment_base_url']}/:document_id/:label/:counter/:basename.:extension"
 
-  field :value, :type => String
   field :created_by, :type => Integer
+  field :counter, :type => Integer
 
   Paperclip.interpolates :document_id do |attachment,style|
    attachment.instance.label.active_meta.document_id
@@ -17,6 +18,10 @@ class Attachment
 
   Paperclip.interpolates :label do |attachment,style|
     attachment.instance.label.name
+  end
+
+  Paperclip.interpolates :counter do |attachment,style|
+    attachment.instance.counter
   end
 
 end

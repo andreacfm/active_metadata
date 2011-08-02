@@ -1,9 +1,7 @@
 module ActiveMetadata
 
-  if File.exists? 'config/active_metadata.yml' #this allows install task to run
-    CONFIG = YAML.load_file('config/active_metadata.yml')[Rails.env]
-  end
-
+  CONFIG = File.exists?('config/active_metadata.yml') ? YAML.load_file('config/active_metadata.yml')[Rails.env] : {}
+ 
   ## Define ModelMethods
   module Base
 

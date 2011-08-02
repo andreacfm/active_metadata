@@ -22,5 +22,16 @@ module ActiveMetadata
       end
     end
 
+    def destroy
+      @document = eval(params[:model_name]).find params[:model_id]
+      @document.delete_attachment_for(params[:field_name], params[:id])
+      
+      #todo: if errors send back the correct answer
+      respond_to do |format|
+        # TODO redirect to index
+        format.js
+      end
+    end
+
   end
 end
