@@ -4,7 +4,7 @@
         <b><%= note.note %></b><br/>
         <%= "Inserita da: #{note.created_by}<br/>" unless note.created_by.nil? %>
         Il: <%= note.created_at.strftime("%m/%d/%Y at %I:%M:%S") %>   <br/>
-        <%= link_to "Elimina", active_metadata_delete_note_path(@document.class,@document.id,note.label.name,note._id), :method => :delete, :remote => true %>
+        <%= link_to "Elimina", active_metadata_destroy_note_path(@document.class,@document.id,note.label.name,note._id), :method => :delete, :remote => true %>
         </li>
     <% end %>
 </ul>

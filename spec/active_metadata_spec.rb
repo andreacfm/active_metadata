@@ -123,32 +123,39 @@ describe ActiveMetadata do
 
     it "should delete a note passing a bson object as id" do
       #fixtures
-      3.times do |i|
+      2.times do |i|
         @document.create_note_for(:name, "Note number #{i}")
       end
 
       #expectations
       notes = @document.notes_for(:name)
-      notes.count.should eq 3
+      notes.count.should eq 2
+      note_to_be_deleted = notes[0].note
+      
       @document.delete_note_for(:name,notes[0]._id)
-      @document.notes_for(:name)
-      @document.notes_for(:name).count.should eq 2
-
+      
+      notes = @document.notes_for(:name)
+      notes.count.should eq 1
+      notes.first.note.should_not eq note_to_be_deleted
+      
     end
 
     it "should delete a note passing a string as id" do
       #fixtures
-      3.times do |i|
+      2.times do |i|
         @document.create_note_for(:name, "Note number #{i}")
       end
 
       #expectations
       notes = @document.notes_for(:name)
-      notes.count.should eq 3
-      id = notes[0]._id.to_s
-      @document.delete_note_for(:name,id)
-      @document.notes_for(:name)
-      @document.notes_for(:name).count.should eq 2
+      notes.count.should eq 2
+      note_to_be_deleted = notes[0].note
+      
+      @document.delete_note_for(:name,notes[0].id.to_s)
+      
+      notes = @document.notes_for(:name)
+      notes.count.should eq 1
+      notes.first.note.should_not eq note_to_be_deleted
 
     end
 
@@ -273,33 +280,52 @@ describe ActiveMetadata do
 
     it "should verify that the document has been saved in the correct position on filesystem" do
       @document.save_attachment_for(:name,@attachment)
-      expected_path = File.expand_path "#{ActiveMetadata::CONFIG['attachment_base_path']}/#{@document.id}/#{:name.to_s}/#{@attachment.original_filename}"
+      expected_path = File.expand_path "#{ActiveMetadata::CONFIG['attachment_base_path']}/#{@document.id}/#{:name.to_s}/#{@attachment.counter}/#{@attachment.original_filename}"
       File.exists?(expected_path).should be_true
     end
 
     it "should delete an attachment passing a bson object as id" do
-      @document.save_attachment_for(:name,@attachment)
-      att = @document.attachments_for(:name).last
-      File.exists?(att.attach.path).should be_true
 
-      @document.delete_attachment(att.id)
-      File.exists?(att.attach.path).should be_false
+      #fixtures
+      2.times do |i|
+        @document.save_attachment_for(:name,@attachment)
+      end
+
+      #expectations
+      attachments = @document.attachments_for(:name)
+      attachments.count.should eq 2
+      attachment_path_to_be_deleted = attachments[0].attach.path
+      
+      @document.delete_attachment_for(:name,attachments[0]._id)
+      
+      attachments = @document.attachments_for(:name)
+      attachments.count.should eq 1
+      attachments.first.attach.path.should_not eq attachment_path_to_be_deleted
     end
 
     it "should delete an attachment passing a string as id" do
-      @document.save_attachment_for(:name,@attachment)
-      att = @document.attachments_for(:name).last
-      File.exists?(att.attach.path).should be_true
+      #fixtures
+      2.times do |i|
+        @document.save_attachment_for(:name,@attachment)
+      end
 
-      @document.delete_attachment(att.id.to_s)
-      File.exists?(att.attach.path).should be_false
+      #expectations
+      attachments = @document.attachments_for(:name)
+      attachments.count.should eq 2
+      attachment_path_to_be_deleted = attachments[0].attach.path
+      
+      @document.delete_attachment_for(:name,attachments[0].id.to_s)
+      
+      attachments = @document.attachments_for(:name)
+      attachments.count.should eq 1
+      attachments.first.attach.path.should_not eq attachment_path_to_be_deleted
     end
 
     it "should update an attachment" do
       @document.save_attachment_for(:name,@attachment)
       att = @document.attachments_for(:name).last
 
-      @document.update_attachment att._id,@attachment2
+      @document.update_attachment_for :name,att._id,@attachment2
       att2 = @document.attachments_for(:name).last
 
       File.exists?(att.attach.path).should be_false
@@ -312,10 +338,24 @@ describe ActiveMetadata do
 
       sleep 1.seconds
 
-      @document.update_attachment att._id,@attachment2
+      @document.update_attachment_for :name,att._id,@attachment2
       att2 = @document.attachments_for(:name).last
 
       att2.attach.instance_read(:updated_at).should be > att.attach.instance_read(:updated_at)
+    end
+    
+    it "should verify that is possible to upload 2 files with the same name for the same field" do
+      2.times do
+        @document.save_attachment_for(:name,@attachment)
+      end  
+      
+      #expectations
+      attachments = @document.attachments_for :name
+      attachments.count.should eq 2
+      File.exists?(attachments[0].attach.path).should be_true
+      attachments[0].attach.instance_read(:file_name).should eq "pdf_test.pdf"
+      File.exists?(attachments[1].attach.path).should be_true
+      attachments[1].attach.instance_read(:file_name).should eq "pdf_test.pdf"
     end
 
     it "should save the correct creator when an attachment is created" do

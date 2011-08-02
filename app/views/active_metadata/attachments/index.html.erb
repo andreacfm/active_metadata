@@ -1,0 +1,11 @@
+<ul>
+  <% @attachments.each do |item| %>
+    <li>
+    	<%= link_to "File: #{item.attach.original_filename}", item.attach.url %><br/>
+    	<%= "Path: #{item.attach.path}"%>
+      <%= "Size: #{item.attach.size}"%>
+      <%= "Updated at: #{item.attach.instance_read(:updated_at)}"%> <br/>
+      <%= link_to "Elimina", active_metadata_destroy_attachment_path(@document.class,@document.id,item.label.name,item._id), :method => :delete, :remote => true %>
+  	</li>
+  <% end %>
+</ul>

@@ -1,8 +1,0 @@
-<%# coding: utf-8 %>
-<% @document.attachments_for(field_name).each do |attach| %>
-	<%= "File: #{attach.attachment_file_name}" %><br/>
-	<%= "Path: #{attach.path}"%>
-    <%= "Size: #{attach.attachment_size}"%>
-    <%= "Updated at: #{attach.attachment_updated_at}"%>
-	<hr>
-<% end %>

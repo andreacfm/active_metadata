@@ -9,6 +9,7 @@ module ActiveMetadata
       respond_to do |format|
         format.html { render :layout => false}
         format.xml  { render :xml => @notes }
+        format.xls { send_data @notes.to_xls_data(:columns => [:note,:created_at], :headers => [:nota,'inserita']), :filename => 'notes.xls' }        
       end
     end  
 

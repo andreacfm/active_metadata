@@ -1,5 +1,0 @@
-<ul>
-<% @document.history_for(:name).each do |entry| %>
-	<li><span><%= entry.created_at.strftime("%m/%d/%Y at %I:%M:%S") %></span> <%= entry.value %></li>
-<% end %>
-</ul>
