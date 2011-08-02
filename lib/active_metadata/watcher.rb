@@ -6,8 +6,7 @@ module ActiveMetadata::Watcher
       
       label_path(field).watchers.create!(:owner_id => owner.id, :created_at => Time.now.utc, :updated_at => Time.now.utc)
       
-      owner.create_inbox unless owner.inbox # ensure that an inbox is present
-      
+      owner.create_inbox unless owner.inbox # ensure that an inbox is present      
     end                      
 
     def watchers_for(field)
@@ -20,7 +19,7 @@ module ActiveMetadata::Watcher
     # the alerting system
     def watcher_callback
       self.changes.each do |label, values|
-        watchers_for(label).each { |watch| watch.notify_changes(label,values) }
+        watchers_for(label).each { |watch| watch.notify_changes(label, values, self.class, self.id) }
       end
     end
         

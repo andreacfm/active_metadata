@@ -8,4 +8,6 @@
 * Method models/Watcher.notify_changes: it should be better ti get the list of user 
 	in one shot to load them from the SQL Database in one shot and not for every watcher
 * the inbox now contains just one object and it should contain a number of alerts
-	
+
+*   def notify_changes(matched_label, values, model_class, model_id) should not present
+	model_class and model_id as parameters but it should take it from a common reference	

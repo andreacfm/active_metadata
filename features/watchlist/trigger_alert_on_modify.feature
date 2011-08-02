@@ -7,12 +7,14 @@ Feature: Trigger alert on modify
 	on a field and a modification on it occurs
                                                     
 	Background: 
-		Given an ActiveRecord object instance of 'Document'
+		Given an ActiveRecord instance of 'Document' with 'name' equals to "pippo"
 		And a User "fg@fractalgarden.com" instanciated
 	
 	Scenario: receive a new alert in the inbox when a save of a field value occurs
 		Given a watcher on the "name" field 
-		When saving a new value on the "name" field
+		When saving a new value "pluto" on the "name" field
 		Then a new alert should be found in the inbox of the user 
-
-
+		And should regard the "name" field 
+		And should record the "Document" model class 
+		And should record the new value "pluto"
+		And the old value "pippo"
