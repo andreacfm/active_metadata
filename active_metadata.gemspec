@@ -16,6 +16,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rspec-rails"
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "sqlite3-ruby"
+  s.add_development_dependency "ci_reporter"  
   s.add_dependency "rails", "3.0.1"
   s.add_dependency "activerecord", "3.0.1"
   s.add_dependency "mongoid", "~> 2.0"
