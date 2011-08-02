@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency "bson_ext"
   s.add_dependency "mongoid-paperclip"
   s.add_dependency "cucumber"
+  s.add_dependency "to_xls"
   s.files         = Dir.glob('{lib,app,config,db}/**/*')
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
