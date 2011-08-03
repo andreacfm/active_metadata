@@ -3,7 +3,13 @@ development:
   database: metadata_d
 
 test:
-  host: localhost
+  hosts: 
+    - - localhost
+      - 27017
+    - - localhost
+      - 27018
+    - - localhost
+      - 27019        
   database: metadata_t
 
 # set these environment variables on your prod server
