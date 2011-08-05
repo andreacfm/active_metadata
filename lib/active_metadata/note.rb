@@ -18,6 +18,11 @@ module ActiveMetadata::Note
       label.notes.desc(:updated_at).to_a
     end
 
+    def note_for field,id
+      label = ActiveMeta.find_or_create_by(:document_id => metadata_id).labels.find_or_create_by(:name => field.to_s)
+      label.notes.find(id)      
+    end      
+    
     def create_notes_for field, notes
       notes.each do |note|
         create_note_for field, note

@@ -170,6 +170,20 @@ describe ActiveMetadata do
       @document.notes_for(:name).first.note.should eq "Note number 2"
       @document.notes_for(:name).last.note.should eq "Note number 0"
     end
+    
+    it "should find a note by id" do
+
+      3.times do |i|
+        @document.create_note_for(:name, "Note number #{i}")
+      end
+      
+      note = @document.notes_for(:name).last
+      id = note.id.to_s
+      
+      match_note = @document.note_for :name,id
+      match_note.id.to_s.should eq id 
+      
+    end
 
   end
 
