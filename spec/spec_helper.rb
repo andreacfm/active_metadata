@@ -25,11 +25,8 @@ ENV["ACTIVE_METADATA_ENV"] ||= 'test'
                                                                       
 # loading ruby files
 require "#{File.dirname(__FILE__)}/../lib/engine.rb"
-# Dir["lib/*.rb"].each { |f| require File.basename(f, File.extname(f)) }
-# require "/opt/code/fractalgarden/active_metadata/app/controllers/active_metadata/metadata_controller.rb"
 Dir["spec/support/*.rb"].each {|f| require "support/#{(File.basename(f, File.extname(f)) )}"}
 Dir["app/models/*.rb"].each {|f| require "models/#{(File.basename(f, File.extname(f)) )}"}
-
 
 require 'models/inbox'
 

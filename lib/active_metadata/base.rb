@@ -15,7 +15,6 @@ module ActiveMetadata
     require "model/history"
     require "model/attachment"
     require "model/watcher"   
-    require 'observer'
 
     def self.included(klass)
       klass.class_eval do
