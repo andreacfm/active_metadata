@@ -4,4 +4,5 @@ class Note
   embedded_in :label
 
   field :note, :type => String
+  
 end

@@ -7,5 +7,5 @@ class Label
   embeds_many :histories, :class_name => "History"
   embeds_many :attachments, :class_name => "Attachment"
   embeds_many :watchers, :class_name => "Watcher"
-
+  
 end
