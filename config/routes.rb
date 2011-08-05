@@ -7,6 +7,9 @@ Rails.application.routes.draw do |map|
     match ':model_name/:model_id/:field_name/notes' => 'notes#index', :via => :get, :as => "notes", :path_prefix => mount_at 
     match ':model_name/:model_id/:field_name/notes' => 'notes#create', :via => :post, :as => "create_note", :path_prefix => mount_at 
     match ':model_name/:model_id/:field_name/note/:id' => 'notes#destroy', :via => :delete, :as => "destroy_note", :path_prefix => mount_at 
+    match ':model_name/:model_id/:field_name/note/:id/edit' => 'notes#edit', :via => :get, :as => "edit_note", :path_prefix => mount_at 
+    match ':model_name/:model_id/:field_name/note/:id' => 'notes#update', :via => :put, :as => "update_note", :path_prefix => mount_at 
+    match ':model_name/:model_id/:field_name/note/:id' => 'notes#show', :via => :get, :as => "show_note", :path_prefix => mount_at 
     
     #history
     match ':model_name/:model_id/:field_name/histories' => 'histories#index', :via => :get, :as => "histories", :path_prefix => mount_at 
