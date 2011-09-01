@@ -49,6 +49,10 @@ module ActiveMetadata
         end
         receiver.id
       end
+                
+      def label_path(field_name)
+        ActiveMeta.find_or_create_by(:document_id => metadata_id).labels.find_or_create_by(:name => field_name.to_s)
+      end      
 
     end # InstanceMethods
   end

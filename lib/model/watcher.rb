@@ -6,8 +6,6 @@ class Watcher
   field :owner_id, :type => Integer
 
   def notify_changes(matched_label, values, model_class, model_id)
-    return unless label.name == matched_label
-
     create_inbox_alert(User.find(owner_id).inbox, matched_label, values, model_class, model_id)
   end
 

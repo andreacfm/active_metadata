@@ -8,7 +8,7 @@ Feature: Trigger alert on modify
                                                     
 	Background: 
 		Given an ActiveRecord instance of 'Document' with 'name' equals to "pippo"
-		And a User "fg@fractalgarden.com" instanciated
+		And a User "fg@fractalgarden.com" instantiated
 	
 	Scenario: receive a new alert in the inbox when a save of a field value occurs
 		Given a watcher on the "name" field 
@@ -18,3 +18,11 @@ Feature: Trigger alert on modify
 		And should record the "Document" model class 
 		And should record the new value "pluto"
 		And the old value "pippo"
+		
+	Scenario: receive a new alert in the inbox when a note of a field is added
+		Given a watcher on the "name" field 
+		When creating a new note on the "name" field with content "new note!"
+		Then a new alert should be found in the inbox of the user 
+		And should regard the "name" field 
+		And should record the "Document" model class 
+		And should record the "new note!" content

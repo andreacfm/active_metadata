@@ -5,7 +5,7 @@ Given /^an ActiveRecord instance of 'Document' with 'name' equals to "([^"]*)"$/
   @document = Document.create!(:name => name, :surname => 'Garden' )
 end
 
-Given /^a User "([^"]*)" instanciated$/ do |email|
+Given /^a User "([^"]*)" instantiated$/ do |email|
   @current_user = User.create!(:email => email, :firstname => 'John', :lastname => 'smith' )
 end
 
@@ -39,4 +39,12 @@ end
 
 Then /^the old value "([^"]*)"$/ do |old_value|
   @message.old_value.should == old_value
+end
+      
+When /^creating a new note on the "([^"]*)" field with content "([^"]*)"$/ do |field, content|
+  @document.create_note_for(field.to_sym, content)
+end
+
+Then /^should record the "([^"]*)" content$/ do |content|
+  @message.content.should == content
 end
