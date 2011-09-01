@@ -1,6 +1,7 @@
 development:
   host: localhost
   database: metadata_d
+  max_retries_on_connection_failure: 50
 
 test:
   hosts: 
@@ -11,7 +12,6 @@ test:
     - - localhost
       - 27019        
   database: metadata_t
-  autocreate_indexes: true
   max_retries_on_connection_failure: 50
 
 # set these environment variables on your prod server

@@ -55,7 +55,9 @@ RSpec.configure do |config|
   # config.use_transactional_fixtures = true
 
 
-  config.before(:suite) do  
+  config.before(:suite) do 
+    ActiveMeta.create_indexes()
+    Label.create_indexes()
   end
 
   config.after(:each) do   

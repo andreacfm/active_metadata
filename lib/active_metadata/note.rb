@@ -9,7 +9,7 @@ module ActiveMetadata::Note
     end
 
     def update_note id, note, updated_by=nil
-      n = ActiveMeta.where("labels.notes._id" => id).first.labels.first.notes.first
+      n = Note.find(id)
       n.update_attributes :note => note, :updated_by => updated_by, :updated_at => Time.now.utc
     end
 

@@ -1,7 +1,7 @@
 class Note
   include Mongoid::Document
 
-  embedded_in :label
+  belongs_to :label
 
   field :note, :type => String
   
