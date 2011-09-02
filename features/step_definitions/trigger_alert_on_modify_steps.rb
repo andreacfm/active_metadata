@@ -42,8 +42,9 @@ When /^creating a new attachment on the "([^"]*)" field with name "([^"]*)"$/ do
   @document.attachments_for(field.to_sym).should have(1).record
 end
 
-When /^deleting the attachment on the "([^"]*)" field with name "([^"]*)"$/ do |arg1, arg2|
-  pending # express the regexp above with the code you wish you had
+When /^deleting the attachment on the "([^"]*)" field with name "([^"]*)"$/ do |field, filename|
+  @attachment = @document.attachments_for(field.to_sym).last  
+  @document.delete_attachment_for(field,@attachment.id)
 end
 
 # Then ##########################################################

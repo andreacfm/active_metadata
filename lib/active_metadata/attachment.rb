@@ -12,16 +12,20 @@ module ActiveMetadata::Attachment
       self.send(:send_notification, field, "", attachment.attach.original_filename)
     end
 
-    def attachments_for field
+    def attachments_for(field)
       label = ActiveMeta.find_or_create_by(:document_id => metadata_id).labels.find_or_create_by(:name => field.to_s)
       label.attachments.desc(:attach_updated_at).to_a
     end
 
-    def delete_attachment_for field,id
-      ActiveMeta.find_or_create_by(:document_id => metadata_id).labels.find_or_create_by(:name => field.to_s).attachments.find(id).destroy
+    def delete_attachment_for(field,id)
+      a = ActiveMeta.find_or_create_by(:document_id => metadata_id).labels.find_or_create_by(:name => field.to_s).attachments.find(id)
+      filename = a.attach.original_filename
+      a.destroy
+      
+      self.send(:send_notification, field, filename, "")
     end
 
-    def update_attachment_for field, id, newfile
+    def update_attachment_for(field, id, newfile)
       a = ActiveMeta.find_or_create_by(:document_id => metadata_id).labels.find_or_create_by(:name => field.to_s).attachments.find(id)
       a.attach = newfile
       a.save
