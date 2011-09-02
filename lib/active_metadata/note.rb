@@ -35,8 +35,10 @@ module ActiveMetadata::Note
     end
 
     def delete_note_for(field,id)
-      ActiveMeta.find_or_create_by(:document_id => metadata_id).labels.find_or_create_by(:name => field.to_s).notes.find(id).destroy
-      self.send(:send_notification, field, "TODO: to be fetched", "")
+      n = ActiveMeta.find_or_create_by(:document_id => metadata_id).labels.find_or_create_by(:name => field.to_s).notes.find(id)
+      old_value = n.note
+      n.destroy
+      self.send(:send_notification, field, old_value, "")
     end
   end
 end

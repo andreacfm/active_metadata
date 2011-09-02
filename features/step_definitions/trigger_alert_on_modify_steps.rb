@@ -28,6 +28,11 @@ When /^afterwards I update the note on the field "([^"]*)" with content "([^"]*)
   @document.update_note(note.id, content, @current_user.email)
 end
 
+When /^afterwards I delete the note on the field "([^"]*)"$/ do |field|
+  note = @document.notes_for(field.to_sym).first
+  @document.delete_note_for(field.to_sym,note.id)  
+end
+
 Then /^([^"]*) alert should be found in the inbox of the user$/ do |number|
   @current_user.inbox.messages.should have(number.to_i).record
   @message = @current_user.inbox.messages.last
@@ -51,4 +56,12 @@ end
       
 Then /^should record the "([^"]*)" content$/ do |value|
   @message.new_value.should == value
+end
+
+Then /^should record the "([^"]*)" content in the old_value$/ do |old_value|
+  @message.old_value.should == old_value
+end
+
+Then /^should record the "([^"]*)" in the new_value$/ do |new_value|
+  @message.new_value.should == new_value
 end

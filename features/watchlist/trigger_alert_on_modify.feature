@@ -35,3 +35,13 @@ Feature: Trigger alert on modify
 		And should regard the "name" field 
 		And should record the "Document" model class 
 		And should record the "updated note!" content
+
+	Scenario: receive a new alert in the inbox when a note of a field is updated
+		Given a watcher on the "name" field 
+		When creating a new note on the "name" field with content "new note!"
+		And afterwards I delete the note on the field "name"
+		Then 2 alert should be found in the inbox of the user 
+		And should regard the "name" field 
+		And should record the "Document" model class 
+		And should record the "new note!" content in the old_value 
+		And should record the "" in the new_value
