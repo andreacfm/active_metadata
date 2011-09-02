@@ -1,7 +1,8 @@
 class History
   include Mongoid::Document
   store_in :history
-  embedded_in :label
+  
+  belongs_to :label
 
   field :value, :type => String
 
