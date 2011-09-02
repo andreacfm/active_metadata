@@ -57,6 +57,16 @@ Feature: Trigger alert on modify
 		And should record the "file.txt" in the new_value
 		And should record the "" in the old_value
 
+	Scenario: receive a new alert in the inbox when a attachment of a field is updated
+		Given a watcher on the "name" field
+		When creating a new attachment on the "name" field with name "file.txt"
+		And updating the attachment on the "name" field with name "updated_file.txt"
+		Then 2 alert should be found in the inbox of the user 
+		And should regard the "name" field 
+		And should record the "Document" model class 
+		And should record the "updated_file.txt" in the new_value
+		And should record the "file.txt" in the old_value
+
 	Scenario: receive a new alert in the inbox when a attachment of a field is deleted
 		Given a watcher on the "name" field 
 		When creating a new attachment on the "name" field with name "file.txt"

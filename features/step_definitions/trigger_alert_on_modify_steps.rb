@@ -46,7 +46,14 @@ When /^deleting the attachment on the "([^"]*)" field with name "([^"]*)"$/ do |
   @attachment = @document.attachments_for(field.to_sym).last  
   @document.delete_attachment_for(field,@attachment.id)
 end
-
+                       
+When /^updating the attachment on the "([^"]*)" field with name "([^"]*)"$/ do |field, filename|
+  @attachment = @document.attachments_for(field.to_sym).last  
+  file = File.expand_path("../../supports/#{filename}", __FILE__)
+  updated_file = Rack::Test::UploadedFile.new(file, "plain/text")
+  
+  @document.update_attachment_for(field,@attachment.id, updated_file)
+end
 # Then ##########################################################
 Then /^([^"]*) alert should be found in the inbox of the user$/ do |number|
   @current_user.inbox.messages.should have(number.to_i).record

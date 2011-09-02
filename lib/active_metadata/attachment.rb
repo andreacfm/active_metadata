@@ -27,8 +27,12 @@ module ActiveMetadata::Attachment
 
     def update_attachment_for(field, id, newfile)
       a = ActiveMeta.find_or_create_by(:document_id => metadata_id).labels.find_or_create_by(:name => field.to_s).attachments.find(id)
+      old_filename = a.attach.original_filename
       a.attach = newfile
-      a.save
+      a.save                                            
+      new_filename = a.attach.original_filename
+      
+      self.send(:send_notification, field, old_filename, new_filename)
     end
 
   end
