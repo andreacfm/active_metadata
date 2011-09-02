@@ -58,12 +58,18 @@ RSpec.configure do |config|
   config.before(:suite) do 
     ActiveMeta.create_indexes()
     Label.create_indexes()
+    Note.create_indexes();
   end
 
-  config.after(:each) do   
+  config.before(:each) do
     Document.delete_all
     ActiveMeta.delete_all
-    FileUtils.remove_dir File.expand_path('public/system/') if Dir.exist?(File.expand_path('public/system/'))
+    Label.delete_all
+    Note.delete_all
+    Watcher.delete_all
+    Attachment.delete_all
+    History.delete_all    
+    FileUtils.remove_dir File.expand_path('public/system/') if Dir.exist?(File.expand_path('public/system/'))       
   end
 
   config.after(:suite) do  

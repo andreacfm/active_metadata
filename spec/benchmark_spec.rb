@@ -11,11 +11,12 @@ describe "ActiveMetadata" do
   
   context "running on mongo" do
 
-    it "should insert 500 notes" do
+    it "should insert xxx notes" do
+      notes = 1000000
       result = []
       Benchmark.bm do |x|
         x.report do
-          500.times do |i|
+          notes.times do |i|
             start = Time.now
             @document.create_note_for(:name, "Note number #{i}")
             result.push Time.now - start
@@ -23,8 +24,8 @@ describe "ActiveMetadata" do
         end  
       end  
       puts "Total = #{result.sum}"
-      puts "Average = #{result.sum / 500}"
-      @document.notes_for(:name).count.should eq 500
+      puts "Average = #{result.sum / notes}"
+      @document.notes_for(:name).count.should eq notes
     end
   
  end

@@ -9,8 +9,8 @@ module ActiveMetadata::Note
     end
 
     def update_note id, note, updated_by=nil
-      n = Note.find(id)
-      n.update_attributes :note => note, :updated_by => updated_by, :updated_at => Time.now.utc
+      n = ActiveMeta.find_or_create_by(:document_id => metadata_id).labels.find_or_create_by(:name => 'name').notes.find id
+      n.update_attributes! :note => note, :updated_by => updated_by, :updated_at => Time.now.utc
     end
 
     def notes_for field
