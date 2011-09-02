@@ -74,7 +74,7 @@ RSpec.configure do |config|
     Note.delete_all
     # Watcher.delete_all
     # Attachment.delete_all
-    # History.delete_all    
+    History.delete_all    
     if is_mongo 
       ActiveMeta.delete_all
       Label.delete_all
