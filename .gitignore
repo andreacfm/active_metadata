@@ -4,3 +4,4 @@ pkg/*
 db/*sqlite3
 log/*log
 /attachments
+public/*
