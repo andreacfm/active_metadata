@@ -25,7 +25,7 @@ module ActiveMetadata
     module Config
 
       def acts_as_metadata *args
-        after_save :save_history, :watcher_callback
+        after_save :save_history, :on_save_watcher_callback
         
         class_variable_set("@@metadata_id_from", args.empty? ? nil : args[0][:metadata_id_from])
         

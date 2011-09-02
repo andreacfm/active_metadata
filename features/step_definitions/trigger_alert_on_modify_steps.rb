@@ -45,6 +45,6 @@ When /^creating a new note on the "([^"]*)" field with content "([^"]*)"$/ do |f
   @document.create_note_for(field.to_sym, content)
 end
 
-Then /^should record the "([^"]*)" content$/ do |content|
-  @message.content.should == content
+Then /^should record the "([^"]*)" content$/ do |value|
+  @message.new_value.should == value
 end
