@@ -1,10 +1,12 @@
 module ActiveMetadata::Persistence
-
-  require "active_metadata/persistence/mongoid"
-  require "active_metadata/persistence/active_record"  
+  
+  PERSISTS_WITH = ActiveMetadata::CONFIG['persists_with']
+  
+  require "active_metadata/persistence/mongoid" if PERSISTS_WITH == 'mongoid'
+  require "active_metadata/persistence/active_record" if PERSISTS_WITH == 'active_record' 
   
   def self.included(receiver)
-    persister = Mongoid.nil? ? ActiveMetadata::Persistence::ActiveRecord : ActiveMetadata::Persistence::Mongoid    
+    persister = PERSISTS_WITH == 'active_record' ? ActiveMetadata::Persistence::ActiveRecord : ActiveMetadata::Persistence::Mongoid 
     receiver.send :include, persister
   end
 
