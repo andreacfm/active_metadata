@@ -1,4 +1,8 @@
-module ActiveMetadata::Attachment
+module ActiveMetadata::Persistence::Mongoid::Attachment
+
+  def self.included(receiver)
+    receiver.send :include, InstanceMethods
+  end
 
   module InstanceMethods
 

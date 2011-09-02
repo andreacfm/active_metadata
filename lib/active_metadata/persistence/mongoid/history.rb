@@ -1,4 +1,8 @@
-module ActiveMetadata::History
+module ActiveMetadata::Persistence::Mongoid::History
+
+  def self.included(receiver)
+    receiver.send :include, InstanceMethods
+  end
 
   module InstanceMethods
 

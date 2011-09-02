@@ -5,10 +5,7 @@ module ActiveMetadata
   ## Define ModelMethods
   module Base
 
-    require "active_metadata/attachment"
-    require "active_metadata/note"
-    require "active_metadata/history"
-    require "active_metadata/watcher"
+    require "active_metadata/persistence/persistence"
     require "model/active_meta"
     require "model/label"
     require "model/note"
@@ -28,12 +25,10 @@ module ActiveMetadata
         after_save :save_history, :on_save_watcher_callback
         
         class_variable_set("@@metadata_id_from", args.empty? ? nil : args[0][:metadata_id_from])
-        
+
         include ActiveMetadata::Base::InstanceMethods
-        include ActiveMetadata::Attachment::InstanceMethods
-        include ActiveMetadata::Note::InstanceMethods
-        include ActiveMetadata::History::InstanceMethods
-        include ActiveMetadata::Watcher::InstanceMethods
+        include ActiveMetadata::Persistence        
+
       end
 
     end
@@ -50,10 +45,6 @@ module ActiveMetadata
         receiver.id
       end
                 
-      def label_path(field_name)
-        ActiveMeta.find_or_create_by(:document_id => metadata_id).labels.find_or_create_by(:name => field_name.to_s)
-      end      
-
     end # InstanceMethods
   end
 

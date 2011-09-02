@@ -1,4 +1,8 @@
-module ActiveMetadata::Note
+module ActiveMetadata::Persistence::Mongoid::Note
+
+  def self.included(receiver)
+    receiver.send :include, InstanceMethods
+  end
 
   module InstanceMethods
     
