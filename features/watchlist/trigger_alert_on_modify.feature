@@ -13,7 +13,7 @@ Feature: Trigger alert on modify
 	Scenario: receive a new alert in the inbox when a save of a field value occurs
 		Given a watcher on the "name" field 
 		When saving a new value "pluto" on the "name" field
-		Then a new alert should be found in the inbox of the user 
+		Then 1 alert should be found in the inbox of the user 
 		And should regard the "name" field 
 		And should record the "Document" model class 
 		And should record the new value "pluto"
@@ -22,7 +22,16 @@ Feature: Trigger alert on modify
 	Scenario: receive a new alert in the inbox when a note of a field is added
 		Given a watcher on the "name" field 
 		When creating a new note on the "name" field with content "new note!"
-		Then a new alert should be found in the inbox of the user 
+		Then 1 alert should be found in the inbox of the user 
 		And should regard the "name" field 
 		And should record the "Document" model class 
 		And should record the "new note!" content
+
+	Scenario: receive a new alert in the inbox when a note of a field is updated
+		Given a watcher on the "name" field 
+		When creating a new note on the "name" field with content "new note!"
+		And afterwards I update the note on the field "name" with content "updated note!"
+		Then 2 alert should be found in the inbox of the user 
+		And should regard the "name" field 
+		And should record the "Document" model class 
+		And should record the "updated note!" content

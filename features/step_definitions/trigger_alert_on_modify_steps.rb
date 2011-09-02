@@ -19,11 +19,19 @@ When /^saving a new value "([^"]*)" on the "([^"]*)" field$/ do |value, attribut
   @document.save!
 end
 
-Then /^a new alert should be found in the inbox of the user$/ do
-  @current_user.inbox.messages.should have(1).record
-  @message = @current_user.inbox.messages.first  
+When /^creating a new note on the "([^"]*)" field with content "([^"]*)"$/ do |field, content|
+  @document.create_note_for(field.to_sym, content)
 end
-                                           
+   
+When /^afterwards I update the note on the field "([^"]*)" with content "([^"]*)"$/ do |field, content|
+  note = @document.notes_for(field.to_sym).first
+  @document.update_note(note.id, content, @current_user.email)
+end
+
+Then /^([^"]*) alert should be found in the inbox of the user$/ do |number|
+  @current_user.inbox.messages.should have(number.to_i).record
+  @message = @current_user.inbox.messages.last
+end                                          
 
 Then /^should regard the "([^"]*)" field$/ do |field|
   @message.label.should == field
@@ -41,10 +49,6 @@ Then /^the old value "([^"]*)"$/ do |old_value|
   @message.old_value.should == old_value
 end
       
-When /^creating a new note on the "([^"]*)" field with content "([^"]*)"$/ do |field, content|
-  @document.create_note_for(field.to_sym, content)
-end
-
 Then /^should record the "([^"]*)" content$/ do |value|
   @message.new_value.should == value
 end
