@@ -6,12 +6,6 @@ module ActiveMetadata
   module Base
 
     require "active_metadata/persistence/persistence"
-    require "model/active_meta"
-    require "model/label"
-    require "model/note"
-    require "model/history"
-    require "model/attachment"
-    require "model/watcher"   
 
     def self.included(klass)
       klass.class_eval do

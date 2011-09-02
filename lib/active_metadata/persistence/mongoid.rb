@@ -4,6 +4,12 @@ module ActiveMetadata::Persistence::Mongoid
     require "active_metadata/persistence/mongoid/note"
     require "active_metadata/persistence/mongoid/history"
     require "active_metadata/persistence/mongoid/watcher"
+    require "model/mongoid/active_meta"
+    require "model/mongoid/label"
+    require "model/mongoid/note"
+    require "model/mongoid/history"
+    require "model/mongoid/attachment"
+    require "model/mongoid/watcher"   
     
     def self.included(receiver)
       receiver.send :include, InstanceMethods
