@@ -16,8 +16,8 @@ Feature: Trigger alert on modify
 		Then 1 alert should be found in the inbox of the user 
 		And should regard the "name" field 
 		And should record the "Document" model class 
-		And should record the new value "pluto"
-		And the old value "pippo"
+		And should record the "pluto" in the new_value
+		And should record the "pippo" in the old_value 
 		
 	Scenario: receive a new alert in the inbox when a note of a field is added
 		Given a watcher on the "name" field 
@@ -25,8 +25,9 @@ Feature: Trigger alert on modify
 		Then 1 alert should be found in the inbox of the user 
 		And should regard the "name" field 
 		And should record the "Document" model class 
-		And should record the "new note!" content
-
+		And should record the "new note!" in the new_value
+		And should record the "" in the old_value 
+		
 	Scenario: receive a new alert in the inbox when a note of a field is updated
 		Given a watcher on the "name" field 
 		When creating a new note on the "name" field with content "new note!"
@@ -34,14 +35,34 @@ Feature: Trigger alert on modify
 		Then 2 alert should be found in the inbox of the user 
 		And should regard the "name" field 
 		And should record the "Document" model class 
-		And should record the "updated note!" content
+		And should record the "new note!" in the old_value 
+		And should record the "updated note!" in the new_value
 
-	Scenario: receive a new alert in the inbox when a note of a field is updated
+	Scenario: receive a new alert in the inbox when a note of a field is deleted
 		Given a watcher on the "name" field 
 		When creating a new note on the "name" field with content "new note!"
 		And afterwards I delete the note on the field "name"
 		Then 2 alert should be found in the inbox of the user 
 		And should regard the "name" field 
 		And should record the "Document" model class 
-		And should record the "new note!" content in the old_value 
+		And should record the "new note!" in the old_value 
 		And should record the "" in the new_value
+
+	Scenario: receive a new alert in the inbox when a attachment of a field is created
+		Given a watcher on the "name" field 
+		When creating a new attachment on the "name" field with name "file.txt"
+		Then 1 alert should be found in the inbox of the user 
+		And should regard the "name" field 
+		And should record the "Document" model class 
+		And should record the "file.txt" in the new_value
+		And should record the "" in the old_value
+
+	Scenario: receive a new alert in the inbox when a attachment of a field is deleted
+		Given a watcher on the "name" field 
+		When creating a new attachment on the "name" field with name "file.txt"
+		And deleting the attachment on the "name" field with name "file.txt"
+		Then 2 alert should be found in the inbox of the user 
+		And should regard the "name" field 
+		And should record the "Document" model class 
+		And should record the "" in the new_value
+		And should record the "file.txt" in the old_value

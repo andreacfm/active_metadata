@@ -390,7 +390,7 @@ describe ActiveMetadata do
     end
     
     it "should create a watcher for a given field" do      
-        user = User.create!(:email => "email@email.it", :firstname => 'John', :lastname => 'smith' )
+        user                        = User.create!(:email => "email@email.it", :firstname => 'John', :lastname => 'smith' )
         @document.create_watcher_for(:name, user)
         @document.watchers_for(:name).should have(1).record
     end

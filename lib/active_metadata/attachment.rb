@@ -2,12 +2,14 @@ module ActiveMetadata::Attachment
 
   module InstanceMethods
 
-    def save_attachment_for field, file
+    def save_attachment_for(field, file)
       label = ActiveMeta.find_or_create_by(:document_id => metadata_id).labels.find_or_create_by(:name => field.to_s)
       counter = label.attachments.count > 0 ? label.attachments.last.counter : 0
-      attachment = Attachment.new :attach => file, :counter => (counter + 1)
+      attachment = Attachment.new(:attach => file, :counter => (counter + 1))
       label.attachments << attachment
       label.save
+      
+      self.send(:send_notification, field, "", attachment.attach.original_filename)
     end
 
     def attachments_for field

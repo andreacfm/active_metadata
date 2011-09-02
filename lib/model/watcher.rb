@@ -10,7 +10,7 @@ class Watcher
   end
 
   def create_inbox_alert(inbox, label, old_value, new_value, model_class, model_id)
-    Message.create do |message|
+    Message.create! do |message|
       message.label = label
       message.model_class = model_class.to_s
       message.model_id = model_id

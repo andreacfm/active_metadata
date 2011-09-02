@@ -1,5 +1,6 @@
 # encoding: UTF-8
-                                           
+
+# Given ##########################################################                                           
 Given /^an ActiveRecord instance of 'Document' with 'name' equals to "([^"]*)"$/ do |name|
   raise unless Document.ancestors.include?(::ActiveRecord::Base)
   @document = Document.create!(:name => name, :surname => 'Garden' )
@@ -14,6 +15,7 @@ Given /^a watcher on the "([^"]*)" field$/ do |attribute|
   @document.create_watcher_for(@attribute, @current_user)
 end
 
+# When ##########################################################
 When /^saving a new value "([^"]*)" on the "([^"]*)" field$/ do |value, attribute|
   @document.send("#{attribute}=", value)
   @document.save!
@@ -33,6 +35,18 @@ When /^afterwards I delete the note on the field "([^"]*)"$/ do |field|
   @document.delete_note_for(field.to_sym,note.id)  
 end
 
+When /^creating a new attachment on the "([^"]*)" field with name "([^"]*)"$/ do |field, filename|
+  file = File.expand_path("../../supports/#{filename}", __FILE__)
+  @attachment = Rack::Test::UploadedFile.new(file, "plain/text")
+  @document.save_attachment_for(field.to_sym, @attachment)
+  @document.attachments_for(field.to_sym).should have(1).record
+end
+
+When /^deleting the attachment on the "([^"]*)" field with name "([^"]*)"$/ do |arg1, arg2|
+  pending # express the regexp above with the code you wish you had
+end
+
+# Then ##########################################################
 Then /^([^"]*) alert should be found in the inbox of the user$/ do |number|
   @current_user.inbox.messages.should have(number.to_i).record
   @message = @current_user.inbox.messages.last
@@ -46,19 +60,7 @@ Then /^should record the "([^"]*)" model class$/ do |model_class|
   @message.model_class.should == model_class
 end
 
-Then /^should record the new value "([^"]*)"$/ do |new_value|
-  @message.new_value.should == new_value
-end
-
-Then /^the old value "([^"]*)"$/ do |old_value|
-  @message.old_value.should == old_value
-end
-      
-Then /^should record the "([^"]*)" content$/ do |value|
-  @message.new_value.should == value
-end
-
-Then /^should record the "([^"]*)" content in the old_value$/ do |old_value|
+Then /^should record the "([^"]*)" in the old_value$/ do |old_value|
   @message.old_value.should == old_value
 end
 

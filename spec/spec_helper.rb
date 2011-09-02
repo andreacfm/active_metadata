@@ -4,7 +4,8 @@ require "rails/all"
 require "logger"
 require 'rspec/core'
 require "sqlite3"
-require "mongoid"
+require "mongoid"   
+require "rack/test/uploaded_file"
 
 $: << File.expand_path(File.dirname(__FILE__) + "/../app")
 gemfile = File.expand_path('../Gemfile', __FILE__)
