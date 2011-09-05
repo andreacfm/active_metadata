@@ -302,6 +302,11 @@ describe ActiveMetadata do
       @document.history_for(:name).first.value.should eq "name 2"
       @document.history_for(:name).last.value.should eq "John"
     end
+    
+    it "should verify that no history is craeted for the skipped field defined in the config file" do
+      @document.history_for(:name).should have(1).record
+      @document.history_for(:id).should have(0).record      
+    end
 
     it "should save the correct creator when a history is created" do
       pending
@@ -312,12 +317,12 @@ describe ActiveMetadata do
   context "attachments" do
 
     before(:each) do
-      @document                     = Document.create! { |d| d.name = "John" }
+      @document = Document.create! { |d| d.name = "John" }
       @document.reload
-      doc                           = File.expand_path('../support/pdf_test.pdf',__FILE__)
-      @attachment                   = Rack::Test::UploadedFile.new(doc, "application/pdf")
-      doc2                          = File.expand_path('../support/pdf_test_2.pdf',__FILE__)
-      @attachment2                  = Rack::Test::UploadedFile.new(doc2, "application/pdf")
+      doc = File.expand_path('../support/pdf_test.pdf',__FILE__)
+      @attachment = Rack::Test::UploadedFile.new(doc, "application/pdf")
+      doc2 = File.expand_path('../support/pdf_test_2.pdf',__FILE__)
+      @attachment2 = Rack::Test::UploadedFile.new(doc2, "application/pdf")
     end
 
     it "should save attachment for a given attribute" do
