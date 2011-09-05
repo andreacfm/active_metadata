@@ -20,6 +20,6 @@ namespace :ci do
 end
 
 RSpec::Core::RakeTask.new(:rspec_all => ["ci:setup:rspec"]) do |t|
-  t.pattern = '**/*_spec.rb'
+  t.pattern = 'spec/*_spec.rb'
 end
                                                             
