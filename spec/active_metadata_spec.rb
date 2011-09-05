@@ -79,15 +79,15 @@ describe ActiveMetadata do
     end
 
     it "should save the creator id in metadata" do
-      @document.create_note_for(:name, "Very important note!", "current_user")
-      @document.notes_for(:name).last.created_by.should eq "current_user"
+      @document.create_note_for(:name, "Very important note!", 101)
+      @document.notes_for(:name).last.created_by.should eq 101
     end
 
     it "should save the updater id in metadata" do
-      @document.create_note_for(:name, "Very important note!", "current_user")
-      id                            = @document.notes_for(:name).last._id
-      @document.update_note id, "new note value", "another_user"
-      @document.notes_for(:name).last.updated_by.should eq "another_user"
+      @document.create_note_for(:name, "Very important note!", 101)
+      id = @document.notes_for(:name).last.id
+      @document.update_note id, "new note value", 102
+      @document.notes_for(:name).last.updated_by.should eq 102
     end
 
     it "should save the created_at datetime in metadata" do
@@ -102,17 +102,17 @@ describe ActiveMetadata do
 
     it "should update the updated_at field when a note is updated" do
       @document.create_note_for(:name, "Very important note!")
-      id                            = @document.notes_for(:name).last._id
+      id = @document.notes_for(:name).last._id
       sleep 0.1.seconds
       @document.update_note id, "new note value"
-      note                          = @document.notes_for(:name).last
+      note = @document.notes_for(:name).last
       note.updated_at.should > note.created_at
     end
 
-    it "should verify that note are saved with the correct model id if metadata_id_from is defined" do
+    it "should verify that note are saved with the correct model id if metadata_id_from is defined" , :mongoid => true do
       # fixtures
       @document.create_note_for(:name, "Very important note!")
-      @section                      = @document.create_section :title => "new section"
+      @section = @document.create_section :title => "new section"
       @section.reload
       @section.create_note_for(:title, "Very important note for section!")
 
@@ -121,39 +121,70 @@ describe ActiveMetadata do
       @section.notes_for(:title).last.label.active_meta.document_id.should eq @document.id
     end
 
-    it "should delete a note passing a bson object as id" do
+    it "should verify that note are saved with the correct model id if metadata_id_from is defined" , :active_record => true do
+      # fixtures
+      @document.create_note_for(:name, "Very important note!")
+      @section = @document.create_section :title => "new section"
+      @section.reload
+      @section.create_note_for(:title, "Very important note for section!")
+
+      # expectations
+      @document.notes_for(:name).last.document_id.should eq @document.id
+      @section.notes_for(:title).last.document_id.should eq @document.id
+    end
+
+    it "should delete a note passing a bson object as id", :mongoid => true do
       #fixtures
       2.times do |i|
         @document.create_note_for(:name, "Note number #{i}")
       end
 
       #expectations
-      notes                         = @document.notes_for(:name)
+      notes = @document.notes_for(:name)
       notes.count.should eq 2
-      note_to_be_deleted            = notes[0].note
+      note_to_be_deleted  = notes[0].note
       
       @document.delete_note_for(:name,notes[0]._id)
       
-      notes                         = @document.notes_for(:name)
+      notes = @document.notes_for(:name)
       notes.count.should eq 1
       notes.first.note.should_not eq note_to_be_deleted
       
     end
 
-    it "should delete a note passing a string as id" do
+    it "should delete a note passing a string as id", :mongoid => true do
       #fixtures
       2.times do |i|
         @document.create_note_for(:name, "Note number #{i}")
       end
 
       #expectations
-      notes                         = @document.notes_for(:name)
+      notes = @document.notes_for(:name)
       notes.count.should eq 2
-      note_to_be_deleted            = notes[0].note
+      note_to_be_deleted = notes[0].note
       
       @document.delete_note_for(:name,notes[0].id.to_s)
       
-      notes                         = @document.notes_for(:name)
+      notes = @document.notes_for(:name)
+      notes.count.should eq 1
+      notes.first.note.should_not eq note_to_be_deleted
+
+    end
+
+    it "should delete a note id", :active_record => true do
+      #fixtures
+      2.times do |i|
+        @document.create_note_for(:name, "Note number #{i}")
+      end
+
+      #expectations
+      notes = @document.notes_for(:name)
+      notes.count.should eq 2
+      note_to_be_deleted = notes[0].note
+      
+      @document.delete_note_for(:name,notes[0].id)
+      
+      notes = @document.notes_for(:name)
       notes.count.should eq 1
       notes.first.note.should_not eq note_to_be_deleted
 
@@ -171,17 +202,31 @@ describe ActiveMetadata do
       @document.notes_for(:name).last.note.should eq "Note number 0"
     end
     
-    it "should find a note by id" do
+    it "should find a note by id", :mongoid => true,  do
 
       3.times do |i|
         @document.create_note_for(:name, "Note number #{i}")
       end
       
-      note                          = @document.notes_for(:name).last
-      id                            = note.id.to_s
+      note = @document.notes_for(:name).last
+      id = note.id.to_s
       
-      match_note                    = @document.note_for :name,id
+      match_note = @document.note_for :name,id
       match_note.id.to_s.should eq id 
+      
+    end
+
+    it "should find a note by id", :active_record => true,  do
+
+      3.times do |i|
+        @document.create_note_for(:name, "Note number #{i}")
+      end
+      
+      note = @document.notes_for(:name).last
+      id = note.id
+      
+      match_note = @document.note_for :name,id
+      match_note.id.should eq id 
       
     end
 
@@ -190,7 +235,7 @@ describe ActiveMetadata do
   context "history" do
 
     before(:each) do
-      @document                     = Document.create! { |d| d.name = "John" }
+      @document = Document.create! { |d| d.name = "John" }
       @document.reload
     end
 
@@ -208,7 +253,7 @@ describe ActiveMetadata do
 
     it "should verify that history return records only for the self document" do
       # fixtures
-      @another_doc                  = Document.create :name => "Andrea"
+      @another_doc = Document.create :name => "Andrea"
       @another_doc.reload
 
         # expectations
@@ -219,9 +264,9 @@ describe ActiveMetadata do
       @another_doc.history_for(:name).last.value.should eq @another_doc.name
     end
 
-    it "should verify that history is saved with the correct model id if metadata_id_from is defined" do
+    it "should verify that history is saved with the correct model id if metadata_id_from is defined", :mongoid => true,  do
       # fixtures
-      @section                      = @document.create_section :title => "new section"
+      @section = @document.create_section :title => "new section"
       @section.reload
 
         # expectations
@@ -232,11 +277,24 @@ describe ActiveMetadata do
       @section.history_for(:title).last.label.active_meta.document_id.should eq @document.id
     end
 
+    it "should verify that history is saved with the correct model id if metadata_id_from is defined", :active_record => true,  do
+      # fixtures
+      @section = @document.create_section :title => "new section"
+      @section.reload
+
+        # expectations
+      @document.history_for(:name).count.should eq(1)
+      @document.history_for(:name).last.document_id.should eq @document.id
+
+      @section.history_for(:title).count.should eq(1)
+      @section.history_for(:title).last.document_id.should eq @document.id
+    end
+
     it "should verify that history_for sort by created_at descending" do
       #fixtures
       3.times do |i|
         sleep 0.1.seconds
-        @document.name              = "name #{i}"
+        @document.name = "name #{i}"
         @document.save
       end
 
@@ -294,8 +352,8 @@ describe ActiveMetadata do
 
     it "should verify that the document has been saved in the correct position on filesystem" do
       @document.save_attachment_for(:name,@attachment)
-      att                           = @document.attachments_for(:name).first
-      expected_path                 = File.expand_path "#{ActiveMetadata::CONFIG['attachment_base_path']}/#{@document.id}/#{:name.to_s}/#{att.counter}/#{@attachment.original_filename}"
+      att = @document.attachments_for(:name).first
+      expected_path = File.expand_path "#{ActiveMetadata::CONFIG['attachment_base_path']}/#{@document.id}/#{:name.to_s}/#{att.counter}/#{@attachment.original_filename}"
       File.exists?(expected_path).should be_true
     end
 
@@ -386,11 +444,11 @@ describe ActiveMetadata do
           
   context "watchers" do        
     before(:each) do
-      @document                     = Document.create! { |d| d.name = "John" }
+      @document = Document.create! { |d| d.name = "John" }
     end
     
     it "should create a watcher for a given field" do      
-        user                        = User.create!(:email => "email@email.it", :firstname => 'John', :lastname => 'smith' )
+        user = User.create!(:email => "email@email.it", :firstname => 'John', :lastname => 'smith' )
         @document.create_watcher_for(:name, user)
         @document.watchers_for(:name).should have(1).record
     end

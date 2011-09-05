@@ -14,10 +14,7 @@ module ActiveMetadata::Persistence::ActiveRecord::History
     end
 
     def history_for field
-      meta = ActiveMeta.find_or_create_by(:document_id => metadata_id)
-      
-      label = meta.labels.find_or_create_by(:name => field.to_s)
-      label.histories.desc(:created_at).to_a
+      History.all(:conditions => {:document_id => metadata_id,:label => field}, :order => "created_at DESC")
     end
 
   end
