@@ -89,3 +89,7 @@ RSpec.configure do |config|
     # seems that closing the established connection isn't really necessary
   end
 end
+
+Cucumber::Rake::Task.new(:features) do |t|
+  t.cucumber_opts = "features --format pretty"
+end
