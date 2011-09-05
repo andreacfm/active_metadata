@@ -2,7 +2,7 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', active_metadata_show_note_path(@document.class,@document.id,@note.label.name,@note.id.to_s) %> |
-<%= link_to 'Back', active_metadata_notes_path(@document.class,@document.id,@note.label.name) %>
+<%= link_to 'Show', active_metadata_show_note_path(@document.class,@document.id,@note.label,@note.id.to_s) %> |
+<%= link_to 'Back', active_metadata_notes_path(@document.class,@document.id,@note.label) %>
 
 

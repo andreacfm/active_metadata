@@ -23,7 +23,7 @@ module ActiveMetadata
     
     initializer "static assets" do |app|
       app.middleware.use ::ActionDispatch::Static, "#{root}/public"
-    end
-    
-  end
+      config.generators.orm = :active_record      
+    end    
+  end  
 end

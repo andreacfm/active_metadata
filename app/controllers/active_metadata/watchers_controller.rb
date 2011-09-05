@@ -1,15 +1,14 @@
 module ActiveMetadata
-  class NotesController < ApplicationController
-
+  class WatchersController < ApplicationController
     unloadable
 
     def index
       @document = eval(params[:model_name]).find params[:model_id] 
-      @notes = @document.notes_for params[:field_name]      
+      @watchers = @document.watchers_for params[:field_name]      
       respond_to do |format|
         format.html { render :layout => false}
         format.xml  { render :xml => @notes }
-        format.xls { send_data @notes.to_xls_data(:columns => [:note,:created_at], :headers => [:nota,'inserita']), :filename => 'notes.xls' }        
+        format.xls { send_data @watchers.to_xls_data(:columns => [:user,:created_at], :headers => [:nota,'inserita']), :filename => 'watchers.xls' }
       end
     end  
 
@@ -38,7 +37,7 @@ module ActiveMetadata
             
       respond_to do |format|
         if @document.update_note(params[:id],params[:note][:note])
-          format.html { redirect_to(active_metadata_show_note_path(@document.class,@document.id,@note.label,@note.id), :notice => 'Note was successfully updated.') }
+          format.html { redirect_to(active_metadata_show_note_path(@document.class,@document.id,@note.label.name,@note._id), :notice => 'Note was successfully updated.') }
           format.xml  { head :ok }
         else
           format.html { render :action => "edit" }

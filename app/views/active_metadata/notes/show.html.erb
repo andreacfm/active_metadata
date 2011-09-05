@@ -5,5 +5,5 @@
 	<%= @note.note %>
 </p>
 
-<%= link_to "Edit", active_metadata_edit_note_path(@document.class,@document.id,@note.label.name,@note._id) %>|
-<%= link_to 'Back', active_metadata_notes_path(@document.class,@document.id,@note.label.name) %>
+<%= link_to "Edit", active_metadata_edit_note_path(@document.class,@document.id,@note.label,@note.id) %>|
+<%= link_to 'Back', active_metadata_notes_path(@document.class,@document.id,@note.label) %>
