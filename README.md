@@ -67,3 +67,5 @@ and a sample migration to be created
 
 *   def notify_changes(matched_label, values, model_class, model_id) should not present
 	model_class and model_id as parameters but it should take it from a common reference	
+*	active_metadata.yml in the host rails app should be generated from a setup step like 
+	rake active_metadata:install
