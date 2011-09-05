@@ -11,15 +11,15 @@ describe ActiveMetadata do
     end
 
     it "should find the metadata id if no metadata_id_from params has been provided" do
-      @document                     = Document.create! { |d| d.name = "John" }
+      @document = Document.create! { |d| d.name = "John" }
       @document.reload
       @document.metadata_id.should eq @document.id
     end
 
     it "should find the metadata id if a metadata_id_from params has been specified" do
-      @document                     = Document.create! { |d| d.name = "John" }
+      @document = Document.create! { |d| d.name = "John" }
       @document.reload
-      @section                      = @document.create_section :title => "new section"
+      @section = @document.create_section :title => "new section"
       @section.reload
       @section.metadata_id.should eq @document.id
     end
@@ -29,7 +29,7 @@ describe ActiveMetadata do
   context "saving and quering notes" do
 
     before(:each) do
-      @document                     = Document.create! { |d| d.name = "John" }
+      @document = Document.create! { |d| d.name = "John" }
       @document.reload
     end
 
@@ -73,7 +73,7 @@ describe ActiveMetadata do
     end
 
     it "should save multiple notes" do
-      notes                         = ["note number 1", "note number 2"]
+      notes = ["note number 1", "note number 2"]
       @document.create_notes_for(:name, notes)
       @document.notes_for(:name).should have(2).record
     end
@@ -103,7 +103,7 @@ describe ActiveMetadata do
     it "should update the updated_at field when a note is updated" do
       @document.create_note_for(:name, "Very important note!")
       id = @document.notes_for(:name).last._id
-      sleep 0.1.seconds
+      sleep 1.seconds
       @document.update_note id, "new note value"
       note = @document.notes_for(:name).last
       note.updated_at.should > note.created_at
@@ -193,7 +193,7 @@ describe ActiveMetadata do
     it "should verify that notes_for sort by updated_at descending" do
       #fixtures
       3.times do |i|
-        sleep 0.1.seconds
+        sleep 1.seconds
         @document.create_note_for(:name, "Note number #{i}")
       end
 
@@ -365,10 +365,17 @@ describe ActiveMetadata do
       @document.attachments_for(:name).last.attach.instance_read(:updated_at).should be_a_kind_of Time
     end
 
-    it "should verify that the document has been saved in the correct position on filesystem" do
+    it "should verify that the document has been saved in the correct position on filesystem", :active_record => true  do
       @document.save_attachment_for(:name,@attachment)
       att = @document.attachments_for(:name).first
       expected_path = File.expand_path "#{ActiveMetadata::CONFIG['attachment_base_path']}/#{@document.id}/#{:name.to_s}/#{att.id}/#{@attachment.original_filename}"
+      File.exists?(expected_path).should be_true
+    end
+
+    it "should verify that the document has been saved in the correct position on filesystem", :mongoid => true  do
+      @document.save_attachment_for(:name,@attachment)
+      att = @document.attachments_for(:name).first
+      expected_path = File.expand_path "#{ActiveMetadata::CONFIG['attachment_base_path']}/#{@document.id}/#{:name.to_s}/#{att.counter}/#{@attachment.original_filename}"
       File.exists?(expected_path).should be_true
     end
 
