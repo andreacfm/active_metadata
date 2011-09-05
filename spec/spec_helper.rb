@@ -3,6 +3,8 @@ require 'rubygems'
 require "rails/all"
 require "logger"
 require 'rspec/core'
+require 'cucumber'
+require 'cucumber/rake/task'
 require "sqlite3"
 require "mongoid"   
 require "rack/test/uploaded_file"
@@ -74,7 +76,7 @@ RSpec.configure do |config|
     Document.delete_all
     Note.delete_all
     Watcher.delete_all
-    # Attachment.delete_all
+    Attachment.delete_all
     History.delete_all    
     if is_mongo 
       ActiveMeta.delete_all
