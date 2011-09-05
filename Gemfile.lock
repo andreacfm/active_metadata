@@ -4,6 +4,7 @@ PATH
     active_metadata (0.0.4)
       activerecord (= 3.0.1)
       bson_ext
+      ci_reporter
       cucumber
       mongoid (= 2.1.4)
       mongoid-paperclip
@@ -134,7 +135,6 @@ PLATFORMS
 
 DEPENDENCIES
   active_metadata!
-  ci_reporter
   rspec-rails
   sqlite3
   sqlite3-ruby
