@@ -7,7 +7,7 @@ module ActiveMetadata::Persistence::ActiveRecord::Note
   module InstanceMethods
     
     def create_note_for(field, note, created_by=nil)
-      note = Note.create! :document_id => metadata_id,:label => field.to_s,:note => note, :created_by => created_by    
+      Note.create! :document_id => metadata_id,:label => field.to_s,:note => note, :created_by => created_by    
                                                      
       # BEWARE: I'm not checking the send_notification method existence
       # this notification should be asynch

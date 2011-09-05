@@ -8,8 +8,8 @@ class CreateAttachment < ActiveRecord::Migration
       t.integer :counter
       t.string :attach_file_name
       t.string :attach_content_type
-      t.string :attach_file_size
-      t.string :attach_updated_at
+      t.integer :attach_file_size
+      t.datetime :attach_updated_at
       t.timestamps
     end
 

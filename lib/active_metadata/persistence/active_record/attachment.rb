@@ -16,15 +16,14 @@ module ActiveMetadata::Persistence::ActiveRecord::Attachment
     end
 
     def delete_attachment_for(field,id)
-      a = ActiveMeta.find_or_create_by(:document_id => metadata_id).labels.find_or_create_by(:name => field.to_s).attachments.find(id)
+      a = Attachment.find(id)
       filename = a.attach.original_filename
-      a.destroy
-      
+      a.destroy      
       self.send(:send_notification, field, filename, "")
     end
 
     def update_attachment_for(field, id, newfile)
-      a = ActiveMeta.find_or_create_by(:document_id => metadata_id).labels.find_or_create_by(:name => field.to_s).attachments.find(id)
+      a = Attachment.find(id)
       old_filename = a.attach.original_filename
       a.attach = newfile
       a.save                                            
