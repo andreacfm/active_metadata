@@ -19,9 +19,9 @@ Gem::Specification.new do |s|
   s.add_development_dependency "ci_reporter"  
   s.add_dependency "rails", "3.0.1"
   s.add_dependency "activerecord", "3.0.1"
-  s.add_dependency "mongoid", "~> 2.0"
-  s.add_dependency "bson_ext"
+  s.add_dependency "mongoid", "2.1.4"
   s.add_dependency "mongoid-paperclip"
+  s.add_dependency "bson_ext"
   s.add_dependency "cucumber"
   s.add_dependency "to_xls"
   s.files         = Dir.glob('{lib,app,config,db}/**/*')

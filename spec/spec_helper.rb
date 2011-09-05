@@ -22,6 +22,18 @@ end if File.exist?(gemfile)
 
 ENV["RAILS_ENV"] ||= 'test'
 ENV["ACTIVE_METADATA_ENV"] ||= 'test'
+
+ActiveRecord::Base.establish_connection YAML.load_file("config/database.yml")[ENV["RAILS_ENV"]]
+ActiveRecord::Base.logger = Logger.new "log/test.log"
+Rails.logger = ActiveRecord::Base.logger  
+
+#load the config
+conf = YAML.load_file('config/active_metadata.yml')[Rails.env]
+is_mongo = conf['persists_with'] == 'mongoid'
+
+if is_mongo 
+  Mongoid.load!("config/mongoid.yml")
+end
                                                                       
 # loading ruby files
 require "#{File.dirname(__FILE__)}/../lib/engine.rb"
@@ -30,17 +42,6 @@ Dir["app/models/*.rb"].each {|f| require "models/#{(File.basename(f, File.extnam
 
 require 'models/inbox'
 
-ActiveRecord::Base.establish_connection YAML.load_file("config/database.yml")[ENV["RAILS_ENV"]]
-ActiveRecord::Base.logger = Logger.new "log/test.log"
-
-#load the config
-conf = YAML.load_file('config/active_metadata.yml')[Rails.env]
-is_mongo = conf['persists_with'] == 'mongoid'
-
-if is_mongo 
-  Mongoid.load!("config/mongoid.yml")
-  Mongoid.logger = Logger.new "log/test.log"
-end
 
 RSpec.configure do |config|
   # == Mock Framework
@@ -72,7 +73,7 @@ RSpec.configure do |config|
   config.before(:each) do
     Document.delete_all
     Note.delete_all
-    # Watcher.delete_all
+    Watcher.delete_all
     # Attachment.delete_all
     History.delete_all    
     if is_mongo 

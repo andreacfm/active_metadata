@@ -4,7 +4,10 @@ module ActiveMetadata
  
   ## Define ModelMethods
   module Base
-
+    
+    require 'mongoid' if ActiveMetadata::CONFIG['persists_with'] == 'mongoid'
+    require 'mongoid_paperclip' if ActiveMetadata::CONFIG['persists_with'] == 'mongoid'
+    require 'paperclip' if ActiveMetadata::CONFIG['persists_with'] == 'active_record'
     require "active_metadata/persistence/persistence"
 
     def self.included(klass)
@@ -21,8 +24,8 @@ module ActiveMetadata
         class_variable_set("@@metadata_id_from", args.empty? ? nil : args[0][:metadata_id_from])
 
         include ActiveMetadata::Base::InstanceMethods
-        include ActiveMetadata::Persistence        
-
+        include ActiveMetadata::Persistence   
+             
       end
 
     end

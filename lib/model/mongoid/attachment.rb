@@ -1,5 +1,3 @@
-require "active_metadata/base"
-
 class Attachment
   include Mongoid::Document
   include Mongoid::Paperclip

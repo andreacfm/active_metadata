@@ -27,8 +27,7 @@ module ActiveMetadata::Persistence::ActiveRecord::Note
     end
 
     def note_for(field,id)
-      label = ActiveMeta.find_or_create_by(:document_id => metadata_id).labels.find_or_create_by(:name => field.to_s)
-      label.notes.find(id)      
+      Note.find(id)
     end      
     
     def create_notes_for(field,notes)
@@ -36,7 +35,7 @@ module ActiveMetadata::Persistence::ActiveRecord::Note
     end
 
     def delete_note_for(field,id)
-      n = ActiveMeta.find_or_create_by(:document_id => metadata_id).labels.find_or_create_by(:name => field.to_s).notes.find(id)
+      n = Note.find(id)
       old_value = n.note
       n.destroy
       self.send(:send_notification, field, old_value, "")
