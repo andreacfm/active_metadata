@@ -1,6 +1,7 @@
 require 'rake'
 require 'bundler/gem_tasks'
 require 'rake/active_record_tasks'  
+require 'rspec/core/rake_task'
 require 'ci/reporter/rake/rspec'
 require 'ci/reporter/rake/cucumber' 
 
@@ -16,5 +17,9 @@ namespace :ci do
       ENV["CUCUMBER_OPTS"] = "#{ENV['CUCUMBER_OPTS']} #{extra_opts}"
     end
   end
+end
+
+RSpec::Core::RakeTask.new(:rspec_all => ["ci:setup:rspec"]) do |t|
+  t.pattern = 'spec/*_spec.rb'
 end
                                                             
