@@ -20,7 +20,6 @@ rescue Bundler::GemNotFound => e
   exit!
 end if File.exist?(gemfile)
 
-# This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
 ENV["ACTIVE_METADATA_ENV"] ||= 'test'
                                                                       
@@ -34,8 +33,14 @@ require 'models/inbox'
 ActiveRecord::Base.establish_connection YAML.load_file("config/database.yml")[ENV["RAILS_ENV"]]
 ActiveRecord::Base.logger = Logger.new "log/test.log"
 
-Mongoid.load!("config/mongoid.yml")
-Mongoid.logger = Logger.new "log/test.log"
+#load the config
+conf = YAML.load_file('config/active_metadata.yml')[Rails.env]
+is_mongo = conf['persists_with'] == 'mongoid'
+
+if is_mongo 
+  Mongoid.load!("config/mongoid.yml")
+  Mongoid.logger = Logger.new "log/test.log"
+end
 
 RSpec.configure do |config|
   # == Mock Framework
@@ -56,13 +61,25 @@ RSpec.configure do |config|
   # config.use_transactional_fixtures = true
 
 
-  config.before(:suite) do  
+  config.before(:suite) do 
+    if is_mongo 
+      ActiveMeta.create_indexes()
+      Label.create_indexes()
+      Note.create_indexes();
+    end  
   end
 
-  config.after(:each) do   
+  config.before(:each) do
     Document.delete_all
-    ActiveMeta.delete_all
-    FileUtils.remove_dir File.expand_path('public/system/') if Dir.exist?(File.expand_path('public/system/'))
+    Note.delete_all
+    # Watcher.delete_all
+    # Attachment.delete_all
+    History.delete_all    
+    if is_mongo 
+      ActiveMeta.delete_all
+      Label.delete_all
+    end  
+    FileUtils.remove_dir File.expand_path('public/system/') if Dir.exist?(File.expand_path('public/system/'))       
   end
 
   config.after(:suite) do  

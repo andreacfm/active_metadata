@@ -1,4 +1,8 @@
-module ActiveMetadata::Note
+module ActiveMetadata::Persistence::Mongoid::Note
+
+  def self.included(receiver)
+    receiver.send :include, InstanceMethods
+  end
 
   module InstanceMethods
     
@@ -13,7 +17,7 @@ module ActiveMetadata::Note
     end
 
     def update_note(id, note, updated_by=nil)
-      n = ActiveMeta.where("labels.notes._id" => id).first.labels.first.notes.first
+      n = ActiveMeta.find_or_create_by(:document_id => metadata_id).labels.find_or_create_by(:name => 'name').notes.find id
       old_value = n.note
       n.update_attributes :note => note, :updated_by => updated_by, :updated_at => Time.now.utc
       
