@@ -38,7 +38,7 @@ module ActiveMetadata
             
       respond_to do |format|
         if @document.update_note(params[:id],params[:note][:note])
-          format.html { redirect_to(active_metadata_show_note_path(@document.class,@document.id,@note.label.name,@note._id), :notice => 'Note was successfully updated.') }
+          format.html { redirect_to(active_metadata_show_note_path(@document.class,@document.id,@note.label,@note.id), :notice => 'Note was successfully updated.') }
           format.xml  { head :ok }
         else
           format.html { render :action => "edit" }

@@ -21,7 +21,7 @@ module ActiveMetadata::Persistence::Mongoid::Note
       old_value = n.note
       n.update_attributes :note => note, :updated_by => updated_by, :updated_at => Time.now.utc
       
-      self.send(:send_notification, n.label.name, old_value, note)
+      self.send(:send_notification, n.label, old_value, note)
     end
 
     def notes_for(field)

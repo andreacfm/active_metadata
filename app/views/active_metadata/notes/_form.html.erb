@@ -1,4 +1,4 @@
-<%= form_for(@note,:url => active_metadata_update_note_path(@document.class,@document.id,@note.label.name,@note._id)) do |f| %>
+<%= form_for(@note,:url => active_metadata_update_note_path(@document.class,@document.id,@note.label,@note.id)) do |f| %>
 
   <% if @document.errors.any? %>
       <div id  = "error_explanation">
