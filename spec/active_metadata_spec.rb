@@ -45,7 +45,7 @@ describe ActiveMetadata do
 
     it "should verify that notes_for_name return only notes for the self Document" do
       # fixtures
-      @another_doc                  = Document.create :name => "Andrea"
+      @another_doc = Document.create :name => "Andrea"
       @another_doc.create_note_for(:name, "Very important note for doc2!")
       @another_doc.reload
       @document.create_note_for(:name, "Very important note!")
@@ -57,9 +57,16 @@ describe ActiveMetadata do
 
     end
 
-    it "should update a note using update_not_for_name" do
+    it "should update a note using update_note_for_name", :mongoid => true  do
       @document.create_note_for(:name, "Very important note!")
-      id                            = @document.notes_for(:name).last._id
+      id = @document.notes_for(:name).last._id
+      @document.update_note(id, "New note value!")
+      @document.notes_for(:name).last.note.should eq "New note value!"
+    end
+
+    it "should update a note using update_note_for_name", :active_record => true  do
+      @document.create_note_for(:name, "Very important note!")
+      id = @document.notes_for(:name).last.id
       @document.update_note(id, "New note value!")
       @document.notes_for(:name).last.note.should eq "New note value!"
     end
@@ -100,9 +107,18 @@ describe ActiveMetadata do
       @document.notes_for(:name).last.updated_at.should be_a_kind_of Time
     end
 
-    it "should update the updated_at field when a note is updated" do
+    it "should update the updated_at field when a note is updated", :mongoid => true  do
       @document.create_note_for(:name, "Very important note!")
       id = @document.notes_for(:name).last._id
+      sleep 1.seconds
+      @document.update_note id, "new note value"
+      note = @document.notes_for(:name).last
+      note.updated_at.should > note.created_at
+    end
+
+    it "should update the updated_at field when a note is updated", :active_record => true  do
+      @document.create_note_for(:name, "Very important note!")
+      id = @document.notes_for(:name).last.id
       sleep 1.seconds
       @document.update_note id, "new note value"
       note = @document.notes_for(:name).last
@@ -434,7 +450,7 @@ describe ActiveMetadata do
       attachments.first.attach.path.should_not eq attachment_path_to_be_deleted
     end
 
-    it "should update an attachment" do
+    it "should update an attachment", :mongoid => true  do
       @document.save_attachment_for(:name,@attachment)
       att = @document.attachments_for(:name).last
 
@@ -445,13 +461,36 @@ describe ActiveMetadata do
       File.exists?(att2.attach.path).should be_true
     end
 
-    it "should verify that field attachment_updated_at is modified after an update" do
+    it "should update an attachment", :active_record => true  do
+      @document.save_attachment_for(:name,@attachment)
+      att = @document.attachments_for(:name).last
+
+      @document.update_attachment_for :name,att.id,@attachment2
+      att2 = @document.attachments_for(:name).last
+
+      File.exists?(att.attach.path).should be_false
+      File.exists?(att2.attach.path).should be_true
+    end
+
+    it "should verify that field attachment_updated_at is modified after an update", :mongoid => true do
       @document.save_attachment_for(:name,@attachment)
       att = @document.attachments_for(:name).last
 
       sleep 1.seconds
 
       @document.update_attachment_for :name,att._id,@attachment2
+      att2 = @document.attachments_for(:name).last
+
+      att2.attach.instance_read(:updated_at).should be > att.attach.instance_read(:updated_at)
+    end
+
+    it "should verify that field attachment_updated_at is modified after an update", :active_record => true do
+      @document.save_attachment_for(:name,@attachment)
+      att = @document.attachments_for(:name).last
+
+      sleep 1.seconds
+
+      @document.update_attachment_for :name,att.id,@attachment2
       att2 = @document.attachments_for(:name).last
 
       att2.attach.instance_read(:updated_at).should be > att.attach.instance_read(:updated_at)

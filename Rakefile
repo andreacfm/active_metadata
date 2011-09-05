@@ -21,5 +21,6 @@ end
 
 RSpec::Core::RakeTask.new(:rspec_all => ["ci:setup:rspec"]) do |t|
   t.pattern = 'spec/*_spec.rb'
+  t.rspec_opts = %w{--tag ~mongoid}
 end
                                                             
