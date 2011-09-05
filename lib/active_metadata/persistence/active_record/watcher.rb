@@ -7,9 +7,7 @@ module ActiveMetadata::Persistence::ActiveRecord::Watcher
   module InstanceMethods
     def create_watcher_for(field, owner)
       raise RuntimeError, "The object id MUST be valued" unless self.id
-
-      label_path(field).watchers.create!(:owner_id => owner.id, :created_at => Time.now.utc, :updated_at => Time.now.utc)
-
+      Watcher.create! :document_id => metadata_id, :label => field, :owner_id => owner.id 
       owner.create_inbox unless owner.inbox # ensure that an inbox is present
     end                      
 

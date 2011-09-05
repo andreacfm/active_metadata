@@ -8,7 +8,7 @@ development:
     attachment_base_url: "/system/metadata_attachments"
 
 test:
-    persists_with: "active_record"
+    persists_with: "mongoid"
     history_skip_fields:
       - 'id'
       - 'created_at'
