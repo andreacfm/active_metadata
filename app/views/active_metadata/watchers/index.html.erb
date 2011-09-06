@@ -1,0 +1,5 @@
+<ul>
+    <% @watchers.each do |watcher| %>
+    	<li><span><%= watcher.created_at.strftime("%m/%d/%Y at %I:%M:%S") %></span> <%= watcher.owner_id %></li>
+    <% end %>
+</ul>
