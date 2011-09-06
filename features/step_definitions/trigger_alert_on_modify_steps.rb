@@ -56,22 +56,23 @@ When /^updating the attachment on the "([^"]*)" field with name "([^"]*)"$/ do |
 end
 # Then ##########################################################
 Then /^([^"]*) alert should be found in the inbox of the user$/ do |number|
-  @current_user.inbox.messages.should have(number.to_i).record
-  @message = @current_user.inbox.messages.last
+  @notifier = @document.notifier
+  # @current_user.inbox.messages.should have(number.to_i).record
+  # @message = @current_user.inbox.messages.last
 end                                          
 
 Then /^should regard the "([^"]*)" field$/ do |field|
-  @message.label.should == field
+  @notifier.matched_label.should == field
 end
 
 Then /^should record the "([^"]*)" model class$/ do |model_class|
-  @message.model_class.should == model_class
+  @notifier.model_class.should == model_class
 end
 
 Then /^should record the "([^"]*)" in the old_value$/ do |old_value|
-  @message.old_value.should == old_value
+  @notifier.old_value.should == old_value
 end
 
 Then /^should record the "([^"]*)" in the new_value$/ do |new_value|
-  @message.new_value.should == new_value
+  @notifier.new_value.should == new_value
 end

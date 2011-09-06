@@ -8,7 +8,6 @@ module ActiveMetadata::Persistence::ActiveRecord::Watcher
     def create_watcher_for(field, owner)
       raise RuntimeError, "The object id MUST be valued" unless self.id
       Watcher.create! :document_id => metadata_id, :label => field, :owner_id => owner.id 
-      owner.create_inbox unless owner.inbox # ensure that an inbox is present
     end                      
 
     def watchers_for(field)
@@ -36,8 +35,21 @@ module ActiveMetadata::Persistence::ActiveRecord::Watcher
     end
 
     def send_notification(field, old_value, new_value)   
-      watchers_for(field).each { |watch| watch.notify_changes(field, old_value, new_value, self.class, self.id) }
+      watchers_for(field).each { |watch| notify_changes(field, old_value, new_value, self.class.to_s, self.id, watch.owner_id) }
     end
+          
+    def notifier
+      @notifier
+    end
+    
+    private
+    def notify_changes(matched_label, old_value, new_value, model_class, model_id, owner_id)    
+      raise "A watcher notifier class must be implemented" unless WatcherNotifier
+
+      @notifier = WatcherNotifier.new
+      @notifier.notify(matched_label.to_s, old_value, new_value, model_class, model_id,owner_id)                                                                               
+    end
+    
   end
 
 end

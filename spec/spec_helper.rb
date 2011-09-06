@@ -38,10 +38,8 @@ end
 # loading ruby files
 require "#{File.dirname(__FILE__)}/../lib/engine.rb"
 Dir["spec/support/*.rb"].each {|f| require "support/#{(File.basename(f, File.extname(f)) )}"}
+
 Dir["app/models/*.rb"].each {|f| require "models/#{(File.basename(f, File.extname(f)) )}"}
-
-require 'models/inbox'
-
 
 RSpec.configure do |config|
   # == Mock Framework
