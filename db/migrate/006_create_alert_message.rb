@@ -11,10 +11,11 @@ class CreateAlertMessage < ActiveRecord::Migration
       t.string :model_class
       t.integer :model_id
       t.string :alert_type
-      t.string :old_value
-      t.string :new_value
-      t.text :content
+      t.text :old_value
+      t.text :new_value
       t.integer :inbox_id
+      t.boolean :read
+      
       t.timestamps
     end
   end

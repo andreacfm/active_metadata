@@ -17,8 +17,8 @@ class Watcher
       message.alert_type = :model_value_changed
       message.old_value = old_value
       message.new_value = new_value
-      message.content = nil?
       message.inbox_id = inbox.id
+      message.read = false
     end 
   end
 end
