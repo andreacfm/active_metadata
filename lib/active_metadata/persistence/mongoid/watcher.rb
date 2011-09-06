@@ -17,6 +17,14 @@ module ActiveMetadata::Persistence::Mongoid::Watcher
       label_path(field).watchers.asc(:created_at).to_a
     end
 
+    def delete_watcher_for(field, owner)
+      #TODO
+    end    
+    
+    def is_watched_by(field,owner)
+      #TODO
+    end                    
+
     # This is a callback method of the after_save of the ActiveRecord
     # object. 
     # TODO: It should definetly be decoupled in time from the save of

@@ -19,7 +19,11 @@ module ActiveMetadata::Persistence::ActiveRecord::Watcher
       Watcher.where(:document_id => metadata_id, :label => field, :owner_id => owner.id).each do |watcher|
         watcher.destroy
       end   
-    end                      
+    end    
+    
+    def is_watched_by(field,owner)
+      Watcher.where(:document_id => metadata_id, :label => field, :owner_id => owner.id).empty? ? false : true 
+    end                    
 
     # This is a callback method of the after_save of the ActiveRecord
     # object. 

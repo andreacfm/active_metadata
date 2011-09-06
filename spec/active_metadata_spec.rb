@@ -540,6 +540,15 @@ describe ActiveMetadata do
       @document.delete_watcher_for :name, user
       @document.watchers_for(:name).should have(0).record      
     end
+
+    it "should return false if field is not watched by the passed user" do
+      user = User.create!(:email => "email@email.it", :firstname => 'John', :lastname => 'smith' )
+      another_user = User.create!(:email => "email2@email.it", :firstname => 'George', :lastname => 'Washington' )
+
+      @document.create_watcher_for(:name, user)
+      @document.is_watched_by(:name,user).should be_true
+      @document.is_watched_by(:name,another_user).should be_false
+    end
     
   end
 end

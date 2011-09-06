@@ -24,7 +24,7 @@ module ActiveMetadata
     
     def destroy
       @document = eval(params[:model_name]).find params[:model_id]     
-      @document.delete
+      @document.delete_watcher_for params[:field_name], User.find(params[:user_id])
       respond_to do |format|
         format.js       
       end
