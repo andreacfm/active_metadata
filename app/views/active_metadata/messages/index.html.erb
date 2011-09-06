@@ -1,0 +1,8 @@
+<ul>
+    <% @messages.each do |message| %>
+    	<li>
+			<span><%= message.created_at.strftime("%m/%d/%Y at %I:%M:%S") %></span> <%= message.new_value %> <br/>
+			<%= link_to "Letto", active_metadata_read_message_path(message.id), :method => :put, :remote => true %>	        
+		</li>
+    <% end %>
+</ul>
