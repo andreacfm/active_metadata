@@ -15,6 +15,12 @@ module ActiveMetadata::Persistence::ActiveRecord::Watcher
       Watcher.all(:conditions => {:label => field, :document_id => metadata_id})   
     end
 
+    def delete_watcher_for(field, owner)
+      Watcher.where(:document_id => metadata_id, :label => field, :owner_id => owner.id).each do |watcher|
+        watcher.destroy
+      end   
+    end                      
+
     # This is a callback method of the after_save of the ActiveRecord
     # object. 
     # TODO: It should definetly be decoupled in time from the save of

@@ -491,6 +491,15 @@ describe ActiveMetadata do
         user = User.create!(:email => "email@email.it", :firstname => 'John', :lastname => 'smith' )
         @document.create_watcher_for(:name, user)
         @document.watchers_for(:name).should have(1).record
+    end   
+    
+    it "should delete a watcher for a given field" do
+      user = User.create!(:email => "email@email.it", :firstname => 'John', :lastname => 'smith' )
+      @document.create_watcher_for(:name, user)
+      @document.watchers_for(:name).should have(1).record
+      
+      @document.delete_watcher_for :name, user
+      @document.watchers_for(:name).should have(0).record      
     end
     
   end
