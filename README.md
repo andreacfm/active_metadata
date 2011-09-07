@@ -1,6 +1,9 @@
-==Active Metadata
+Active Metadata
+====
                
-==Requirements
+Requirements
+---
+
 ActiveMetadata gem will work properly under the following conditions:
 
 *	ActiveMetadata will work _only_ in a Rails 3+ application 
@@ -20,15 +23,16 @@ Here are a sample of the *User* model to be inserted
 	end
 	  
 and a sample migration to be created
+
 	create_table :users do |t|
 	  t.string :email
 	  t.string :firstname
 	  t.string :lastname
 	  t.timestamps
 	end
-----
 
-== Tech Debts
+Tech Debts
+---
 
 * The migration to create the inboxes table should automagically be created by 
   a generator or a rake task like {rake active_metadata:setup}
@@ -44,3 +48,7 @@ and a sample migration to be created
 	
 * Method models/Watcher.notify_changes: it should be better ti get the list of user 
 	in one shot to load them from the SQL Database in one shot and not for every watcher
+	
+* Saving the model name into histories, notes etc... records could allow the gem to be used 
+  for more models into the same applications. As per the id also the model name should consider the presence of a a
+  parent.	
