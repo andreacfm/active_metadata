@@ -1,7 +1,7 @@
 class CreateNotes < ActiveRecord::Migration
   def self.up
     create_table :notes do |t|
-      t.string :note
+      t.text :note
       t.string :label
       t.integer :document_id
       t.integer :created_by

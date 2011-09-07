@@ -1,7 +1,7 @@
 class CreateHistory < ActiveRecord::Migration
   def self.up
     create_table :histories do |t|
-      t.string :value
+      t.text :value
       t.string :label
       t.integer :document_id
       t.timestamps
