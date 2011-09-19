@@ -18,6 +18,7 @@ Feature: Trigger alert on modify
 		And should record the "Document" model class 
 		And should record the "pluto" in the new_value
 		And should record the "pippo" in the old_value 
+		And should record the :history_message in the type
 		
 	Scenario: receive a new alert in the inbox when a note of a field is added
 		Given a watcher on the "name" field 

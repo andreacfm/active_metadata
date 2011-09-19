@@ -76,3 +76,7 @@ end
 Then /^should record the "([^"]*)" in the new_value$/ do |new_value|
   @notifier.new_value.should == new_value
 end
+
+Then /^should record the "([^"]*)" in the type$/ do |type|
+  @notifier.type.should == type
+end

@@ -24,18 +24,8 @@ module ActiveMetadata::Persistence::ActiveRecord::Watcher
       Watcher.where(:document_id => metadata_id, :label => field, :owner_id => owner.id).empty? ? false : true 
     end                    
 
-    # This is a callback method of the after_save of the ActiveRecord
-    # object. 
-    # TODO: It should definetly be decoupled in time from the save of
-    # the alerting system
-    def on_save_watcher_callback                          
-      self.changes.each do |field, values|
-        send_notification(field, values.first, values.last)
-      end
-    end
-
-    def send_notification(field, old_value, new_value)   
-      watchers_for(field).each { |watch| notify_changes(field, old_value, new_value, self.class.to_s, self.id, watch.owner_id) }
+    def send_notification(field, old_value, new_value, type=:default_message)   
+      watchers_for(field).each { |watch| notify_changes(field, old_value, new_value, self.class.to_s, self.id, watch.owner_id,type) }
     end
           
     def notifier
@@ -43,11 +33,11 @@ module ActiveMetadata::Persistence::ActiveRecord::Watcher
     end
     
     private
-    def notify_changes(matched_label, old_value, new_value, model_class, model_id, owner_id)    
+    def notify_changes(matched_label, old_value, new_value, model_class, model_id, owner_id,type)    
       raise "A watcher notifier class must be implemented" unless WatcherNotifier
 
       @notifier = WatcherNotifier.new
-      @notifier.notify(matched_label.to_s, old_value, new_value, model_class, model_id,owner_id)                                                                               
+      @notifier.notify(matched_label.to_s, old_value, new_value, model_class, model_id,owner_id,type)                                                                               
     end
     
   end
