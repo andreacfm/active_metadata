@@ -8,7 +8,7 @@ module ActiveMetadata::Persistence::ActiveRecord::Attachment
 
     def save_attachment_for(field, file)      
       attachment = Attachment.create! :document_id => metadata_id, :label => field, :attach => file      
-      self.send(:send_notification, field, "", attachment.attach.original_filename)
+      self.send(:send_notification, field, "", attachment.attach.original_filename, :attachment_message)
     end
 
     def attachments_for(field)
@@ -19,7 +19,7 @@ module ActiveMetadata::Persistence::ActiveRecord::Attachment
       a = Attachment.find(id)
       filename = a.attach.original_filename
       a.destroy      
-      self.send(:send_notification, field, filename, "")
+      self.send(:send_notification, field, filename, "", :attachment_message)
     end
 
     def update_attachment_for(field, id, newfile)
@@ -29,7 +29,7 @@ module ActiveMetadata::Persistence::ActiveRecord::Attachment
       a.save                                            
       new_filename = a.attach.original_filename
       
-      self.send(:send_notification, field, old_filename, new_filename)
+      self.send(:send_notification, field, old_filename, new_filename, :attachment_message)
     end
 
   end
