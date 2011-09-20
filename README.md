@@ -9,6 +9,8 @@ ActiveMetadata gem will work properly under the following conditions:
 *	ActiveMetadata will work _only_ in a Rails 3+ application 
 *	a User model having an id and an email attribute MUST be present in the application. This requirement is necessary 
 	to correlate the User model to the alert Watcher model.
+*   User model must expose a current method that returns the current_user in order to make active_metadata capable to save the user_id	
+    http://rails-bestpractices.com/posts/47-fetch-current-user-in-models
 *	The Rails application MUST create from scratch implement a WatcherNotifier class 
 * 	a migration must be created and launched to make the rails web application function properly. In a future
 	version there will be a task to create this migration but ATM it should be made by hand

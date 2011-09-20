@@ -41,6 +41,10 @@ module ActiveMetadata
         end
         receiver.id
       end
+      
+      def current_user_id
+        User.current.id if User.respond_to?(:current)
+      end  
                 
     end # InstanceMethods
   end

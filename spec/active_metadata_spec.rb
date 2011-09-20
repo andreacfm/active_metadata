@@ -325,7 +325,9 @@ describe ActiveMetadata do
     end
 
     it "should save the correct creator when a history is created" do
-      pending
+      current_user = User.current
+      history = @document.history_for(:name).first
+      history.created_by.should eq current_user.id  
     end
 
   end
