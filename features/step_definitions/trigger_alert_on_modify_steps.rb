@@ -27,7 +27,7 @@ end
    
 When /^afterwards I update the note on the field "([^"]*)" with content "([^"]*)"$/ do |field, content|
   note = @document.notes_for(field.to_sym).first
-  @document.update_note(note.id, content, @current_user.email)
+  @document.update_note(note.id, content)
 end
 
 When /^afterwards I delete the note on the field "([^"]*)"$/ do |field|

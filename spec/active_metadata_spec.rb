@@ -43,6 +43,11 @@ describe ActiveMetadata do
       @document.notes_for(:name).last.note.should eq "Very important note!"
     end
 
+    it "should verify the created_by of a note created" do
+      @document.create_note_for(:name, "Very important note!")
+      @document.notes_for(:name).last.created_by.should eq User.current.id
+    end
+
     it "should verify that notes_for_name return only notes for the self Document" do
       # fixtures
       @another_doc = Document.create :name => "Andrea"
@@ -85,16 +90,11 @@ describe ActiveMetadata do
       @document.notes_for(:name).should have(2).record
     end
 
-    it "should save the creator id in metadata" do
-      @document.create_note_for(:name, "Very important note!", 101)
-      @document.notes_for(:name).last.created_by.should eq 101
-    end
-
     it "should save the updater id in metadata" do
-      @document.create_note_for(:name, "Very important note!", 101)
+      @document.create_note_for(:name, "Very important note!")
       id = @document.notes_for(:name).last.id
-      @document.update_note id, "new note value", 102
-      @document.notes_for(:name).last.updated_by.should eq 102
+      @document.update_note id, "new note value"
+      @document.notes_for(:name).last.updated_by.should eq User.current.id
     end
 
     it "should save the created_at datetime in metadata" do
@@ -513,11 +513,18 @@ describe ActiveMetadata do
     end
 
     it "should save the correct creator when an attachment is created" do
-      pending
+      @document.save_attachment_for(:name,@attachment)
+      @document.attachments_for(:name).last.created_by.should eq User.current.id
     end
 
     it "should save the correct updater when anttachment is updated" do
-      pending
+      @document.save_attachment_for(:name,@attachment)
+      att = @document.attachments_for(:name).last
+
+      @document.update_attachment_for :name,att._id,@attachment2
+      att2 = @document.attachments_for(:name).last
+      
+      @document.attachments_for(:name).last.updated_by.should eq User.current.id        
     end
 
 

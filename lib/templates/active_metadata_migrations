@@ -18,6 +18,7 @@ class ActiveMetadataMigrations < ActiveRecord::Migration
       t.text :value
       t.string :label
       t.integer :document_id
+      t.integer :created_by
       t.timestamps
     end
 

@@ -30,6 +30,7 @@ Feature: Trigger alert on modify
 		And should record the "new note!" in the new_value
 		And should record the "" in the old_value 
 		And should record the "note_message" in the type
+		And should record the current_user_id in the created_by
 
 	Scenario: receive a new alert in the inbox when a note of a field is updated
 		Given a watcher on the "name" field 
@@ -41,6 +42,7 @@ Feature: Trigger alert on modify
 		And should record the "new note!" in the old_value 
 		And should record the "updated note!" in the new_value
 		And should record the "note_message" in the type
+		And should record the current_user_id in the created_by
 
 	Scenario: receive a new alert in the inbox when a note of a field is deleted
 		Given a watcher on the "name" field 
@@ -62,6 +64,7 @@ Feature: Trigger alert on modify
 		And should record the "file.txt" in the new_value
 		And should record the "" in the old_value
 		And should record the "attachment_message" in the type
+		And should record the current_user_id in the created_by
 
 	Scenario: receive a new alert in the inbox when a attachment of a field is updated
 		Given a watcher on the "name" field
@@ -73,6 +76,7 @@ Feature: Trigger alert on modify
 		And should record the "updated_file.txt" in the new_value
 		And should record the "file.txt" in the old_value
 		And should record the "attachment_message" in the type
+		And should record the current_user_id in the created_by
 
 	Scenario: receive a new alert in the inbox when a attachment of a field is deleted
 		Given a watcher on the "name" field 
