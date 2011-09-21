@@ -22,6 +22,16 @@ module ActiveMetadata
       end
     end
 
+    def update
+      @document = eval(params[:model_name]).find params[:model_id]
+      @document.update_attachment_for(params[:field_name],params[:id],params[:file])
+      
+      #todo: if errors send back the correct answer
+      respond_to do |format|
+        format.js {render :json => {'success' => true}}
+      end
+    end
+
     def destroy
       @document = eval(params[:model_name]).find params[:model_id]
       @document.delete_attachment_for(params[:field_name], params[:id])

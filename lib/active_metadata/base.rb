@@ -43,7 +43,11 @@ module ActiveMetadata
       end
       
       def current_user_id
-        User.current.id if User.respond_to?(:current)
+        if User.respond_to?(:current) && !User.current.nil?
+            User.current.id
+        else
+          nil
+        end      
       end  
                 
     end # InstanceMethods
