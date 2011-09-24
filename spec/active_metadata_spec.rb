@@ -246,7 +246,7 @@ describe ActiveMetadata do
       
     end
 
-    it "should verify a defined field has notes" do
+    it "should has_notes_for verify if defined field has notes" do
       @document.has_notes_for(:name).should be_false
       @document.create_note_for(:name, "new note")
       @document.has_notes_for(:name).should be_true      
@@ -531,6 +531,12 @@ describe ActiveMetadata do
       att2 = @document.attachments_for(:name).last
       
       @document.attachments_for(:name).last.updated_by.should eq User.current.id        
+    end
+
+    it "should has_notes_for verify if defined field has attachments" do
+      @document.has_attachments_for(:name).should be_false
+      @document.save_attachment_for(:name,@attachment)
+      @document.has_attachments_for(:name).should be_true      
     end
     
   end

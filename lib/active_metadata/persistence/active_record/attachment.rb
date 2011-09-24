@@ -33,6 +33,10 @@ module ActiveMetadata::Persistence::ActiveRecord::Attachment
       self.send(:send_notification, field, old_filename, new_filename, :attachment_message, current_user_id)
     end
 
+    def has_attachments_for field
+      Attachment.count(:conditions => {:label => field, :document_id => metadata_id}) == 0 ? false : true
+    end
+
   end
 
 end
