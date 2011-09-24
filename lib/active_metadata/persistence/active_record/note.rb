@@ -37,5 +37,9 @@ module ActiveMetadata::Persistence::ActiveRecord::Note
       n.destroy
       self.send(:send_notification, field, old_value, "", :note_message)
     end
+    
+    def has_notes_for field
+      Note.count(:conditions => {:label => field, :document_id => metadata_id}) == 0 ? false : true
+    end
   end
 end

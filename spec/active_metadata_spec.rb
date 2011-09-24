@@ -246,6 +246,12 @@ describe ActiveMetadata do
       
     end
 
+    it "should verify a defined field has notes" do
+      @document.has_notes_for(:name).should be_false
+      @document.create_note_for(:name, "new note")
+      @document.has_notes_for(:name).should be_true      
+    end
+
   end
 
   context "history" do
@@ -526,8 +532,7 @@ describe ActiveMetadata do
       
       @document.attachments_for(:name).last.updated_by.should eq User.current.id        
     end
-
-
+    
   end
           
   context "watchers" do        
