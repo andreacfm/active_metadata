@@ -1,11 +1,9 @@
 PATH
   remote: .
   specs:
-    active_metadata (0.1.4)
+    active_metadata (0.1.5)
       activerecord (= 3.0.1)
       bson_ext
-      ci_reporter
-      cucumber
       mongoid (= 2.1.4)
       mongoid-paperclip
       rails (= 3.0.1)
@@ -49,7 +47,7 @@ GEM
     ci_reporter (1.6.5)
       builder (>= 2.1.2)
     cocaine (0.2.0)
-    cucumber (1.0.6)
+    cucumber (1.0.4)
       builder (>= 2.1.2)
       diff-lcs (>= 1.1.2)
       gherkin (~> 2.4.18)
@@ -135,6 +133,8 @@ PLATFORMS
 
 DEPENDENCIES
   active_metadata!
+  ci_reporter
+  cucumber (~> 1.0.4)
   rspec-rails
   sqlite3
   sqlite3-ruby
