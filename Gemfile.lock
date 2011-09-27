@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    active_metadata (0.1.5)
+    active_metadata (0.1.6)
       activerecord (= 3.0.1)
       bson_ext
       mongoid (= 2.1.4)
