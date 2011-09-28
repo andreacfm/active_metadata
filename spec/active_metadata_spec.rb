@@ -527,7 +527,7 @@ describe ActiveMetadata do
       @document.save_attachment_for(:name,@attachment)
       att = @document.attachments_for(:name).last
 
-      @document.update_attachment_for :name,att._id,@attachment2
+      @document.update_attachment_for :name,att.id,@attachment2
       att2 = @document.attachments_for(:name).last
       
       @document.attachments_for(:name).last.updated_by.should eq User.current.id        
