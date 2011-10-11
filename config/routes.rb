@@ -1,4 +1,4 @@
-Rails.application.routes.draw do |map|
+Rails.application.routes.draw do
 
   mount_at = ActiveMetadata::Engine.config.mount_at
   
