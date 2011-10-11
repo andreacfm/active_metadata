@@ -62,14 +62,7 @@ describe ActiveMetadata do
 
     end
 
-    it "should update a note using update_note_for_name", :mongoid => true  do
-      @document.create_note_for(:name, "Very important note!")
-      id = @document.notes_for(:name).last._id
-      @document.update_note(id, "New note value!")
-      @document.notes_for(:name).last.note.should eq "New note value!"
-    end
-
-    it "should update a note using update_note_for_name", :active_record => true  do
+    it "should update a note using update_note_for_name" do
       @document.create_note_for(:name, "Very important note!")
       id = @document.notes_for(:name).last.id
       @document.update_note(id, "New note value!")
@@ -107,16 +100,7 @@ describe ActiveMetadata do
       @document.notes_for(:name).last.updated_at.should be_a_kind_of Time
     end
 
-    it "should update the updated_at field when a note is updated", :mongoid => true  do
-      @document.create_note_for(:name, "Very important note!")
-      id = @document.notes_for(:name).last._id
-      sleep 1.seconds
-      @document.update_note id, "new note value"
-      note = @document.notes_for(:name).last
-      note.updated_at.should > note.created_at
-    end
-
-    it "should update the updated_at field when a note is updated", :active_record => true  do
+    it "should update the updated_at field when a note is updated" do
       @document.create_note_for(:name, "Very important note!")
       id = @document.notes_for(:name).last.id
       sleep 1.seconds
@@ -125,19 +109,7 @@ describe ActiveMetadata do
       note.updated_at.should > note.created_at
     end
 
-    it "should verify that note are saved with the correct model id if metadata_id_from is defined" , :mongoid => true do
-      # fixtures
-      @document.create_note_for(:name, "Very important note!")
-      @section = @document.create_section :title => "new section"
-      @section.reload
-      @section.create_note_for(:title, "Very important note for section!")
-
-      # expectations
-      @document.notes_for(:name).last.label.active_meta.document_id.should eq @document.id
-      @section.notes_for(:title).last.label.active_meta.document_id.should eq @document.id
-    end
-
-    it "should verify that note are saved with the correct model id if metadata_id_from is defined" , :active_record => true do
+    it "should verify that note are saved with the correct model id if metadata_id_from is defined"  do
       # fixtures
       @document.create_note_for(:name, "Very important note!")
       @section = @document.create_section :title => "new section"
@@ -149,45 +121,7 @@ describe ActiveMetadata do
       @section.notes_for(:title).last.document_id.should eq @document.id
     end
 
-    it "should delete a note passing a bson object as id", :mongoid => true do
-      #fixtures
-      2.times do |i|
-        @document.create_note_for(:name, "Note number #{i}")
-      end
-
-      #expectations
-      notes = @document.notes_for(:name)
-      notes.count.should eq 2
-      note_to_be_deleted  = notes[0].note
-      
-      @document.delete_note_for(:name,notes[0]._id)
-      
-      notes = @document.notes_for(:name)
-      notes.count.should eq 1
-      notes.first.note.should_not eq note_to_be_deleted
-      
-    end
-
-    it "should delete a note passing a string as id", :mongoid => true do
-      #fixtures
-      2.times do |i|
-        @document.create_note_for(:name, "Note number #{i}")
-      end
-
-      #expectations
-      notes = @document.notes_for(:name)
-      notes.count.should eq 2
-      note_to_be_deleted = notes[0].note
-      
-      @document.delete_note_for(:name,notes[0].id.to_s)
-      
-      notes = @document.notes_for(:name)
-      notes.count.should eq 1
-      notes.first.note.should_not eq note_to_be_deleted
-
-    end
-
-    it "should delete a note id", :active_record => true do
+    it "should delete a note id" do
       #fixtures
       2.times do |i|
         @document.create_note_for(:name, "Note number #{i}")
@@ -218,21 +152,7 @@ describe ActiveMetadata do
       @document.notes_for(:name).last.note.should eq "Note number 0"
     end
     
-    it "should find a note by id", :mongoid => true,  do
-
-      3.times do |i|
-        @document.create_note_for(:name, "Note number #{i}")
-      end
-      
-      note = @document.notes_for(:name).last
-      id = note.id.to_s
-      
-      match_note = @document.note_for :name,id
-      match_note.id.to_s.should eq id 
-      
-    end
-
-    it "should find a note by id", :active_record => true,  do
+    it "should find a note by id" do
 
       3.times do |i|
         @document.create_note_for(:name, "Note number #{i}")
@@ -286,20 +206,7 @@ describe ActiveMetadata do
       @another_doc.history_for(:name).last.value.should eq @another_doc.name
     end
 
-    it "should verify that history is saved with the correct model id if metadata_id_from is defined", :mongoid => true,  do
-      # fixtures
-      @section = @document.create_section :title => "new section"
-      @section.reload
-
-        # expectations
-      @document.history_for(:name).count.should eq(1)
-      @document.history_for(:name).last.label.active_meta.document_id.should eq @document.id
-
-      @section.history_for(:title).count.should eq(1)
-      @section.history_for(:title).last.label.active_meta.document_id.should eq @document.id
-    end
-
-    it "should verify that history is saved with the correct model id if metadata_id_from is defined", :active_record => true,  do
+    it "should verify that history is saved with the correct model id if metadata_id_from is defined" do
       # fixtures
       @section = @document.create_section :title => "new section"
       @section.reload
@@ -354,12 +261,7 @@ describe ActiveMetadata do
       @document.attachments_for(:name).should have(1).record
     end
 
-    it "should verify that the attachment metadata id refers to the correct self id", :mongoid => true  do
-      @document.save_attachment_for(:name,@attachment)
-      @document.attachments_for(:name).last.label.active_meta.document_id.should eq @document.id
-    end
-
-    it "should verify that the attachment metadata id refers to the correct self id", :active_record => true  do
+    it "should verify that the attachment metadata id refers to the correct self id" do
       @document.save_attachment_for(:name,@attachment)
       @document.attachments_for(:name).last.document_id.should eq @document.id
     end
@@ -379,68 +281,19 @@ describe ActiveMetadata do
       @document.attachments_for(:name).last.attach.size.should eq @attachment.size
     end
 
-    it "should verify that the attachment updated_at is correctly saved", :mongoid => true  do
-      @document.save_attachment_for(:name,@attachment)      
-      @document.attachments_for(:name).last.attach.instance_read(:updated_at).should be_a_kind_of DateTime
-    end
-
-    it "should verify that the attachment updated_at is correctly saved", :active_record => true  do
+    it "should verify that the attachment updated_at is correctly saved"  do
       @document.save_attachment_for(:name,@attachment)      
       @document.attachments_for(:name).last.attach.instance_read(:updated_at).should be_a_kind_of Time
     end
 
-    it "should verify that the document has been saved in the correct position on filesystem", :active_record => true  do
+    it "should verify that the document has been saved in the correct position on filesystem"  do
       @document.save_attachment_for(:name,@attachment)
       att = @document.attachments_for(:name).first
       expected_path = File.expand_path "#{ActiveMetadata::CONFIG['attachment_base_path']}/#{@document.id}/#{:name.to_s}/#{att.id}/#{@attachment.original_filename}"
       File.exists?(expected_path).should be_true
     end
 
-    it "should verify that the document has been saved in the correct position on filesystem", :mongoid => true  do
-      @document.save_attachment_for(:name,@attachment)
-      att = @document.attachments_for(:name).first
-      expected_path = File.expand_path "#{ActiveMetadata::CONFIG['attachment_base_path']}/#{@document.id}/#{:name.to_s}/#{att.counter}/#{@attachment.original_filename}"
-      File.exists?(expected_path).should be_true
-    end
-
-    it "should delete an attachment passing a bson object as id", :mongoid => true  do
-
-      #fixtures
-      2.times do |i|
-        @document.save_attachment_for(:name,@attachment)
-      end
-
-      #expectations
-      attachments = @document.attachments_for(:name)
-      attachments.count.should eq 2
-      attachment_path_to_be_deleted = attachments[0].attach.path
-      
-      @document.delete_attachment_for(:name,attachments[0]._id)
-      
-      attachments = @document.attachments_for(:name)
-      attachments.count.should eq 1
-      attachments.first.attach.path.should_not eq attachment_path_to_be_deleted
-    end
-
-    it "should delete an attachment passing a string as id", :mongoid => true do
-      #fixtures
-      2.times do |i|
-        @document.save_attachment_for(:name,@attachment)
-      end
-
-      #expectations
-      attachments = @document.attachments_for(:name)
-      attachments.count.should eq 2
-      attachment_path_to_be_deleted = attachments[0].attach.path
-      
-      @document.delete_attachment_for(:name,attachments[0].id.to_s)
-      
-      attachments = @document.attachments_for(:name)
-      attachments.count.should eq 1
-      attachments.first.attach.path.should_not eq attachment_path_to_be_deleted
-    end
-
-    it "should delete an attachment by id", :active_record => true do
+    it "should delete an attachment by id" do
       #fixtures
       2.times do |i|
         @document.save_attachment_for(:name,@attachment)
@@ -458,18 +311,7 @@ describe ActiveMetadata do
       attachments.first.attach.path.should_not eq attachment_path_to_be_deleted
     end
 
-    it "should update an attachment", :mongoid => true  do
-      @document.save_attachment_for(:name,@attachment)
-      att = @document.attachments_for(:name).last
-
-      @document.update_attachment_for :name,att._id,@attachment2
-      att2 = @document.attachments_for(:name).last
-
-      File.exists?(att.attach.path).should be_false
-      File.exists?(att2.attach.path).should be_true
-    end
-
-    it "should update an attachment", :active_record => true  do
+    it "should update an attachment" do
       @document.save_attachment_for(:name,@attachment)
       att = @document.attachments_for(:name).last
 
@@ -480,19 +322,7 @@ describe ActiveMetadata do
       File.exists?(att2.attach.path).should be_true
     end
 
-    it "should verify that field attachment_updated_at is modified after an update", :mongoid => true do
-      @document.save_attachment_for(:name,@attachment)
-      att = @document.attachments_for(:name).last
-
-      sleep 1.seconds
-
-      @document.update_attachment_for :name,att._id,@attachment2
-      att2 = @document.attachments_for(:name).last
-
-      att2.attach.instance_read(:updated_at).should be > att.attach.instance_read(:updated_at)
-    end
-
-    it "should verify that field attachment_updated_at is modified after an update", :active_record => true do
+    it "should verify that field attachment_updated_at is modified after an update" do
       @document.save_attachment_for(:name,@attachment)
       att = @document.attachments_for(:name).last
 

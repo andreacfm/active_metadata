@@ -5,9 +5,7 @@ module ActiveMetadata
   ## Define ModelMethods
   module Base
     
-    require 'mongoid' if ActiveMetadata::CONFIG['persists_with'] == 'mongoid'
-    require 'mongoid_paperclip' if ActiveMetadata::CONFIG['persists_with'] == 'mongoid'
-    require 'paperclip' if ActiveMetadata::CONFIG['persists_with'] == 'active_record'
+    require 'paperclip'
     require "active_metadata/persistence/persistence"
 
     def self.included(klass)
