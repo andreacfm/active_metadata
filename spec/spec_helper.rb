@@ -4,7 +4,6 @@ require "rails/all"
 require "logger"
 require 'rspec/core'
 require "sqlite3"
-require "mongoid"   
 require "rack/test/uploaded_file"
 
 $: << File.expand_path(File.dirname(__FILE__) + "/../app")
@@ -26,14 +25,6 @@ ENV["ACTIVE_METADATA_ENV"] ||= 'test'
 ActiveRecord::Base.establish_connection YAML.load_file("config/database.yml")[ENV["RAILS_ENV"]]
 ActiveRecord::Base.logger = Logger.new "log/test.log"
 Rails.logger = ActiveRecord::Base.logger  
-
-#load the config
-conf = YAML.load_file('config/active_metadata.yml')[Rails.env]
-is_mongo = conf['persists_with'] == 'mongoid'
-
-if is_mongo 
-  Mongoid.load!("config/mongoid.yml")
-end
                                                                       
 # loading ruby files
 require "#{File.dirname(__FILE__)}/../lib/engine.rb"
@@ -60,24 +51,12 @@ RSpec.configure do |config|
   # config.use_transactional_fixtures = true
 
 
-  config.before(:suite) do 
-    if is_mongo 
-      ActiveMeta.create_indexes()
-      Label.create_indexes()
-      Note.create_indexes();
-    end  
-  end
-
   config.before(:each) do
     Document.delete_all
     Note.delete_all
     Watcher.delete_all
     Attachment.delete_all
     History.delete_all    
-    if is_mongo 
-      ActiveMeta.delete_all
-      Label.delete_all
-    end  
     FileUtils.remove_dir File.expand_path('public/system/') if Dir.exist?(File.expand_path('public/system/'))       
   end
 

@@ -1,5 +1,4 @@
 development:
-    persists_with: "active_record"
     history_skip_fields:
       - 'id'
       - 'created_at'
@@ -8,7 +7,6 @@ development:
     attachment_base_url: "/system/metadata_attachments"
 
 test:
-    persists_with: "active_record"
     history_skip_fields:
       - 'id'
       - 'created_at'
