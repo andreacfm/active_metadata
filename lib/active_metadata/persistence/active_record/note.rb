@@ -8,7 +8,7 @@ module ActiveMetadata::Persistence::ActiveRecord::Note
     
     def create_note_for(field, note)      
       Note.create! :document_id => metadata_id,:label => field.to_s,:note => note, :created_by => current_user_id  
-      invalidate_cache_for field 
+      reload_notes_cache_for field 
       self.send(:send_notification, field, "", note, :note_message, current_user_id) 
     end
 
@@ -16,13 +16,13 @@ module ActiveMetadata::Persistence::ActiveRecord::Note
       n = Note.find(id)
       old_value = n.note
       n.update_attributes! :note => note, :updated_by => current_user_id, :updated_at => Time.now.utc     
-      invalidate_cache_for field 
+      reload_notes_cache_for n.label 
       self.send(:send_notification, n.label, old_value, note, :note_message, current_user_id)
     end
 
     def notes_for(field)
-      Rails.cache.fetch("active_metadata/notes/#{field}", :expires_in => 5.minutes) do
-        Note.all(:conditions => {:label => field, :document_id => metadata_id}, :order => "updated_at DESC" )        
+      Rails.cache.fetch(notes_cache_key(field), :expires_in => 10.minutes) do
+        fetch_notes_for field       
       end    
     end
 
@@ -38,7 +38,7 @@ module ActiveMetadata::Persistence::ActiveRecord::Note
       n = Note.find(id)
       old_value = n.note
       n.destroy
-      invalidate_cache_for field 
+      reload_notes_cache_for field 
       self.send(:send_notification, field, old_value, "", :note_message)
     end
     
@@ -48,9 +48,13 @@ module ActiveMetadata::Persistence::ActiveRecord::Note
     
     private
     
-    def invalidate_cache_for field
-      Rails.cache.delete("active_metadata/notes/#{field}")     
+    def reload_notes_cache_for field
+      Rails.cache.write(notes_cache_key(field),fetch_notes_for(field), :expires_in => 10.minutes )     
     end  
     
+    def fetch_notes_for field
+      Note.all(:conditions => {:label => field, :document_id => metadata_id}, :order => "updated_at DESC" )              
+    end  
+        
   end
 end

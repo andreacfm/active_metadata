@@ -47,6 +47,11 @@ module ActiveMetadata
           nil
         end      
       end  
+      
+      def notes_cache_key field
+        "active_metadata/notes/#{self.class}/#{metadata_id}/#{field}/"
+      end  
+      
                 
     end # InstanceMethods
   end
