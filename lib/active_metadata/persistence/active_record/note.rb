@@ -21,7 +21,7 @@ module ActiveMetadata::Persistence::ActiveRecord::Note
     end
 
     def notes_for(field)
-      Rails.cache.fetch(notes_cache_key(field), :expires_in => 10.minutes) do
+      Rails.cache.fetch(notes_cache_key(field), :expires_in => ActiveMetadata::CONFIG['cache_expires_in'].minutes) do
         fetch_notes_for field       
       end    
     end
@@ -49,7 +49,7 @@ module ActiveMetadata::Persistence::ActiveRecord::Note
     private
     
     def reload_notes_cache_for field
-      Rails.cache.write(notes_cache_key(field),fetch_notes_for(field), :expires_in => 10.minutes )     
+      Rails.cache.write(notes_cache_key(field),fetch_notes_for(field), :expires_in => ActiveMetadata::CONFIG['cache_expires_in'].minutes )     
     end  
     
     def fetch_notes_for field
