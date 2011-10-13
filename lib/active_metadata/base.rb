@@ -34,7 +34,7 @@ module ActiveMetadata
       def self.included(klass)
         [:notes,:attachments,:history].each do |item|
           klass.send(:define_method,"#{item.to_s}_cache_key".to_sym) do |field|
-            p "active_metadata/#{item.to_s}/#{self.class}/#{metadata_id}/#{field}/"            
+            "active_metadata/#{item.to_s}/#{self.class}/#{metadata_id}/#{field}/"            
           end  
         end          
       end
