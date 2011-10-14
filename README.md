@@ -36,20 +36,24 @@ and a sample migration to be created
 Tech Debts
 ---
 
+* Add metadata support for more than one model in the same application. Actually only the document_id is stored and searched.
+  A solution can be store also a metadata_model_name as we now dow with the metadata_id method. Then searching also based on this parameter.
+
 * The migration to create the inboxes table should automagically be created by 
   a generator or a rake task like {rake active_metadata:setup}
-* in the {active_metadata:setup} task will be generated a sample WatcherNotifier class 
-	to be changed and implemented accordingly to the rails app logic 
+
+* in the {active_metadata:setup} task will be generated a sample WatcherNotifier class
+  to be changed and implemented accordingly to the rails app logic
 
 * the inbox now contains just one object and it should contain a number of alerts
 
-*   def notify_changes(matched_label, values, model_class, model_id) should not present
-	model_class and model_id as parameters but it should take it from a common reference	
-*	active_metadata.yml in the host rails app should be generated from a setup step like 
-	rake active_metadata:install
+* def notify_changes(matched_label, values, model_class, model_id) should not present
+  model_class and model_id as parameters but it should take it from a common reference
+* active_metadata.yml in the host rails app should be generated from a setup step like
+  rake active_metadata:install
 	
 * Method models/Watcher.notify_changes: it should be better ti get the list of user 
-	in one shot to load them from the SQL Database in one shot and not for every watcher
+  in one shot to load them from the SQL Database in one shot and not for every watcher
 	
 * Saving the model name into histories, notes etc... records could allow the gem to be used 
   for more models into the same applications. As per the id also the model name should consider the presence of a a
