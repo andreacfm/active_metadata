@@ -11,7 +11,7 @@ module ActiveMetadata::Persistence::ActiveRecord::Watcher
     end                      
 
     def watchers_for(field)
-      Watcher.all(:conditions => {:label => field, :document_id => metadata_id})   
+      Watcher.all(:conditions => {:label => field, :document_id => metadata_model[:id]})
     end
 
     def delete_watcher_for(field, owner)

@@ -7,7 +7,7 @@ class ActiveMetadataMigrations < ActiveRecord::Migration
       t.string :document_class
       t.integer :document_id
       t.integer :created_by
-      t.integer :updated_by      
+      t.integer :updated_by
       t.timestamps
     end
 
@@ -58,7 +58,7 @@ class ActiveMetadataMigrations < ActiveRecord::Migration
     add_index :watchers, :label
     add_index :watchers, :owner_id
     add_index :watchers, :created_at
-        
+
   end
 
   def self.down

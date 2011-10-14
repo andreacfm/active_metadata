@@ -20,7 +20,7 @@ module ActiveMetadata
       def acts_as_metadata *args
         after_save :save_history
         
-        class_variable_set("@@metadata_id_from", args.empty? ? nil : args[0][:metadata_id_from])
+        class_variable_set("@@active_metadata_model", args.empty? ? nil : args[0][:active_metadata_model])
 
         include ActiveMetadata::Base::InstanceMethods
         include ActiveMetadata::Persistence   
@@ -34,21 +34,21 @@ module ActiveMetadata
       def self.included(klass)
         [:notes,:attachments,:history].each do |item|
           klass.send(:define_method,"#{item.to_s}_cache_key".to_sym) do |field|
-            "#{Rails.env}/active_metadata/#{item.to_s}/#{self.class}/#{metadata_id}/#{field}/"            
+            "#{Rails.env}/active_metadata/#{item.to_s}/#{self.class}/#{metadata_model[:id]}/#{field}/"
           end  
         end          
       end
 
-      def metadata_id
-        metadata_id_from = self.class.class_variable_get("@@metadata_id_from")
-        return self.id if metadata_id_from.nil?
+      def metadata_model
+        metadata_model = self.class.class_variable_get("@@active_metadata_model")
+        return {:id => self.id, :class => self.class.to_s} if metadata_model.nil?
         receiver = self
-        metadata_id_from.each do |item|
+        metadata_model.each do |item|
           receiver = receiver.send item
         end
-        receiver.id
+        {:id => receiver.id, :class => receiver.class.to_s}
       end
-      
+
       def current_user_id
         if User.respond_to?(:current) && !User.current.nil?
             User.current.id

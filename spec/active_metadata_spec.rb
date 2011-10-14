@@ -10,18 +10,20 @@ describe ActiveMetadata do
       Document.respond_to?(:acts_as_metadata).should be_true
     end
 
-    it "should find the metadata id if no metadata_id_from params has been provided" do
+    it "should find the metadata model if no metadata_model params has been provided" do
       @document = Document.create! { |d| d.name = "John" }
       @document.reload
-      @document.metadata_id.should eq @document.id
+      @document.metadata_model[:id].should eq @document.id
+      @document.metadata_model[:class].should eq @document.class.to_s
     end
 
-    it "should find the metadata id if a metadata_id_from params has been specified" do
+    it "should find the metadata model if an  active_metadata_model params has been specified" do
       @document = Document.create! { |d| d.name = "John" }
       @document.reload
       @section = @document.create_section :title => "new section"
       @section.reload
-      @section.metadata_id.should eq @document.id
+      @section.metadata_model[:id].should eq @document.id
+      @section.metadata_model[:class].should eq @document.class.to_s
     end
 
   end
