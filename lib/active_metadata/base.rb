@@ -78,7 +78,6 @@ module ActiveMetadata
 
       # Resolve concurrency using the provided timestamps and the active_metadata histories.
       # Conflicts are stored into @conflicts instance variable
-      #
       # Timestamp used for versioning can be passed both as :
       # ====
       # * @object.active_metadata_timestamp = ....
