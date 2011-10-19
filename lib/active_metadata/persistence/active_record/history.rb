@@ -15,9 +15,9 @@ module ActiveMetadata::Persistence::ActiveRecord::History
       end
     end
 
-    def history_for field
+    def history_for field, order="created_at DESC"
       Rails.cache.fetch(history_cache_key(field), :expires_in => ActiveMetadata::CONFIG['cache_expires_in'].minutes) do
-        fetch_histories_for field
+        fetch_histories_for field, order
       end  
     end
 
@@ -27,8 +27,8 @@ module ActiveMetadata::Persistence::ActiveRecord::History
       Rails.cache.delete history_cache_key(field)     
     end  
 
-    def fetch_histories_for field
-      History.all(:conditions => {:document_id => metadata_id,:label => field}, :order => "created_at DESC")
+    def fetch_histories_for field, order
+      History.all(:conditions => {:document_id => metadata_id,:label => field}, :order => order)
     end  
 
 
