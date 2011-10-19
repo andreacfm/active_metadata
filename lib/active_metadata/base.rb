@@ -78,12 +78,22 @@ module ActiveMetadata
 
       # Resolve concurrency using the provided timestamps and the active_metadata histories.
       # Conflicts are stored into @conflicts instance variable
-      # Returns 2 values containing the the deleted params with the related history:
-      # [{:key => [passed_value,history]}]
       #
-      # first result is the WARNINGS array: conflict appears on a field not touched by the user that submit the value
-      # first result is the FATALS Array : if the conflict appears on a field modified by the user that submit the value
-      # an empty array is returned by default
+      # Timestamp used for versioning can be passed both as :
+      # ====
+      # * @object.active_metadata_timestamp = ....
+      # * @object.update_attributes :active_metadata_timestamp => ...
+      #
+      # Check is skipped if no timestamp exists. A check is made also for parents defined via acts_as_metadata method
+      #
+      # Conflicts
+      # ====
+      # * @conflicts[:warnings] contains any conflict that "apply cleanly" or where the submit value has not been modified by the user that is saving
+      #  the data
+      #
+      # * @conflicts[:fatals] contains any conflict that "do not apply cleanly" or where the passed value does not match the last history value and was modified
+      #   by the user that is submittig the data
+      #
       def manage_concurrency
         return if active_metadata_timestamp.nil? #if no timestamp no way to check concurrency so just skip
 
