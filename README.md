@@ -13,6 +13,10 @@ ActiveMetadata gem will work properly under the following conditions:
     http://rails-bestpractices.com/posts/47-fetch-current-user-in-models
 *	The Rails application MUST create from scratch or implement a WatcherNotifier class
 
+Concurrency
+===
+
+* use the active_metadata_timestamp form helper to pass a correctly formatted timestamps
 
 Tech Debts
 ---

@@ -38,11 +38,20 @@ module ActiveMetadata
       include ActiveMetadata::Helpers
 
       def self.included(klass)
+
         [:notes, :attachments, :history].each do |item|
           klass.send(:define_method, "#{item.to_s}_cache_key".to_sym) do |field|
             "#{Rails.env}/active_metadata/#{item.to_s}/#{self.class}/#{metadata_id}/#{field}/"
           end
         end
+
+        [:fatals, :warnings].each do |conf|
+          klass.send(:define_method, "has_#{conf.to_s}_conflicts?".to_sym) do
+            return false if self.conflicts.nil? || self.conflicts[conf.to_sym].nil? || self.conflicts[conf.to_sym].empty?
+            true
+          end
+        end
+
       end
 
       def metadata_id
@@ -101,17 +110,18 @@ module ActiveMetadata
         self.attributes.each do |key, val|
           # ensure the query order
           histories = history_for key.to_sym, "created_at DESC"
-          next if histories.count == 0 #if history does not exists yet cannot be a conflict
+
+          # if history does not exists yet cannot be a conflict  OR
+          # if value has no change respect to the latest db saved we have no conflict
+          next if histories.count == 0 || self.changes[key].nil?
 
           latest_history = histories.first
 
           #if the timestamp is previous of the last history change
           if timestamp < latest_history.created_at.to_f
 
-            begin
-              self[key.to_sym] = self.changes[key][0]
-            rescue
-            end  # there is a conflict so ensure the actual value if any change exists
+            # there is a conflict so ensure the actual value
+            self[key.to_sym] = self.changes[key][0]
 
             # We have a conflict.
             # Check if the actual submission has been modified
