@@ -19,6 +19,24 @@ describe "Manage Concurrency" do
     @document.conflicts.should be_nil
   end
 
+  describe "am_timestamp" do
+
+    it "should return nil if active_metadata_timestamp has not been provided" do
+      @document.am_timestamp.should be_nil
+    end
+
+    it "should return a float if active_metadata_timestamp is instance of Time" do
+      @document.active_metadata_timestamp = Time.now
+      @document.am_timestamp.should be_an_instance_of Float
+    end
+
+    it "should return a float if active_metadata_timestamp is a String" do
+      @document.active_metadata_timestamp = Time.now.to_f.to_s
+      @document.am_timestamp.should be_an_instance_of Float
+    end
+
+  end
+
   describe "when a field is modified and the form ts is subsequent of the history ts" do
 
     it "should save the new value and history must be updated with the latest change" do
