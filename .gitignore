@@ -6,3 +6,6 @@ log/*log
 /attachments
 public/*
 doc/*
+features/reports/
+spec/reports/
+

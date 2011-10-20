@@ -7,8 +7,8 @@ module ActiveMetadata
   module Base
 
     require 'paperclip'
-    require "active_metadata/persistence/persistence"
-    require "active_metadata/helpers"
+    require 'active_metadata/persistence/persistence'
+    require 'active_metadata/helpers'
 
     def self.included(klass)
       klass.class_eval do
@@ -37,11 +37,6 @@ module ActiveMetadata
 
       include ActiveMetadata::Helpers
 
-      def attributes=(attributes)
-        attributes.delete(:active_metadata_timestamp) unless attributes[:active_metadata_timestamp].nil?
-        super
-      end
-
       def self.included(klass)
         [:notes, :attachments, :history].each do |item|
           klass.send(:define_method, "#{item.to_s}_cache_key".to_sym) do |field|
@@ -54,8 +49,11 @@ module ActiveMetadata
         metadata_root.id
       end
 
-      def active_metadata_timestamp
-        metadata_root.active_metadata_timestamp || nil
+      # Normalize the active_metadata_timestamp into a float to be comparable with the history
+      def am_timestamp
+        ts = metadata_root.active_metadata_timestamp
+        return nil if ts.nil?
+        ts = ts.to_f
       end
 
       def current_user_id
@@ -94,7 +92,8 @@ module ActiveMetadata
       #   by the user that is submittig the data
       #
       def manage_concurrency
-        return if active_metadata_timestamp.nil? #if no timestamp no way to check concurrency so just skip
+        timestamp = self.am_timestamp
+        return if timestamp.nil? #if no timestamp no way to check concurrency so just skip
 
         self.conflicts = { :warnings => [], :fatals => [] }
 
@@ -102,15 +101,12 @@ module ActiveMetadata
         self.attributes.each do |key, val|
           # ensure the query order
           histories = history_for key.to_sym, "created_at DESC"
-          latest_history = histories.first
-          timestamp = self.active_metadata_timestamp
+          next if histories.count == 0 #if history does not exists yet cannot be a conflict
 
-          # if form timestamp is subsequent the history last change go on
-          # if history does not exists yet go on
-          next if latest_history.nil? || timestamp > latest_history.created_at
+          latest_history = histories.first
 
           #if the timestamp is previous of the last history change
-          if timestamp < latest_history.created_at
+          if timestamp < latest_history.created_at.to_f
 
             begin
               self[key.to_sym] = self.changes[key][0]
@@ -121,7 +117,7 @@ module ActiveMetadata
             # Check if the actual submission has been modified
             histories.each do |h|
               # Looking for the value that was loaded by the user. First history with a ts that is younger than the form ts
-              next if timestamp > h.created_at
+              next if timestamp > h.created_at.to_f
 
               # History stores values as strings so any boolean is stored as "0" or "1"
               # We need to translate the params passed for a safer comparison.
