@@ -2,7 +2,10 @@ begin
   require 'ci/reporter/rake/rspec'
   require 'ci/reporter/rake/cucumber'
 
-  namespace :ci do        
+  namespace :ci do
+
+    ENV["DATABASE_ENV"] = 'test'
+
     namespace :setup do
       
       @reports_dir = ENV['CI_REPORTS'] || 'features/reports'
