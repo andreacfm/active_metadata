@@ -7,8 +7,8 @@ module ActiveMetadata
   module Base
 
     require 'paperclip'
-    require "active_metadata/persistence/persistence"
-    require "active_metadata/helpers"
+    require 'active_metadata/persistence/persistence'
+    require 'active_metadata/helpers'
 
     def self.included(klass)
       klass.class_eval do
@@ -19,8 +19,12 @@ module ActiveMetadata
     module Config
 
       def acts_as_metadata *args
+        before_update :manage_concurrency
         after_save :save_history
-        class_variable_set("@@active_metadata_model", args.empty? ? nil : args[0][:active_metadata_model])
+        attr_accessor :conflicts
+        attr_accessor :active_metadata_timestamp
+
+        class_variable_set("@@metadata_id_from", args.empty? ? nil : args[0][:metadata_id_from])
 
         include ActiveMetadata::Base::InstanceMethods
         include ActiveMetadata::Persistence
@@ -34,21 +38,31 @@ module ActiveMetadata
       include ActiveMetadata::Helpers
 
       def self.included(klass)
-        [:notes,:attachments,:history].each do |item|
-          klass.send(:define_method,"#{item.to_s}_cache_key".to_sym) do |field|
-            "#{Rails.env}/active_metadata/#{item.to_s}/#{self.class}/#{metadata_model[:id]}/#{field}/"
-          end  
-        end          
+
+        [:notes, :attachments, :history].each do |item|
+          klass.send(:define_method, "#{item.to_s}_cache_key".to_sym) do |field|
+            "#{Rails.env}/active_metadata/#{item.to_s}/#{self.class}/#{metadata_id}/#{field}/"
+          end
+        end
+
+        [:fatals, :warnings].each do |conf|
+          klass.send(:define_method, "has_#{conf.to_s}_conflicts?".to_sym) do
+            return false if self.conflicts.nil? || self.conflicts[conf.to_sym].nil? || self.conflicts[conf.to_sym].empty?
+            true
+          end
+        end
+
       end
 
-      def metadata_model
-        metadata_model = self.class.class_variable_get("@@active_metadata_model")
-        return {:id => self.id, :class => self.class.to_s} if metadata_model.nil?
-        receiver = self
-        metadata_model.each do |item|
-          receiver = receiver.send item
-        end
-        {:id => receiver.id, :class => receiver.class.to_s}
+      def metadata_id
+        metadata_root.id
+      end
+
+      # Normalize the active_metadata_timestamp into a float to be comparable with the history
+      def am_timestamp
+        ts = metadata_root.active_metadata_timestamp
+        return nil if ts.nil?
+        ts = ts.to_f
       end
 
       def current_user_id
@@ -59,38 +73,58 @@ module ActiveMetadata
         end
       end
 
-      # Resolve concurrency using the passed timestamps and the active_metadata histories
-      # To be called from controller before updating the model. Params that contains a conflict are removed from the params list.
-      # Returns 2 values containing the the deleted params with the related history:
-      # [{:key => [passed_value,history]}]
+      def metadata_root
+        metadata_id_from = self.class.class_variable_get("@@metadata_id_from")
+        return self if metadata_id_from.nil?
+        receiver = self
+        metadata_id_from.each do |item|
+          receiver = receiver.send item
+        end
+        receiver
+      end
+
+      # Resolve concurrency using the provided timestamps and the active_metadata histories.
+      # Conflicts are stored into @conflicts instance variable
+      # Timestamp used for versioning can be passed both as :
+      # ====
+      # * @object.active_metadata_timestamp = ....
+      # * @object.update_attributes :active_metadata_timestamp => ...
       #
-      # first result is the WARNINGS array: conflict appears on a field not touched by the user that submit the value
-      # first result is the FATALS Array : if the conflict appears on a field modified by the user that submit the value
-      # an empty array is returned by default
-      def manage_concurrency(params, timestamp)
-        warnings = []
-        fatals = []
+      # Check is skipped if no timestamp exists. A check is made also for parents defined via acts_as_metadata method
+      #
+      # Conflicts
+      # ====
+      # * @conflicts[:warnings] contains any conflict that "apply cleanly" or where the submit value has not been modified by the user that is saving
+      #  the data.
+      #
+      # * @conflicts[:fatals] contains any conflict that "do not apply cleanly" or where the passed value does not match the last history value and was modified
+      #   by the user that is submittig the data
+      #
+      def manage_concurrency
+        timestamp = self.am_timestamp
+        return if timestamp.nil? #if no timestamp no way to check concurrency so just skip
+
+        self.conflicts = { :warnings => [], :fatals => [] }
 
         # scan params
-        params.each do |key, val|
+        self.attributes.each do |key, val|
           # ensure the query order
           histories = history_for key.to_sym, "created_at DESC"
+
+          # if history does not exists yet cannot be a conflict  OR
+          # if value has no change respect to the latest db saved we have no conflict
+          next if histories.count == 0 || self.changes[key].nil?
+
           latest_history = histories.first
 
-          # if form timestamp is subsequent the history last change go on
-          # if history does not exists yet go on
-          next if latest_history.nil? || timestamp > latest_history.created_at
-
           #if the timestamp is previous of the last history change
-          if timestamp < latest_history.created_at
-            #remove the key from the update process
-            params.delete key
+          if timestamp < latest_history.created_at.to_f
 
             # We have a conflict.
             # Check if the actual submission has been modified
-            histories.each do |h|
+            histories.each_with_index do |h,i|
               # Looking for the value that was loaded by the user. First history with a ts that is younger than the form ts
-              next if timestamp > h.created_at
+              next if h.created_at.to_f > timestamp
 
               # History stores values as strings so any boolean is stored as "0" or "1"
               # We need to translate the params passed for a safer comparison.
@@ -98,18 +132,22 @@ module ActiveMetadata
                 b_val = to_bool(h.value)
               end
 
+              # conflict ensure the actual value is not modified
+              self[key.to_sym] = self.changes[key][0]
+
               if [h.value, b_val].include? val
-                warnings << {key => [val, h]}
+                self.conflicts[:warnings] << {key.to_sym => latest_history}
               else
-                fatals << {key => [val, h]}
+                self.conflicts[:fatals] << {key.to_sym => latest_history}
               end
+
+              break #done for this field
             end
 
           end
 
         end
 
-        return warnings, fatals
       end
 
     end # InstanceMethods

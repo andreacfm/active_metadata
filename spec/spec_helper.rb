@@ -32,8 +32,6 @@ RAILS_CACHE = ActiveSupport::Cache::MemoryStore.new
 require "#{File.dirname(__FILE__)}/../lib/engine.rb"
 Dir["spec/support/*.rb"].each {|f| require "support/#{(File.basename(f, File.extname(f)) )}"}
 
-Dir["app/models/*.rb"].each {|f| require "models/#{(File.basename(f, File.extname(f)) )}"}
-
 RSpec.configure do |config|
   # == Mock Framework
   #
