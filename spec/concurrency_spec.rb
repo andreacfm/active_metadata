@@ -93,6 +93,52 @@ describe "Manage Concurrency" do
 
     end
 
+    it "should register a warning if the history newest value is different from the submitted once but the submitting user has not modified the value" do
+      #fixtures
+      value = @document.name
+      form_timestamp = Time.now
+      params = {:name => "nuovo nome"}
+
+      #someone change the field value
+      sleep 0.2.seconds
+      @document.update_attributes(params)
+
+      # user submit a different value
+      sleep 0.2.seconds
+      different_params = {:name => value, :active_metadata_timestamp => form_timestamp}
+      @document.update_attributes(different_params)
+
+      #assetions
+      warnings = @document.conflicts[:warnings]
+      warnings.size.should eq 1
+      warnings[0][:name].value.should eq "nuovo nome"
+
+      @document.conflicts[:fatals].should be_empty
+    end
+
+    it "when a warning is registered the submitted value is skipped" do
+      #fixtures
+      value = @document.name
+      form_timestamp = Time.now
+      params = {:name => "nuovo nome"}
+
+      #someone change the field value
+      sleep 0.2.seconds
+      @document.update_attributes(params)
+
+      # user submit a different value
+      sleep 0.2.seconds
+      different_params = {:name => value, :active_metadata_timestamp => form_timestamp}
+      @document.update_attributes(different_params)
+
+      #assetions
+      hs = @document.history_for(:name)
+      hs.count.should eq 2
+      hs.first.value.should eq "nuovo nome"
+      Document.last.name.should eq "nuovo nome"
+
+    end
+
     it "should reject the change as fatal if the history newest value is different from the submitted once and both user has changed the value" do
       #fixtures
       form_timestamp = Time.now
@@ -102,7 +148,7 @@ describe "Manage Concurrency" do
       sleep 0.2.seconds
       @document.update_attributes(params)
 
-      # user submit a new value
+      # user submit a different value
       sleep 0.2.seconds
       different_params = {:name => "altro nome", :active_metadata_timestamp => form_timestamp}
       @document.update_attributes(different_params)
@@ -110,8 +156,26 @@ describe "Manage Concurrency" do
       #assetions
       fatals = @document.conflicts[:fatals]
       fatals.size.should eq 1
-      fatals[0][:name][0].should eq "altro nome"
+      fatals[0][:name].value.should eq "nuovo nome"
       @document.conflicts[:warnings].should be_empty
+
+    end
+
+    it "when a fatal conflict occurs the submitted value is skipped" do
+      #fixtures
+      form_timestamp = Time.now
+      params = {:name => "nuovo nome"}
+
+      #someone change the field value
+      sleep 0.2.seconds
+      @document.update_attributes(params)
+
+      # user submit a different value
+      sleep 0.2.seconds
+      different_params = {:name => "altro nome", :active_metadata_timestamp => form_timestamp}
+      @document.update_attributes(different_params)
+
+      #assetions
       hs = @document.history_for(:name)
       hs.count.should eq 2
       hs.first.value.should eq "nuovo nome"

@@ -95,7 +95,7 @@ module ActiveMetadata
       # Conflicts
       # ====
       # * @conflicts[:warnings] contains any conflict that "apply cleanly" or where the submit value has not been modified by the user that is saving
-      #  the data
+      #  the data.
       #
       # * @conflicts[:fatals] contains any conflict that "do not apply cleanly" or where the passed value does not match the last history value and was modified
       #   by the user that is submittig the data
@@ -120,14 +120,11 @@ module ActiveMetadata
           #if the timestamp is previous of the last history change
           if timestamp < latest_history.created_at.to_f
 
-            # there is a conflict so ensure the actual value
-            self[key.to_sym] = self.changes[key][0]
-
             # We have a conflict.
             # Check if the actual submission has been modified
-            histories.each do |h|
+            histories.each_with_index do |h,i|
               # Looking for the value that was loaded by the user. First history with a ts that is younger than the form ts
-              next if timestamp > h.created_at.to_f
+              next if h.created_at.to_f > timestamp
 
               # History stores values as strings so any boolean is stored as "0" or "1"
               # We need to translate the params passed for a safer comparison.
@@ -135,11 +132,16 @@ module ActiveMetadata
                 b_val = to_bool(h.value)
               end
 
+              # conflict ensure the actual value is not modified
+              self[key.to_sym] = self.changes[key][0]
+
               if [h.value, b_val].include? val
-                self.conflicts[:warnings] << {key.to_sym => [val, h]}
+                self.conflicts[:warnings] << {key.to_sym => latest_history}
               else
-                self.conflicts[:fatals] << {key.to_sym => [val, h]}
+                self.conflicts[:fatals] << {key.to_sym => latest_history}
               end
+
+              break #done for this field
             end
 
           end
