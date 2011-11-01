@@ -7,11 +7,11 @@ module ActiveMetadata::Persistence::ActiveRecord::Watcher
   module InstanceMethods
     def create_watcher_for(field, owner)
       raise RuntimeError, "The object id MUST be valued" unless self.id
-      Watcher.create! :document_id => metadata_id, :label => field, :owner_id => owner.id 
+      Watcher.create! :document_class => metadata_class, :document_id => metadata_id, :label => field, :owner_id => owner.id
     end                      
 
     def watchers_for(field)
-      Watcher.all(:conditions => {:label => field, :document_id => metadata_model[:id]})
+      Watcher.all(:conditions => {:document_class => metadata_class, :label => field, :document_id => metadata_id})
     end
 
     def delete_watcher_for(field, owner)
@@ -21,7 +21,7 @@ module ActiveMetadata::Persistence::ActiveRecord::Watcher
     end    
     
     def is_watched_by(field,owner)
-      Watcher.where(:document_id => metadata_id, :label => field, :owner_id => owner.id).empty? ? false : true 
+      Watcher.where(:document_class => metadata_class, :document_id => metadata_id, :label => field, :owner_id => owner.id).empty? ? false : true
     end                    
 
     def send_notification(field, old_value, new_value, type=:default_message, created_by=nil)   

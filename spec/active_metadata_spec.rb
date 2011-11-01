@@ -10,20 +10,20 @@ describe ActiveMetadata do
       Document.respond_to?(:acts_as_metadata).should be_true
     end
 
-    it "should find the metadata model if no metadata_model params has been provided" do
+    it "should find the active_metadata_ancestors if no active_metadata_ancestors params has been provided" do
       @document = Document.create! { |d| d.name = "John" }
       @document.reload
-      @document.metadata_model[:id].should eq @document.id
-      @document.metadata_model[:class].should eq @document.class.to_s
+      @document.metadata_id.should eq @document.id
+      @document.metadata_class.should eq @document.class.to_s
     end
 
-    it "should find the metadata model if an  active_metadata_model params has been specified" do
+    it "should find the metadata_root.id if an active_metadata_ancestors params has been specified" do
       @document = Document.create! { |d| d.name = "John" }
       @document.reload
       @section = @document.create_section :title => "new section"
       @section.reload
-      @section.metadata_model[:id].should eq @document.id
-      @section.metadata_model[:class].should eq @document.class.to_s
+      @section.metadata_id.should eq @document.id
+      @section.metadata_class.should eq @document.class.to_s
     end
 
   end
@@ -40,9 +40,15 @@ describe ActiveMetadata do
       @document.notes_for(:name).should have(1).record
     end
 
+
     it "should verify the content of a note created" do
       @document.create_note_for(:name, "Very important note!")
       @document.notes_for(:name).last.note.should eq "Very important note!"
+    end
+
+    it "should verify that notes are created for the correct model" do
+      @document.create_note_for(:name, "Very important note!")
+      @document.notes_for(:name).last.document_class.should eq(@document.class.to_s)
     end
 
     it "should verify the created_by of a note created" do
@@ -189,6 +195,10 @@ describe ActiveMetadata do
 
     it "should create history for a defined field when a document is created" do
       @document.history_for(:name)[0].value.should eq(@document.name)
+    end
+
+    it "should verify that histories are created for the correct model" do
+      @document.history_for(:name)[0].document_class.should eq(@document.class.to_s)
     end
 
     it "should save the craeted_at datetime anytime an history entry is created" do

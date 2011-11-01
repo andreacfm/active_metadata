@@ -24,7 +24,7 @@ module ActiveMetadata
         attr_accessor :conflicts
         attr_accessor :active_metadata_timestamp
 
-        class_variable_set("@@metadata_id_from", args.empty? ? nil : args[0][:metadata_id_from])
+        class_variable_set("@@active_metadata_ancestors", args.empty? ? nil : args[0][:active_metadata_ancestors])
 
         include ActiveMetadata::Base::InstanceMethods
         include ActiveMetadata::Persistence
@@ -58,6 +58,10 @@ module ActiveMetadata
         metadata_root.id
       end
 
+      def metadata_class
+        metadata_root.class.to_s
+      end
+
       # Normalize the active_metadata_timestamp into a float to be comparable with the history
       def am_timestamp
         ts = metadata_root.active_metadata_timestamp
@@ -74,10 +78,10 @@ module ActiveMetadata
       end
 
       def metadata_root
-        metadata_id_from = self.class.class_variable_get("@@metadata_id_from")
-        return self if metadata_id_from.nil?
+        active_metadata_ancestors = self.class.class_variable_get("@@active_metadata_ancestors")
+        return self if active_metadata_ancestors.nil?
         receiver = self
-        metadata_id_from.each do |item|
+        active_metadata_ancestors.each do |item|
           receiver = receiver.send item
         end
         receiver

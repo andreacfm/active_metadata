@@ -7,7 +7,7 @@ module ActiveMetadata::Persistence::ActiveRecord::Note
   module InstanceMethods
     
     def create_note_for(field, note)      
-      Note.create! :document_id => metadata_id,:label => field.to_s,:note => note, :created_by => current_user_id  
+      Note.create! :document_id => metadata_id, :document_class => metadata_class, :label => field.to_s,:note => note, :created_by => current_user_id
       reload_notes_cache_for field 
       self.send(:send_notification, field, "", note, :note_message, current_user_id) 
     end
@@ -53,7 +53,7 @@ module ActiveMetadata::Persistence::ActiveRecord::Note
     end  
     
     def fetch_notes_for field
-      Note.all(:conditions => {:label => field, :document_id => metadata_id}, :order => "updated_at DESC" )              
+      Note.all(:conditions => {:label => field, :document_class => metadata_class, :document_id => metadata_id}, :order => "updated_at DESC" )
     end  
         
   end

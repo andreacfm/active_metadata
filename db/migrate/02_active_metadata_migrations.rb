@@ -14,6 +14,7 @@ class ActiveMetadataMigrations < ActiveRecord::Migration
     add_index :notes, :document_id
     add_index :notes, :label
     add_index :notes, :updated_at
+    add_index :notes, :document_class
 
     create_table :histories do |t|
       t.text :value
@@ -27,6 +28,7 @@ class ActiveMetadataMigrations < ActiveRecord::Migration
     add_index :histories, :document_id
     add_index :histories, :label
     add_index :histories, :created_at
+    add_index :notes, :document_class
 
     create_table :attachments do |t|
       t.string :label
@@ -45,6 +47,7 @@ class ActiveMetadataMigrations < ActiveRecord::Migration
     add_index :attachments, :document_id
     add_index :attachments, :label
     add_index :attachments, :attach_updated_at
+    add_index :notes, :document_class
 
     create_table :watchers do |t|
       t.integer :owner_id
