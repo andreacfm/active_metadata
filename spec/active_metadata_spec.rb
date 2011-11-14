@@ -301,7 +301,7 @@ describe ActiveMetadata do
     it "should verify that the document has been saved in the correct position on filesystem"  do
       @document.save_attachment_for(:name,@attachment)
       att = @document.attachments_for(:name).first
-      expected_path = File.expand_path "#{ActiveMetadata::CONFIG['attachment_base_path']}/#{@document.id}/#{:name.to_s}/#{att.id}/#{@attachment.original_filename}"
+      expected_path = File.expand_path "#{ActiveMetadata::CONFIG['attachment_base_path']}/#{att.document_class}/#{@document.id}/#{:name.to_s}/#{att.id}/#{@attachment.original_filename}"
       File.exists?(expected_path).should be_true
     end
 
