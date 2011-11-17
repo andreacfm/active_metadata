@@ -180,6 +180,11 @@ describe ActiveMetadata do
       @document.has_notes_for(:name).should be_true      
     end
 
+    it "should save special notes" do
+      @document.create_note_for(:name, "nuova nota", true)
+      @document.notes_for(:name).first.special?.should be_true
+    end
+
   end
 
   context "history" do

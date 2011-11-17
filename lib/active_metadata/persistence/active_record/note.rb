@@ -6,8 +6,8 @@ module ActiveMetadata::Persistence::ActiveRecord::Note
 
   module InstanceMethods
     
-    def create_note_for(field, note)      
-      Note.create! :document_id => metadata_id, :document_class => metadata_class, :label => field.to_s,:note => note, :created_by => current_user_id
+    def create_note_for(field, note, special=false)
+      Note.create! :document_id => metadata_id, :document_class => metadata_class, :label => field.to_s,:note => note, :created_by => current_user_id, :special => special
       reload_notes_cache_for field 
       self.send(:send_notification, field, "", note, :note_message, current_user_id) 
     end
