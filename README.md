@@ -21,10 +21,6 @@ Concurrency
 Tech Debts
 ---
 
-* Add metadata support for more than one model in the same application. Actually only the document_id is stored and searched.
-  A solution can be store also a metadata_model_name as we now dow with the metadata_id method. Then searching also based on this parameter.
-  Started in branch MODELS
-
 * in the {active_metadata:setup} task will be generated a sample WatcherNotifier class
   to be changed and implemented accordingly to the rails app logic
 
@@ -37,3 +33,5 @@ Tech Debts
 * Fix the setup task for:
     * Migration file copy must come from db/migration and not from a template
     * drop mongoid set up file
+
+* implement controller methods for notes/attachments starred/star/unstar
