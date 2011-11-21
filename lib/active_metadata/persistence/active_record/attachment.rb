@@ -19,12 +19,12 @@ module ActiveMetadata::Persistence::ActiveRecord::Attachment
       end  
     end
 
-    def delete_attachment_for(field,id)
+    def delete_attachment(id)
       a = Attachment.find(id)
       filename = a.attach.original_filename
       a.destroy      
-      reload_attachments_cache_for field 
-      self.send(:send_notification, field, filename, "", :attachment_message)
+      reload_attachments_cache_for a.label
+      self.send(:send_notification, a.label, filename, "", :attachment_message)
     end
 
     def update_attachment(id, newfile, starred=nil)

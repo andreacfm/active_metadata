@@ -34,7 +34,7 @@ module ActiveMetadata
 
     def destroy
       @document = eval(params[:model_name]).find params[:model_id]
-      @document.delete_attachment_for(params[:field_name], params[:id])
+      @document.delete_attachment(params[:id])
       
       #todo: if errors send back the correct answer
       respond_to do |format|

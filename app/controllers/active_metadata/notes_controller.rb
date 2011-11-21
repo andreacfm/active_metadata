@@ -49,7 +49,7 @@ module ActiveMetadata
 
     def destroy
       @document = eval(params[:model_name]).find params[:model_id]
-      @document.delete_note_for(params[:field_name],params[:id])
+      @document.delete_note(params[:id])
       respond_to do |format|
         # TODO redirect to index
         format.js

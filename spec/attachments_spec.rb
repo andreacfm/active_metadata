@@ -66,7 +66,7 @@ describe ActiveMetadata do
         attachments.count.should eq 2
         attachment_path_to_be_deleted = attachments[0].attach.path
 
-        @document.delete_attachment_for(:name, attachments[0].id)
+        @document.delete_attachment(attachments[0].id)
 
         attachments = @document.attachments_for(:name)
         attachments.count.should eq 1

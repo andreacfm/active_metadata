@@ -117,7 +117,7 @@ describe ActiveMetadata do
         notes.count.should eq 2
         note_to_be_deleted = notes[0].note
 
-        @document.delete_note_for(:name, notes[0].id)
+        @document.delete_note(notes[0].id)
 
         notes = @document.notes_for(:name)
         notes.count.should eq 1
