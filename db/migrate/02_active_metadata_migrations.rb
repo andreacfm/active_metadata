@@ -8,7 +8,7 @@ class ActiveMetadataMigrations < ActiveRecord::Migration
       t.integer :document_id
       t.integer :created_by
       t.integer :updated_by
-      t.boolean :special
+      t.boolean :starred
       t.timestamps
     end
 
@@ -42,7 +42,7 @@ class ActiveMetadataMigrations < ActiveRecord::Migration
       t.string :attach_content_type
       t.integer :attach_file_size
       t.datetime :attach_updated_at
-      t.boolean :special
+      t.boolean :starred
       t.timestamps
     end
 
