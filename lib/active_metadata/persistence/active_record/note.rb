@@ -6,16 +6,21 @@ module ActiveMetadata::Persistence::ActiveRecord::Note
 
   module InstanceMethods
     
-    def create_note_for(field, note, special=false)
-      Note.create! :document_id => metadata_id, :document_class => metadata_class, :label => field.to_s,:note => note, :created_by => current_user_id, :special => special
-      reload_notes_cache_for field 
+    def create_note_for(field, note, starred=false)
+      Note.create! :document_id => metadata_id, :document_class => metadata_class, :label => field.to_s,:note => note, :created_by => current_user_id, :starred => starred
+      reload_notes_cache_for field
       self.send(:send_notification, field, "", note, :note_message, current_user_id) 
     end
 
-    def update_note(id, note)
+    def update_note(id, note, starred=nil)
       n = Note.find(id)
       old_value = n.note
-      n.update_attributes! :note => note, :updated_by => current_user_id, :updated_at => Time.now.utc     
+      attributes =  {:note => note, :updated_by => current_user_id, :updated_at => Time.now.utc}
+      #mass assign starred inly if provided
+      unless starred.nil?
+        attributes[:starred] = starred
+      end
+      n.update_attributes! attributes
       reload_notes_cache_for n.label 
       self.send(:send_notification, n.label, old_value, note, :note_message, current_user_id)
     end
@@ -26,7 +31,7 @@ module ActiveMetadata::Persistence::ActiveRecord::Note
       end    
     end
 
-    def note_for(field,id)
+    def find_note_by_id(id)
       Note.find(id)
     end      
     
@@ -45,15 +50,34 @@ module ActiveMetadata::Persistence::ActiveRecord::Note
     def has_notes_for field      
       notes_for(field).size == 0 ? false : true
     end
-    
+
+    # not cached
+    def starred_notes_for(field)
+      fetch_notes_for field,true
+    end
+
+    def star_note(id)
+      n = Note.find(id)
+      update_note id,n.note,true
+    end
+
+    def unstar_note(id)
+      n = Note.find(id)
+      update_note id,n.note,false
+    end
+
     private
     
     def reload_notes_cache_for field
       Rails.cache.write(notes_cache_key(field),fetch_notes_for(field), :expires_in => ActiveMetadata::CONFIG['cache_expires_in'].minutes )     
     end  
     
-    def fetch_notes_for field
-      Note.all(:conditions => {:label => field, :document_class => metadata_class, :document_id => metadata_id}, :order => "updated_at DESC" )
+    def fetch_notes_for(field, starred=nil)
+      conditions = {:label => field, :document_class => metadata_class, :document_id => metadata_id}
+      unless starred.nil?
+        conditions[:starred] = starred
+      end
+      Note.all(:conditions => conditions, :order => "updated_at DESC")
     end  
         
   end

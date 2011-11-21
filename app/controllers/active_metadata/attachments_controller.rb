@@ -24,7 +24,7 @@ module ActiveMetadata
 
     def update
       @document = eval(params[:model_name]).find params[:model_id]
-      @document.update_attachment_for(params[:field_name],params[:id],params[:file])
+      @document.update_attachment(params[:id],params[:file])
       
       #todo: if errors send back the correct answer
       respond_to do |format|
