@@ -25,9 +25,9 @@ module ActiveMetadata::Persistence::ActiveRecord::Note
       self.send(:send_notification, n.label, old_value, note, :note_message, current_user_id)
     end
 
-    def notes_for(field)
+    def notes_for(field, order_by="updated_at DESC")
       Rails.cache.fetch(notes_cache_key(field), :expires_in => ActiveMetadata::CONFIG['cache_expires_in'].minutes) do
-        fetch_notes_for field       
+        fetch_notes_for field, nil, order_by
       end    
     end
 
@@ -72,12 +72,12 @@ module ActiveMetadata::Persistence::ActiveRecord::Note
       Rails.cache.write(notes_cache_key(field),fetch_notes_for(field), :expires_in => ActiveMetadata::CONFIG['cache_expires_in'].minutes )     
     end  
     
-    def fetch_notes_for(field, starred=nil)
+    def fetch_notes_for(field, starred=nil, order_by="updated_at DESC")
       conditions = {:label => field, :document_class => metadata_class, :document_id => metadata_id}
       unless starred.nil?
         conditions[:starred] = starred
       end
-      Note.all(:conditions => conditions, :order => "updated_at DESC")
+      Note.all(:conditions => conditions, :order => order_by)
     end  
         
   end
