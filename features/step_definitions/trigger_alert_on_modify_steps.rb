@@ -32,7 +32,7 @@ end
 
 When /^afterwards I delete the note on the field "([^"]*)"$/ do |field|
   note = @document.notes_for(field.to_sym).first
-  @document.delete_note_for(field.to_sym,note.id)  
+  @document.delete_note(note.id)
 end
 
 When /^creating a new attachment on the "([^"]*)" field with name "([^"]*)"$/ do |field, filename|
@@ -44,7 +44,7 @@ end
 
 When /^deleting the attachment on the "([^"]*)" field with name "([^"]*)"$/ do |field, filename|
   @attachment = @document.attachments_for(field.to_sym).last  
-  @document.delete_attachment_for(field,@attachment.id)
+  @document.delete_attachment(@attachment.id)
 end
                        
 When /^updating the attachment on the "([^"]*)" field with name "([^"]*)"$/ do |field, filename|
@@ -52,7 +52,7 @@ When /^updating the attachment on the "([^"]*)" field with name "([^"]*)"$/ do |
   file = File.expand_path("../../supports/#{filename}", __FILE__)
   updated_file = Rack::Test::UploadedFile.new(file, "plain/text")
   
-  @document.update_attachment_for(field,@attachment.id, updated_file)
+  @document.update_attachment(@attachment.id, updated_file)
 end
 # Then ##########################################################
 Then /^([^"]*) alert should be found in the inbox of the user$/ do |number|
