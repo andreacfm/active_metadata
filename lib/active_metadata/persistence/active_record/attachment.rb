@@ -13,9 +13,9 @@ module ActiveMetadata::Persistence::ActiveRecord::Attachment
       self.send(:send_notification, field, "", attachment.attach.original_filename, :attachment_message, current_user_id)
     end
 
-    def attachments_for(field)
+    def attachments_for(field, order_by="attach_updated_at DESC")
       Rails.cache.fetch(attachments_cache_key(field), :expires_in => ActiveMetadata::CONFIG['cache_expires_in'].minutes) do
-        fetch_attachments_for field   
+        fetch_attachments_for field, nil, order_by
       end  
     end
 
@@ -69,10 +69,10 @@ module ActiveMetadata::Persistence::ActiveRecord::Attachment
       Rails.cache.write(attachments_cache_key(field),fetch_attachments_for(field), :expires_in => ActiveMetadata::CONFIG['cache_expires_in'].minutes )     
     end  
     
-    def fetch_attachments_for field, starred=nil
+    def fetch_attachments_for(field, starred=nil, order_by="attach_updated_at DESC")
       conditions = {:document_class => metadata_class, :document_id => metadata_id,:label => field}
       conditions[:starred] = starred if !starred.nil?
-      Attachment.all(:conditions => conditions , :order => "attach_updated_at DESC")
+      Attachment.all(:conditions => conditions , :order => order_by)
     end  
 
   end
