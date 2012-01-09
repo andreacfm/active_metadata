@@ -18,8 +18,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency "sqlite3-ruby"
   s.add_development_dependency "cucumber"
   s.add_development_dependency "ci_reporter"
-  s.add_dependency "rails", "> 3.0.1"
-  s.add_dependency "activerecord", "> 3.0.1"
+  s.add_dependency "rails"
+  s.add_dependency "activerecord"
   s.add_dependency "paperclip"
   s.files         = Dir.glob('{lib,app,config,db}/**/*')
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
