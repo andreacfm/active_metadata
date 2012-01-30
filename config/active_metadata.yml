@@ -6,8 +6,8 @@ development:
     attachment_base_path: "public/system/metadata_attachments"
     attachment_base_url: "/system/metadata_attachments"
     streamables:
-      - 'note'
-      - 'attachment'
+      - :note
+      - :attachment
 
 test:
     history_skip_fields:
@@ -17,5 +17,5 @@ test:
     attachment_base_path: "public/system/metadata_attachments"
     attachment_base_url: "/system/metadata_attachments"
     streamables:
-      - 'note'
-      - 'attachment'
+      - :note
+      - :attachment

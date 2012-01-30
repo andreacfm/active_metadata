@@ -6,9 +6,10 @@ module ActiveMetadata
   ## Define ModelMethods
   module Base
 
+    require 'active_metadata/helpers'
+    require 'active_metadata/streamable'
     require 'paperclip'
     require 'active_metadata/persistence/persistence'
-    require 'active_metadata/helpers'
 
     def self.included(klass)
       klass.class_eval do
@@ -28,6 +29,7 @@ module ActiveMetadata
 
         include ActiveMetadata::Base::InstanceMethods
         include ActiveMetadata::Persistence
+        include ActiveMetadata::Streamable
 
       end
 

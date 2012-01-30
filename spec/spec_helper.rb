@@ -6,6 +6,7 @@ require 'rspec/core'
 require "sqlite3"
 require "rack/test/uploaded_file"
 require 'active_support/cache'
+require 'paperclip'
 
 $: << File.expand_path(File.dirname(__FILE__) + "/../app")
 gemfile = File.expand_path('../Gemfile', __FILE__)
@@ -24,7 +25,9 @@ ENV["RAILS_ENV"] ||= 'test'
 
 ActiveRecord::Base.establish_connection YAML.load_file("config/database.yml")[ENV["RAILS_ENV"]]
 ActiveRecord::Base.logger = Logger.new "log/test.log"
-Rails.logger = ActiveRecord::Base.logger  
+Rails.logger = ActiveRecord::Base.logger
+Paperclip.logger = Rails.logger
+
 RAILS_CACHE = ActiveSupport::Cache::MemoryStore.new
                                                                       
 # loading ruby files
