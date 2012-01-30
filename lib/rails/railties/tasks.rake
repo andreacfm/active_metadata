@@ -3,7 +3,7 @@ namespace :active_metadata do
   desc "Install the active_metadata gem requirements file ***TASK IS ON ALPHA STAGE***"
   task :install do
 
-    FileUtils.cp File.expand_path('../../templates/active_metadata.yml',__FILE__), File.expand_path('config/')
+    FileUtils.cp File.expand_path('../../../config/active_metadata.yml',__FILE__), File.expand_path('config/')
     puts "Installed active_metadata.yml"
 
     puts "Copying migrations"

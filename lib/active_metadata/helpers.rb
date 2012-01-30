@@ -7,3 +7,17 @@ module  ActiveMetadata::Helpers
   end
 
 end
+
+class String
+  # transform a symbol/string into a class
+  def to_class
+    self.to_s.camelize.constantize
+  end
+end
+
+class Symbol
+  # transform a symbol/string into a class
+  def to_class
+    self.to_s.to_class
+  end
+end

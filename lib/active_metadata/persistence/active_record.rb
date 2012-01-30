@@ -4,12 +4,13 @@ module ActiveMetadata::Persistence::ActiveRecord
   require "model/active_record/history"
   require "model/active_record/watcher"
   require "model/active_record/attachment"
-  
+  require "model/active_record/stream"
+
   require "active_metadata/persistence/active_record/note"
   require "active_metadata/persistence/active_record/history"
   require "active_metadata/persistence/active_record/watcher"
   require "active_metadata/persistence/active_record/attachment"
-  
+
   def self.included(receiver)
     receiver.send :include, InstanceMethods
   end

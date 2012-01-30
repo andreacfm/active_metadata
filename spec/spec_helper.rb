@@ -21,7 +21,6 @@ rescue Bundler::GemNotFound => e
 end if File.exist?(gemfile)
 
 ENV["RAILS_ENV"] ||= 'test'
-ENV["ACTIVE_METADATA_ENV"] ||= 'test'
 
 ActiveRecord::Base.establish_connection YAML.load_file("config/database.yml")[ENV["RAILS_ENV"]]
 ActiveRecord::Base.logger = Logger.new "log/test.log"
@@ -63,4 +62,9 @@ RSpec.configure do |config|
   config.after(:suite) do  
     # seems that closing the established connection isn't really necessary
   end
+end
+
+def test_pdf name='pdf_test'
+  doc = File.expand_path("../support/#{name}.pdf", __FILE__)
+  Rack::Test::UploadedFile.new(doc, "application/pdf")
 end
