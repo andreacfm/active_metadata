@@ -1,30 +1,27 @@
 module ActiveMetadata
   class NotesController < ApplicationController
 
-    unloadable
-
     def index
-      @document = eval(params[:model_name]).find params[:model_id] 
-      @notes = @document.notes_for params[:field_name]      
+      @document = params[:model_name].to_class.find(params[:model_id])
+      @notes = @document.notes_for params[:field_name]
       respond_to do |format|
         format.html { render :layout => false}
         format.xml  { render :xml => @notes }
-        format.xls { send_data @notes.to_xls_data(:columns => [:note,:created_at], :headers => [:nota,'inserita']), :filename => 'notes.xls' }        
       end
     end  
 
     def edit
-      @document = eval(params[:model_name]).find params[:model_id] 
+      @document = params[:model_name].to_class.find(params[:model_id])
       @note = @document.note_for params[:field_name],params[:id]     
     end  
 
     def show
-      @document = eval(params[:model_name]).find params[:model_id] 
+      @document = params[:model_name].to_class.find(params[:model_id])
       @note = @document.note_for params[:field_name],params[:id]     
     end  
 
     def create
-      @document = eval(params[:model_name]).find params[:model_id]
+      @document = params[:model_name].to_class.find(params[:model_id])
       @document.create_note_for(params[:field_name], params[:note])
       respond_to do |format|
         # TODO redirect to edit
@@ -33,7 +30,7 @@ module ActiveMetadata
     end
 
     def update
-      @document = eval(params[:model_name]).find params[:model_id]
+      @document = params[:model_name].to_class.find(params[:model_id])
       @note = @document.note_for params[:field_name],params[:id]     
             
       respond_to do |format|
@@ -48,7 +45,7 @@ module ActiveMetadata
     end
 
     def destroy
-      @document = eval(params[:model_name]).find params[:model_id]
+      @document = params[:model_name].to_class.find(params[:model_id])
       @document.delete_note(params[:id])
       respond_to do |format|
         # TODO redirect to index

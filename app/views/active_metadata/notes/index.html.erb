@@ -1,11 +1,3 @@
 <ul>
-    <% @notes.each do |note| %>
-        <li>
-        <b><%= note.note %></b><br/>
-        <%= "Inserita da: #{note.created_by}<br/>" unless note.created_by.nil? %>
-        Il: <%= note.created_at.strftime("%m/%d/%Y at %I:%M:%S") %>   <br/>
-        <%= link_to "Edit", active_metadata_edit_note_path(@document.class,@document.id,note.label,note.id) %>
-        <%= link_to "Destroy", active_metadata_destroy_note_path(@document.class,@document.id,note.label,note.id), :method => :delete, :remote => true %>
-        </li>
-    <% end %>
+    <%= render :partial => "note", :collection => @notes %>
 </ul>

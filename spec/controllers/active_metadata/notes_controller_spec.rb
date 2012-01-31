@@ -1,15 +1,16 @@
 require 'spec_helper'
 
-describe ActiveMetadata::StreamController do
+describe ActiveMetadata::NotesController do
 
-  context "given 1 note and 1 attachment for @document#name" do
+  context "given 3 notes @document#name" do
 
     render_views
 
     before(:each) do
       @document = Document.create! { |d| d.name = "John" }
-      @document.save_attachment_for(:name,test_pdf("pdf_test"))
-      @document.create_note_for(:name, "note")
+      (1..3).each do |i|
+        @document.create_note_for(:name, "note#{i}")
+      end
     end
 
     describe "GET 'index'" do
@@ -19,22 +20,22 @@ describe ActiveMetadata::StreamController do
         response.should be_success
       end
 
-      it "should assign document" do
+      it "should assign notes" do
         get 'index', :model_name => 'document', :model_id => @document.id, :field_name => 'name'
-        assigns(:document).should_not be_nil
-        assigns(:document).id.should eq @document.id
+        assigns(:notes).should_not be_nil
+        assigns(:notes).size.should eq 3
       end
 
-      it "should assign stream" do
+      it "should display 3 notes" do
         get 'index', :model_name => 'document', :model_id => @document.id, :field_name => 'name'
-        assigns(:stream).should_not be_nil
-        assigns(:stream).size.should eq 2
+        response.body.should match(/note1/)
+        response.body.should match(/note2/)
+        response.body.should match(/note3/)
       end
 
     end
 
   end
-
 
 
 end
