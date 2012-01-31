@@ -1,7 +1,9 @@
-# -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
+
+# Maintain your gem's version:
 require "active_metadata/version"
 
+# Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name        = "active_metadata"
   s.version     = ActiveMetadata::VERSION
@@ -13,16 +15,17 @@ Gem::Specification.new do |s|
 
   s.rubyforge_project = "active_metadata"
 
-  s.add_development_dependency "rspec-rails"
-  s.add_development_dependency "sqlite3"
-  s.add_development_dependency "sqlite3-ruby"
-  s.add_development_dependency "cucumber"
-  s.add_development_dependency "ci_reporter"
-  s.add_dependency "rails"
-  s.add_dependency "activerecord"
-  s.add_dependency "paperclip"
-  s.files         = Dir.glob('{lib,app,config,db}/**/*')
+  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
+
+  s.add_dependency "rails", "~> 3.2.0"
+  s.add_development_dependency "sqlite3"
+  s.add_development_dependency "rspec-rails"
+  s.add_development_dependency "sqlite3"
+  s.add_development_dependency "sqlite3-ruby"
+  s.add_development_dependency "cucumber-rails"
+  s.add_development_dependency "ci_reporter"
+  s.add_dependency "paperclip"    
 end

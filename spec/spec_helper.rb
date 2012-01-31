@@ -1,38 +1,18 @@
 # encoding: utf-8
 require 'rubygems'
-require "rails/all"
-require "logger"
-require 'rspec/core'
-require "sqlite3"
-require "rack/test/uploaded_file"
-require 'active_support/cache'
-require 'paperclip'
-
-$: << File.expand_path(File.dirname(__FILE__) + "/../app")
-gemfile = File.expand_path('../Gemfile', __FILE__)
-
-begin
-  ENV['BUNDLE_GEMFILE'] = gemfile
-  require 'bundler'
-  Bundler.setup
-rescue Bundler::GemNotFound => e
-  STDERR.puts e.message
-  STDERR.puts "Try running `bundle install`."
-  exit!
-end if File.exist?(gemfile)
 
 ENV["RAILS_ENV"] ||= 'test'
 
-ActiveRecord::Base.establish_connection YAML.load_file("config/database.yml")[ENV["RAILS_ENV"]]
-ActiveRecord::Base.logger = Logger.new "log/test.log"
-Rails.logger = ActiveRecord::Base.logger
-Paperclip.logger = Rails.logger
+require 'rails/all'
+require 'active_metadata'
+require 'rack/test/uploaded_file'
+require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 
-RAILS_CACHE = ActiveSupport::Cache::MemoryStore.new
-                                                                      
-# loading ruby files
-require "#{File.dirname(__FILE__)}/../lib/engine.rb"
-Dir["spec/support/*.rb"].each {|f| require "support/#{(File.basename(f, File.extname(f)) )}"}
+ENGINE_RAILS_ROOT=File.join(File.dirname(__FILE__), '../')
+Dir[File.join(ENGINE_RAILS_ROOT, "spec/support/**/*.rb")].each {|f| require f }
+
+require 'rspec/rails'
+
 
 RSpec.configure do |config|
   # == Mock Framework
