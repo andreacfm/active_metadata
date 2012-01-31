@@ -9,7 +9,7 @@ describe ActiveMetadata::StreamController do
     before(:each) do
       @document = Document.create! { |d| d.name = "John" }
       @document.save_attachment_for(:name,test_pdf("pdf_test"))
-      @document.create_note_for(:name, "note")
+      @document.create_note_for(:name, "nota per name john")
     end
 
     describe "GET 'index'" do
@@ -29,6 +29,12 @@ describe ActiveMetadata::StreamController do
         get 'index', :model_name => 'document', :model_id => @document.id, :field_name => 'name'
         assigns(:stream).should_not be_nil
         assigns(:stream).size.should eq 2
+      end
+
+      it "should render both note and the attachment" do
+        get 'index', :model_name => 'document', :model_id => @document.id, :field_name => 'name'
+        response.body.should match(/pdf_test.pdf/)
+        response.body.should match(/nota per name john/)
       end
 
     end
