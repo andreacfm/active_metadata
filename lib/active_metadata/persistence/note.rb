@@ -1,4 +1,4 @@
-module ActiveMetadata::Persistence::ActiveRecord::Note
+module ActiveMetadata::Persistence::Note
 
   def self.included(receiver)
     receiver.send :include, InstanceMethods
@@ -7,13 +7,13 @@ module ActiveMetadata::Persistence::ActiveRecord::Note
   module InstanceMethods
     
     def create_note_for(field, note, starred=false)
-      Note.create! :document_id => metadata_id, :document_class => metadata_class, :label => field.to_s,:note => note, :created_by => current_user_id, :starred => starred
+      ActiveMetadata::Note.create! :document_id => metadata_id, :document_class => metadata_class, :label => field.to_s,:note => note, :created_by => current_user_id, :starred => starred
       reload_notes_cache_for field
       self.send(:send_notification, field, "", note, :note_message, current_user_id) 
     end
 
     def update_note(id, note, starred=nil)
-      n = Note.find(id)
+      n = ActiveMetadata::Note.find(id)
       old_value = n.note
       attributes =  {:note => note, :updated_by => current_user_id, :updated_at => Time.now.utc}
       #mass assign starred inly if provided
@@ -32,7 +32,7 @@ module ActiveMetadata::Persistence::ActiveRecord::Note
     end
 
     def find_note_by_id(id)
-      Note.find(id)
+      ActiveMetadata::Note.find(id)
     end      
     
     def create_notes_for(field,notes)
@@ -40,7 +40,7 @@ module ActiveMetadata::Persistence::ActiveRecord::Note
     end
 
     def delete_note(id)
-      n = Note.find(id)
+      n = ActiveMetadata::Note.find(id)
       old_value = n.note
       n.destroy
       reload_notes_cache_for n.label
@@ -57,12 +57,12 @@ module ActiveMetadata::Persistence::ActiveRecord::Note
     end
 
     def star_note(id)
-      n = Note.find(id)
+      n = ActiveMetadata::Note.find(id)
       update_note id,n.note,true
     end
 
     def unstar_note(id)
-      n = Note.find(id)
+      n = ActiveMetadata::Note.find(id)
       update_note id,n.note,false
     end
 
@@ -77,7 +77,7 @@ module ActiveMetadata::Persistence::ActiveRecord::Note
       unless starred.nil?
         conditions[:starred] = starred
       end
-      Note.all(:conditions => conditions, :order => order_by)
+      ActiveMetadata::Note.all(:conditions => conditions, :order => order_by)
     end  
         
   end

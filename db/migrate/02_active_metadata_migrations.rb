@@ -1,7 +1,7 @@
 class ActiveMetadataMigrations < ActiveRecord::Migration
   def self.up
 
-    create_table :notes do |t|
+    create_table :active_metadata_notes do |t|
       t.text :note
       t.string :label
       t.string :document_class
@@ -12,12 +12,12 @@ class ActiveMetadataMigrations < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :notes, :document_id
-    add_index :notes, :label
-    add_index :notes, :updated_at
-    add_index :notes, :document_class
+    add_index :active_metadata_notes, :document_id
+    add_index :active_metadata_notes, :label
+    add_index :active_metadata_notes, :updated_at
+    add_index :active_metadata_notes, :document_class
 
-    create_table :histories do |t|
+    create_table :active_metadata_histories do |t|
       t.text :value
       t.string :label
       t.string :document_class
@@ -26,12 +26,12 @@ class ActiveMetadataMigrations < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :histories, :document_id
-    add_index :histories, :label
-    add_index :histories, :created_at
-    add_index :histories, :document_class
+    add_index :active_metadata_histories, :document_id
+    add_index :active_metadata_histories, :label
+    add_index :active_metadata_histories, :created_at
+    add_index :active_metadata_histories, :document_class
 
-    create_table :attachments do |t|
+    create_table :active_metadata_attachments do |t|
       t.string :label
       t.integer :document_id
       t.string :document_class
@@ -46,12 +46,12 @@ class ActiveMetadataMigrations < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :attachments, :document_id
-    add_index :attachments, :label
-    add_index :attachments, :attach_updated_at
-    add_index :attachments, :document_class
+    add_index :active_metadata_attachments, :document_id
+    add_index :active_metadata_attachments, :label
+    add_index :active_metadata_attachments, :attach_updated_at
+    add_index :active_metadata_attachments, :document_class
 
-    create_table :watchers do |t|
+    create_table :active_metadata_watchers do |t|
       t.integer :owner_id
       t.string :label
       t.string :document_class
@@ -59,18 +59,18 @@ class ActiveMetadataMigrations < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :watchers, :document_id
-    add_index :watchers, :label
-    add_index :watchers, :owner_id
-    add_index :watchers, :created_at
+    add_index :active_metadata_watchers, :document_id
+    add_index :active_metadata_watchers, :label
+    add_index :active_metadata_watchers, :owner_id
+    add_index :active_metadata_watchers, :created_at
 
   end
 
   def self.down
-    drop_table :notes
-    drop_table :histories
-	drop_table :attachments
-	drop_table :watchers
+    drop_table :active_metadata_notes
+    drop_table :active_metadata_histories
+    drop_table :active_metadata_attachments
+    drop_table :active_metadata_watchers
   end
 
 end

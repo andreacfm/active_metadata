@@ -12,14 +12,13 @@ module ActiveMetadata::Streamable
   def collect_stream_data field
     res = []
     ActiveMetadata::CONFIG['streamables'].each do |model|
-      res.concat self.send(stream_collect_method(model),field).collect { |el| el }
+      res.concat self.send(stream_collect_method(model.to_s),field).collect { |el| el }
     end
     res
   end
 
   def stream_collect_method model
-    #convert to class to check class existance
-    model.to_class.to_s == 'Note' ? 'notes_for' : 'attachments_for'
+    model.to_s == 'note' ? 'notes_for' : 'attachments_for'
   end
 
 

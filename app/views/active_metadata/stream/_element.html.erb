@@ -1,1 +1,1 @@
-<%= render stream_partial_path(element), element.class.to_s.downcase.to_sym => element %>
+<%= render stream_partial_path(element), clean_class_name(element.class.to_s.downcase).to_sym => element %>

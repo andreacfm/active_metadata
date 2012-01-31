@@ -35,10 +35,10 @@ RSpec.configure do |config|
 
   config.before(:each) do
     Document.delete_all
-    Note.delete_all
-    Watcher.delete_all
-    Attachment.delete_all
-    History.delete_all    
+    ActiveMetadata::Note.delete_all
+    ActiveMetadata::Watcher.delete_all
+    ActiveMetadata::Attachment.delete_all
+    ActiveMetadata::History.delete_all
     FileUtils.remove_dir File.expand_path('public/system/') if Dir.exist?(File.expand_path('public/system/'))       
   end
 

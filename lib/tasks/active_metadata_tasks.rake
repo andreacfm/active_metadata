@@ -7,6 +7,8 @@ begin
 
   namespace :ci do :environment
 
+    ENV["RAILS_ENV"] ||= 'test'
+
     namespace :setup do
 
       @reports_dir = ENV['CI_REPORTS'] || 'features/reports'
