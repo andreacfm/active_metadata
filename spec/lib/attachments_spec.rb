@@ -9,9 +9,9 @@ describe ActiveMetadata do
     before(:each) do
       @document = Document.create! { |d| d.name = "John" }
       @document.reload
-      doc = File.expand_path('../support/pdf_test.pdf', __FILE__)
+      doc = File.expand_path('../../support/pdf_test.pdf', __FILE__)
       @attachment = Rack::Test::UploadedFile.new(doc, "application/pdf")
-      doc2 = File.expand_path('../support/pdf_test_2.pdf', __FILE__)
+      doc2 = File.expand_path('../../support/pdf_test_2.pdf', __FILE__)
       @attachment2 = Rack::Test::UploadedFile.new(doc2, "application/pdf")
     end
 
