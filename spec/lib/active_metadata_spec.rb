@@ -28,4 +28,15 @@ describe ActiveMetadata do
 
   end
 
+  context "saving a child object before active_metadata_ancestors" do
+
+    it "should save the history when the ancestor saves" do
+      section = Section.create! :title => 'section title'
+      doc = Document.create! :name => 'doc_name', :section => section
+
+      Section.find(section.id).history_for(:title).first.value.should eq 'section title'
+    end
+
+  end
+
 end
