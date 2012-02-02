@@ -86,6 +86,7 @@ module ActiveMetadata
         active_metadata_ancestors.each do |item|
           receiver = receiver.send item
         end
+        raise(RuntimeError.new,"[active_metdata] - Ancestor model is not yet persisted") unless receiver
         receiver
       end
 

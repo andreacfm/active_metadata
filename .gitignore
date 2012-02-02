@@ -1,4 +1,5 @@
 *.gem
+spec/dummy/db*.sqlite3
 .bundle
 pkg/*
 db/*sqlite3
