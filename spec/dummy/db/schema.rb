@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(:version => 2) do
 
-  create_table "attachments", :force => true do |t|
+  create_table "active_metadata_attachments", :force => true do |t|
     t.string   "label"
     t.integer  "document_id"
     t.string   "document_class"
@@ -29,20 +29,12 @@ ActiveRecord::Schema.define(:version => 2) do
     t.datetime "updated_at",          :null => false
   end
 
-  add_index "attachments", ["attach_updated_at"], :name => "index_attachments_on_attach_updated_at"
-  add_index "attachments", ["document_class"], :name => "index_attachments_on_document_class"
-  add_index "attachments", ["document_id"], :name => "index_attachments_on_document_id"
-  add_index "attachments", ["label"], :name => "index_attachments_on_label"
+  add_index "active_metadata_attachments", ["attach_updated_at"], :name => "index_active_metadata_attachments_on_attach_updated_at"
+  add_index "active_metadata_attachments", ["document_class"], :name => "index_active_metadata_attachments_on_document_class"
+  add_index "active_metadata_attachments", ["document_id"], :name => "index_active_metadata_attachments_on_document_id"
+  add_index "active_metadata_attachments", ["label"], :name => "index_active_metadata_attachments_on_label"
 
-  create_table "documents", :force => true do |t|
-    t.string   "name"
-    t.string   "surname"
-    t.boolean  "keep_alive"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "histories", :force => true do |t|
+  create_table "active_metadata_histories", :force => true do |t|
     t.text     "value"
     t.string   "label"
     t.string   "document_class"
@@ -52,12 +44,12 @@ ActiveRecord::Schema.define(:version => 2) do
     t.datetime "updated_at",     :null => false
   end
 
-  add_index "histories", ["created_at"], :name => "index_histories_on_created_at"
-  add_index "histories", ["document_class"], :name => "index_histories_on_document_class"
-  add_index "histories", ["document_id"], :name => "index_histories_on_document_id"
-  add_index "histories", ["label"], :name => "index_histories_on_label"
+  add_index "active_metadata_histories", ["created_at"], :name => "index_active_metadata_histories_on_created_at"
+  add_index "active_metadata_histories", ["document_class"], :name => "index_active_metadata_histories_on_document_class"
+  add_index "active_metadata_histories", ["document_id"], :name => "index_active_metadata_histories_on_document_id"
+  add_index "active_metadata_histories", ["label"], :name => "index_active_metadata_histories_on_label"
 
-  create_table "notes", :force => true do |t|
+  create_table "active_metadata_notes", :force => true do |t|
     t.text     "note"
     t.string   "label"
     t.string   "document_class"
@@ -69,10 +61,32 @@ ActiveRecord::Schema.define(:version => 2) do
     t.datetime "updated_at",     :null => false
   end
 
-  add_index "notes", ["document_class"], :name => "index_notes_on_document_class"
-  add_index "notes", ["document_id"], :name => "index_notes_on_document_id"
-  add_index "notes", ["label"], :name => "index_notes_on_label"
-  add_index "notes", ["updated_at"], :name => "index_notes_on_updated_at"
+  add_index "active_metadata_notes", ["document_class"], :name => "index_active_metadata_notes_on_document_class"
+  add_index "active_metadata_notes", ["document_id"], :name => "index_active_metadata_notes_on_document_id"
+  add_index "active_metadata_notes", ["label"], :name => "index_active_metadata_notes_on_label"
+  add_index "active_metadata_notes", ["updated_at"], :name => "index_active_metadata_notes_on_updated_at"
+
+  create_table "active_metadata_watchers", :force => true do |t|
+    t.integer  "owner_id"
+    t.string   "label"
+    t.string   "document_class"
+    t.integer  "document_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "active_metadata_watchers", ["created_at"], :name => "index_active_metadata_watchers_on_created_at"
+  add_index "active_metadata_watchers", ["document_id"], :name => "index_active_metadata_watchers_on_document_id"
+  add_index "active_metadata_watchers", ["label"], :name => "index_active_metadata_watchers_on_label"
+  add_index "active_metadata_watchers", ["owner_id"], :name => "index_active_metadata_watchers_on_owner_id"
+
+  create_table "documents", :force => true do |t|
+    t.string   "name"
+    t.string   "surname"
+    t.boolean  "keep_alive"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "sections", :force => true do |t|
     t.string   "title"
@@ -88,19 +102,5 @@ ActiveRecord::Schema.define(:version => 2) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
-
-  create_table "watchers", :force => true do |t|
-    t.integer  "owner_id"
-    t.string   "label"
-    t.string   "document_class"
-    t.integer  "document_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-  end
-
-  add_index "watchers", ["created_at"], :name => "index_watchers_on_created_at"
-  add_index "watchers", ["document_id"], :name => "index_watchers_on_document_id"
-  add_index "watchers", ["label"], :name => "index_watchers_on_label"
-  add_index "watchers", ["owner_id"], :name => "index_watchers_on_owner_id"
 
 end
