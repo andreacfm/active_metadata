@@ -44,6 +44,10 @@ module ActiveMetadata::Persistence::Attachment
       attachments_for(field).size == 0 ? false : true
     end
 
+    def count_attachments_for field
+      attachments_for(field).size
+    end
+
     def find_attachment_by_id(id)
       ActiveMetadata::Attachment.find(id)
     end

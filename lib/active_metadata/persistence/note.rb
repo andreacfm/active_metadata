@@ -51,6 +51,10 @@ module ActiveMetadata::Persistence::Note
       notes_for(field).size == 0 ? false : true
     end
 
+    def count_notes_for field      
+      notes_for(field).size
+    end
+
     # not cached
     def starred_notes_for(field)
       fetch_notes_for field,true
