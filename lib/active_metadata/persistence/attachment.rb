@@ -70,6 +70,7 @@ module ActiveMetadata::Persistence::Attachment
     private
     
     def reload_attachments_cache_for field
+      Rails.cache.clear
       Rails.cache.write(attachments_cache_key(field),fetch_attachments_for(field), :expires_in => ActiveMetadata::CONFIG['cache_expires_in'].minutes )     
     end  
     

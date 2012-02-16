@@ -8,6 +8,7 @@ module ActiveMetadata::Persistence::Note
     
     def create_note_for(field, note, starred=false)
       ActiveMetadata::Note.create! :document_id => metadata_id, :document_class => metadata_class, :label => field.to_s,:note => note, :created_by => current_user_id, :starred => starred
+
       reload_notes_cache_for field
       self.send(:send_notification, field, "", note, :note_message, current_user_id) 
     end
@@ -26,9 +27,9 @@ module ActiveMetadata::Persistence::Note
     end
 
     def notes_for(field, order_by="updated_at DESC")
-      Rails.cache.fetch(notes_cache_key(field), :expires_in => ActiveMetadata::CONFIG['cache_expires_in'].minutes) do
+      # Rails.cache.fetch(notes_cache_key(field), :expires_in => ActiveMetadata::CONFIG['cache_expires_in'].minutes) do
         fetch_notes_for field, nil, order_by
-      end    
+      # end    
     end
 
     def find_note_by_id(id)
@@ -40,11 +41,11 @@ module ActiveMetadata::Persistence::Note
     end
 
     def delete_note(id)
-      n = ActiveMetadata::Note.find(id)
-      old_value = n.note
-      n.destroy
-      reload_notes_cache_for n.label
-      self.send(:send_notification, n.label, old_value, "", :note_message)
+      note = ActiveMetadata::Note.find(id)
+      old_value = note.note
+      note.destroy      
+      reload_notes_cache_for note.label
+      self.send(:send_notification, note.label, old_value, "", :note_message)
     end
     
     def has_notes_for field      
@@ -72,7 +73,7 @@ module ActiveMetadata::Persistence::Note
 
     private
     
-    def reload_notes_cache_for field
+    def reload_notes_cache_for field      
       Rails.cache.write(notes_cache_key(field),fetch_notes_for(field), :expires_in => ActiveMetadata::CONFIG['cache_expires_in'].minutes )     
     end  
     
