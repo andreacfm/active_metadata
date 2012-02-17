@@ -3,10 +3,11 @@ require 'rubygems'
 
 ENV["RAILS_ENV"] ||= 'test'
 
+require File.expand_path("../dummy/config/environment.rb",  __FILE__)
+
 require 'rails/all'
 require 'active_metadata'
 require 'rack/test/uploaded_file'
-require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 
 ENGINE_RAILS_ROOT=File.join(File.dirname(__FILE__), '../')
 Dir[File.join(ENGINE_RAILS_ROOT, "spec/support/**/*.rb")].each {|f| require f }
