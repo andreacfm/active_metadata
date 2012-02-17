@@ -1,6 +1,7 @@
 module ActiveMetadata
 
   class Attachment < ActiveRecord::Base
+    self.table_name = "active_metadata_attachments"
 
     include ::Paperclip
     include ::Paperclip::Glue

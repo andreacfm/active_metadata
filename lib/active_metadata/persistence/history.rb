@@ -16,15 +16,15 @@ module ActiveMetadata::Persistence::History
     end
 
     def history_for field, order="created_at DESC"
-      Rails.cache.fetch(history_cache_key(field), :expires_in => ActiveMetadata::CONFIG['cache_expires_in'].minutes) do
+      #Rails.cache.fetch(history_cache_key(field), :expires_in => ActiveMetadata::CONFIG['cache_expires_in'].minutes) do
         fetch_histories_for field, order
-      end  
+      #end
     end
 
     private
 
     def invalidate_history_cache_for field
-      Rails.cache.delete history_cache_key(field)     
+      #Rails.cache.delete history_cache_key(field)
     end  
 
     def fetch_histories_for field, order
