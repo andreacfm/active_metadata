@@ -14,9 +14,9 @@ module ActiveMetadata::Persistence::Attachment
     end
 
     def attachments_for(field, order_by="updated_at DESC")
-      Rails.cache.fetch(attachments_cache_key(field), :expires_in => ActiveMetadata::CONFIG['cache_expires_in'].minutes) do
+      # Rails.cache.fetch(attachments_cache_key(field), :expires_in => ActiveMetadata::CONFIG['cache_expires_in'].minutes) do
         fetch_attachments_for field, nil, order_by
-      end  
+      # end  
     end
 
     def delete_attachment(id)
