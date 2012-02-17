@@ -1,3 +1,6 @@
+require 'rspec/core/rake_task'
+require 'cucumber/rake/task'
+
 namespace :jenkins do :environment
 
   ENV['COVERAGE'] = 'on'
@@ -29,7 +32,6 @@ namespace :jenkins do :environment
 end
 
 task :jenkins => ["jenkins:clean_reports", "jenkins:migrate", "jenkins:rspec", "jenkins:cucumber"]
-
 
 namespace :active_metadata do
 
