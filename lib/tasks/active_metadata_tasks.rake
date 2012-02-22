@@ -1,37 +1,26 @@
-require 'rspec/core/rake_task'
-require 'cucumber/rake/task'
+namespace :active_metadata do
+  namespace :ci do
+    ENV['COVERAGE'] = 'on'
+    ENV['JCI'] = 'on'
+    ENV['RAILS_ENV'] ||= 'test'
 
-namespace :jenkins do :environment
+    task :migrate do
+      Rake::Task["db:migrate"].invoke
+    end
 
-  ENV['COVERAGE'] = 'on'
-  ENV["RAILS_ENV"] ||= 'test'
+    task :rspec do
+      Rake::Task["ci:setup:rspec"].invoke
+      Rake::Task["spec"].invoke
+    end
 
-  task :clean_rspec_reports do
-    rm_rf "spec/reports"
+    task :cucumber do
+      ENV["CUCUMBER_OPTS"] = "--format junit --out features/reports --format html --out features/reports/cucumber.ht"
+      Rake::Task["app:cucumber"].invoke
+    end
   end
-
-  task :clean_cucumber_reports do
-    rm_rf "features/reports"
-  end
-
-  task :clean_reports => ["jenkins:clean_rspec_reports", "jenkins:clean_cucumber_reports"]
-
-  task :migrate do
-    sh "bundle exec rake db:migrate RAILS_ENV=#{ENV['RAILS_ENV']} "
-  end
-
-  task :rspec => "jenkins:clean_rspec_reports" do
-    sh "bundle exec rspec spec --format CI::Reporter::RSpec"
-  end
-
-  task :cucumber => "jenkins:clean_cucumber_reports" do
-    ENV["CUCUMBER_OPTS"] = "--format CI::Reporter::Cucumber --format junit --out features/reports"
-    Rake::Task["app:cucumber"].invoke
-  end
-
 end
 
-task :jenkins => ["jenkins:clean_reports", "jenkins:migrate", "jenkins:rspec", "jenkins:cucumber"]
+task "active_metadata:ci" => ["app:active_metadata:ci:migrate", "app:active_metadata:ci:rspec", "app:active_metadata:ci:cucumber"]
 
 namespace :active_metadata do
 
