@@ -1,12 +1,12 @@
 module ActiveMetadata::Streamable
 
-  def stream_for field
-    sort_stream(collect_stream_data(field))
+  def stream_for(field, order_by = :created_at)
+    sort_stream(collect_stream_data(field), order_by)
   end
 
   private
-  def sort_stream stream
-    stream.sort{|a,b| b.updated_at <=> a.updated_at}
+  def sort_stream stream, order_by
+    stream.sort{ |a,b| b.send(order_by) <=> a.send(order_by) }
   end
 
   def collect_stream_data field

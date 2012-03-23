@@ -76,7 +76,7 @@ describe ActiveMetadata::Streamable do
         end
 
 
-        it "should sort the stream data by updated_at DESC by default" do
+        it "should sort the stream by updated_at DESC" do
           @document.save_attachment_for(:surname,test_pdf("pdf_test_1"))
           sleep 2.seconds
           @document.create_note_for(:surname, "surname note")
@@ -84,11 +84,26 @@ describe ActiveMetadata::Streamable do
           @document.save_attachment_for(:surname,test_pdf("pdf_test_2"))
 
           stream = @document.send(:collect_stream_data, :surname)
-          res = @document.send(:sort_stream, stream)
+          res = @document.send(:sort_stream, stream, :updated_at)
 
           res[0].attach_file_name.should eq 'pdf_test_2.pdf'
           res[1].note.should eq 'surname note'
           res[2].attach_file_name.should eq 'pdf_test_1.pdf'
+        end
+
+        it "should sort the stream by updated_at DESC" do
+          @document.create_note_for(:surname, "surname note")
+          sleep 2.seconds
+          @document.save_attachment_for(:surname,test_pdf("pdf_test_2"))
+          sleep 2.seconds
+          @document.save_attachment_for(:surname,test_pdf("pdf_test_1"))
+
+          stream = @document.send(:collect_stream_data, :surname)
+          res = @document.send(:sort_stream, stream, :created_at)
+
+          res[0].attach_file_name.should eq 'pdf_test_1.pdf'
+          res[1].attach_file_name.should eq 'pdf_test_2.pdf'
+          res[2].note.should eq 'surname note'
         end
 
       end
