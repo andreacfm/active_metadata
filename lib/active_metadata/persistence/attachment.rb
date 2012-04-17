@@ -52,7 +52,12 @@ module ActiveMetadata::Persistence::Attachment
       ActiveMetadata::Attachment.find(id)
     end
 
-    # not cached
+    # return all the starred notes for the current model and for any field
+    # datas does not come from cache
+    def starred_attachments
+      fetch_attachments_for nil, true
+    end
+
     def starred_attachments_for(field)
       fetch_attachments_for field, true
     end
@@ -75,8 +80,9 @@ module ActiveMetadata::Persistence::Attachment
     end
 
     def fetch_attachments_for(field, starred=nil, order_by="updated_at DESC")
-      conditions = {:document_class => metadata_class, :document_id => metadata_id, :label => field}
-      conditions[:starred] = starred if !starred.nil?
+      conditions = {:document_class => metadata_class, :document_id => metadata_id}
+      conditions[:label] = field unless field.nil?
+      conditions[:starred] = starred unless starred.nil?
       ActiveMetadata::Attachment.all(:conditions => conditions, :order => order_by)
     end
 

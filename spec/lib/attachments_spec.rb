@@ -176,6 +176,21 @@ describe ActiveMetadata do
 
     end
 
+    describe "#starred_attachments" do
+
+      it "should return all the starred attachments for any model field" do
+        @document.save_attachment_for(:name, @attachment, true)
+        @document.save_attachment_for(:title, @attachment, true)
+        @document.save_attachment_for(:title, @attachment2 )
+
+        starred = @document.starred_attachments
+        starred.count.should eq 2
+        starred.find{|att| att.attach.instance_read(:file_name) == "pdf_test_2.pdf"}.should be_nil
+      end
+
+    end
+
+
 
   end
 

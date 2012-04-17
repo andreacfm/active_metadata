@@ -56,16 +56,27 @@ module ActiveMetadata::Persistence::Note
       notes_for(field).size
     end
 
-    # not cached
+    # return all the starred notes for the current model and for any field
+    # datas does not come from cache
+    def starred_notes
+      fetch_notes_for nil, true
+    end
+
+    # return all the starred notes for a particular field
+    # datas does not come from cache
     def starred_notes_for(field)
       fetch_notes_for field, true
     end
 
+    # star a note
+    # reload the cache calling update
     def star_note(id)
       n = ActiveMetadata::Note.find(id)
       update_note id, n.note, true
     end
 
+    # unstar a note
+    # reload the cache calling update
     def unstar_note(id)
       n = ActiveMetadata::Note.find(id)
       update_note id, n.note, false
@@ -78,10 +89,9 @@ module ActiveMetadata::Persistence::Note
     end
 
     def fetch_notes_for(field, starred=nil, order_by="updated_at DESC")
-      conditions = {:label => field, :document_class => metadata_class, :document_id => metadata_id}
-      unless starred.nil?
-        conditions[:starred] = starred
-      end
+      conditions = {:document_class => metadata_class, :document_id => metadata_id}
+      conditions[:label] = field  unless field.nil?
+      conditions[:starred] = starred  unless starred.nil?
       ActiveMetadata::Note.all(:conditions => conditions, :order => order_by)
     end
 
