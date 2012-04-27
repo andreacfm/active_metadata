@@ -76,7 +76,7 @@ describe ActiveMetadata::Streamable do
         end
 
 
-        it "should sort the stream by updated_at DESC" do
+        it "should sort the stream by created_at DESC" do
           @document.save_attachment_for(:surname,test_pdf("pdf_test_1"))
           sleep 2.seconds
           @document.create_note_for(:surname, "surname note")
@@ -86,12 +86,12 @@ describe ActiveMetadata::Streamable do
           stream = @document.send(:collect_stream_data, :surname)
           res = @document.send(:sort_stream, stream, :updated_at)
 
-          res[0].attach_file_name.should eq 'pdf_test_2.pdf'
+          res[0].attach_file_name.should eq 'pdf_test_1.pdf'
           res[1].note.should eq 'surname note'
-          res[2].attach_file_name.should eq 'pdf_test_1.pdf'
+          res[2].attach_file_name.should eq 'pdf_test_2.pdf'
         end
 
-        it "should sort the stream by updated_at DESC" do
+        it "should sort the stream by created_at DESC" do
           @document.create_note_for(:surname, "surname note")
           sleep 2.seconds
           @document.save_attachment_for(:surname,test_pdf("pdf_test_2"))
@@ -101,9 +101,9 @@ describe ActiveMetadata::Streamable do
           stream = @document.send(:collect_stream_data, :surname)
           res = @document.send(:sort_stream, stream, :created_at)
 
-          res[0].attach_file_name.should eq 'pdf_test_1.pdf'
+          res[0].note.should eq 'surname note'
           res[1].attach_file_name.should eq 'pdf_test_2.pdf'
-          res[2].note.should eq 'surname note'
+          res[2].attach_file_name.should eq 'pdf_test_1.pdf'
         end
 
       end
@@ -131,31 +131,30 @@ describe ActiveMetadata::Streamable do
 
   end
 
-  describe "#stream_all_starred" do
+  describe "#stream_all_starred_by_group" do
 
     context "given 2 notes (only one starred) and 2 attachments (only one starred)" do
 
       before(:each) do
         @document = Document.create! { |d| d.name = "John" }
         (1..2).each do |i|
-          @document.save_attachment_for(:name,test_pdf("pdf_test_#{i}"), i.odd? )
-          @document.create_note_for(:name, "note_#{i}", i.odd? )
+          @document.save_attachment_for(:name,test_pdf("pdf_test_#{i}"), i.odd?, 'my_group' )
+          @document.create_note_for(:name, "note_#{i}", i.odd?, 'my_group' )
         end
       end
 
       it "should return 2 elements" do
-        @document.stream_all_starred.count.should eq 2
+        @document.stream_all_starred_by_group('my_group').count.should eq 2
       end
 
       it "should return only the starred items" do
-        @document.stream_all_starred.collect{|el| el.starred? }.count.should eq 2
+        @document.stream_all_starred_by_group('my_group').collect{|el| el.starred? }.count.should eq 2
       end
 
-      it "should return the starred stream ordered by UPDATED_AT DESC" do
-        starred = @document.stream_all_starred
-        starred.first.should be_kind_of ActiveMetadata::Note
-        @document.update_attachment starred.last.id, starred.last.attach.to_file
-        @document.stream_all_starred.first.should be_kind_of ActiveMetadata::Attachment
+      it "should return the starred stream ordered by created_at DESC" do
+        items = @document.stream_all_starred_by_group('my_group')
+        items.first.should be_kind_of ActiveMetadata::Attachment
+        @document.stream_all_starred_by_group('my_group').first.id.should eq items.first.id
       end
 
     end

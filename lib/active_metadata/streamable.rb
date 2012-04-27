@@ -2,18 +2,18 @@ module ActiveMetadata::Streamable
 
   # return the streamables items by field in an ordered array
   # ActiveMetadata::CONFIG['streamables'] defines what models will be retrieved
-  def stream_for(field, order_by = :updated_at)
+  def stream_for(field, order_by = :created_at)
     sort_stream(collect_stream_data(field), order_by)
   end
 
   # same as #stream_for but not filtered by field
-  def stream_all_starred order_by = :updated_at
-    sort_stream(collect_starred_stream_data, order_by)
+  def stream_all_starred_by_group group, order_by = :created_at
+    sort_stream(collect_starred_stream_data_xxx(group), order_by)
   end
 
   private
   def sort_stream stream, order_by
-    stream.sort{ |a,b| b.send(order_by) <=> a.send(order_by) }
+    stream.sort{ |a,b| a.send(order_by) <=> b.send(order_by) }
   end
 
   def collect_stream_data field
@@ -24,10 +24,10 @@ module ActiveMetadata::Streamable
     res
   end
 
-  def collect_starred_stream_data
+  def collect_starred_stream_data_xxx group
     res = []
     ActiveMetadata::CONFIG['streamables'].each do |model|
-      res.concat self.send("starred_#{model.to_s.pluralize}".to_sym).collect { |el| el }
+      res.concat self.send("starred_#{model.to_s.pluralize}_by_group".to_sym, group).collect { |el| el }
     end
     res
   end
