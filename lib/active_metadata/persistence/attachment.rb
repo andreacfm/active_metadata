@@ -62,6 +62,10 @@ module ActiveMetadata::Persistence::Attachment
       fetch_attachments_for field, true
     end
 
+    def starred_attachments_by_group(group, order_by="updated_at DESC")
+      ActiveMetadata::Attachment.all(:conditions => {:starred => true, :group => group}, :order => order_by)
+    end
+
     def star_attachment(id)
       n = ActiveMetadata::Attachment.find(id)
       update_attachment id, n.attach, true

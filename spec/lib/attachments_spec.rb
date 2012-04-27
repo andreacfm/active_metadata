@@ -198,15 +198,14 @@ describe ActiveMetadata do
       describe "starred_notes_by_group" do
 
         it "should return all the starred notes of a particular group" do
-          pending
-          @document.create_note_for :name, "starred note for name", false, 'my_group'
-          @document.create_note_for :title, "to be returned", true, 'my_group'
-          @document.create_note_for :name, "to be returned", true, 'my_group'
-          @document.create_note_for :name, "starred note for name", false, 'your_group'
-          @document.create_note_for :name, "starred note for name", true, 'your_group'
+          @document.save_attachment_for :name, @attachment, false, 'my_group'
+          @document.save_attachment_for :title, @attachment, true, 'my_group'
+          @document.save_attachment_for :name, @attachment, true, 'my_group'
+          @document.save_attachment_for :name, @attachment, false, 'your_group'
+          @document.save_attachment_for :name, @attachment, true, 'your_group'
 
-          @document.starred_notes_by_group('my_group').count.should eq 2
-          @document.starred_notes_by_group('your_group').count.should eq 1
+          @document.starred_attachments_by_group('my_group').count.should eq 2
+          @document.starred_attachments_by_group('your_group').count.should eq 1
         end
       end
     end
