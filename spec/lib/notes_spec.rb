@@ -204,5 +204,19 @@ describe ActiveMetadata do
 
     end
 
+    describe "#starred_notes" do
+
+      it "should return all the starred notes for any model field" do
+        @document.create_note_for :name, "starred note for name", true
+        @document.create_note_for :title, "starred note for title", true
+        @document.create_note_for :title, "not starred note for title"
+
+        starred = @document.starred_notes
+        starred.count.should eq 2
+        starred.find{|note| note.note == "not starred note for title"}.should be_nil
+      end
+
+    end
+
   end
 end

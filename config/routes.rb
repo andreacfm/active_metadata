@@ -24,8 +24,8 @@ Rails.application.routes.draw do
     match ':model_name/:model_id/:field_name/attachments/:id' => 'attachments#destroy', :via => :delete, :as => "destroy_attachment"
     match ':model_name/:model_id/:field_name/attachments/:id' => 'attachments#update', :via => :put, :as => "update_attachment"
     match ':model_name/:model_id/:field_name/attachments/starred' => 'attachments#starred', :via => :get, :as => "starred_attachments"
-    match ':model_name/:model_id/:field_name/attachments/:id/star' => 'attachments#star', :via => :put, :as => "star_attachments"
-    match ':model_name/:model_id/:field_name/attachments/:id/unstar' => 'attachments#unstar', :via => :put, :as => "unstar_attachments"
+    match ':model_name/:model_id/:field_name/attachments/:id/star' => 'attachments#star', :via => :put, :as => "star_attachment"
+    match ':model_name/:model_id/:field_name/attachments/:id/unstar' => 'attachments#unstar', :via => :put, :as => "unstar_attachment"
 
     #alerts
     get ':model_name/:model_id/:field_name/watchers' => 'watchers#index', :as => "watchers"
