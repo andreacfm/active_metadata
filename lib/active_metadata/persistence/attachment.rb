@@ -6,9 +6,9 @@ module ActiveMetadata::Persistence::Attachment
 
   module InstanceMethods
 
-    def save_attachment_for(field, file, starred=false)
+    def save_attachment_for(field, file, starred=false, group=nil)
       attachment = ActiveMetadata::Attachment.create! :document_class => metadata_class, :document_id => metadata_id, :label => field, :attach => file,
-                                                      :starred => starred, :created_by => current_user_id
+                                                      :starred => starred, :created_by => current_user_id, :group => group
       reload_attachments_cache_for field
       self.send(:send_notification, field, "", attachment.attach.original_filename, :attachment_message, current_user_id)
     end

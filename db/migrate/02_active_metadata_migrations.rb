@@ -44,6 +44,7 @@ class ActiveMetadataMigrations < ActiveRecord::Migration
       t.integer :attach_file_size
       t.datetime :attach_updated_at
       t.boolean :starred
+      t.string :group
       t.timestamps
     end
 

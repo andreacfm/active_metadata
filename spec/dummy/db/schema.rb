@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(:version => 2) do
     t.integer  "attach_file_size"
     t.datetime "attach_updated_at"
     t.boolean  "starred"
+    t.string   "group"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
   end
