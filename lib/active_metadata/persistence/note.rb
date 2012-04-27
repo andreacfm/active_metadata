@@ -68,6 +68,11 @@ module ActiveMetadata::Persistence::Note
       fetch_notes_for field, true
     end
 
+    # return all starred notes for a given group
+    def starred_notes_by_group(group, order_by="updated_at DESC")
+      ActiveMetadata::Note.all(:conditions => {:starred => true, :group => group}, :order => order_by)
+    end
+
     # star a note
     # reload the cache calling update
     def star_note(id)
