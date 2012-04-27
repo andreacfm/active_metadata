@@ -217,6 +217,12 @@ describe ActiveMetadata do
       end
 
     end
+    describe "#group" do
+      it "should save the associated group when specified" do
+        @document.create_note_for :name, "starred note for name", false, 'my_group'
+        @document.notes_for(:name).last.group.should eq 'my_group'
+      end
+    end
 
   end
 end

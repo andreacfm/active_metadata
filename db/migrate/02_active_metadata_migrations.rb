@@ -9,6 +9,7 @@ class ActiveMetadataMigrations < ActiveRecord::Migration
       t.integer :created_by
       t.integer :updated_by
       t.boolean :starred
+      t.string :group
       t.timestamps
     end
 

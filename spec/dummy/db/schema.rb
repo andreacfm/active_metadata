@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(:version => 2) do
     t.integer  "created_by"
     t.integer  "updated_by"
     t.boolean  "starred"
+    t.string   "group"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
   end
