@@ -204,8 +204,8 @@ describe ActiveMetadata do
           @document.save_attachment_for :name, @attachment, false, 'your_group'
           @document.save_attachment_for :name, @attachment, true, 'your_group'
 
-          @document.starred_attachments_by_group('my_group').count.should eq 2
-          @document.starred_attachments_by_group('your_group').count.should eq 1
+          @document.attachments_by_group('my_group', :starred => true).count.should eq 2
+          @document.attachments_by_group('your_group', :starred => true).count.should eq 1
         end
       end
     end

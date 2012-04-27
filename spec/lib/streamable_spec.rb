@@ -144,17 +144,17 @@ describe ActiveMetadata::Streamable do
       end
 
       it "should return 2 elements" do
-        @document.stream_all_starred_by_group('my_group').count.should eq 2
+        @document.stream_by_group('my_group', :starred => true).count.should eq 2
       end
 
       it "should return only the starred items" do
-        @document.stream_all_starred_by_group('my_group').collect{|el| el.starred? }.count.should eq 2
+        @document.stream_by_group('my_group', :starred => true).collect{|el| el.starred? }.count.should eq 2
       end
 
       it "should return the starred stream ordered by created_at DESC" do
-        items = @document.stream_all_starred_by_group('my_group')
+        items = @document.stream_by_group('my_group', :starred => true)
         items.first.should be_kind_of ActiveMetadata::Attachment
-        @document.stream_all_starred_by_group('my_group').first.id.should eq items.first.id
+        @document.stream_by_group('my_group', :starred => true).first.id.should eq items.first.id
       end
 
     end

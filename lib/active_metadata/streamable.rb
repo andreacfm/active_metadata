@@ -7,8 +7,10 @@ module ActiveMetadata::Streamable
   end
 
   # same as #stream_for but not filtered by field
-  def stream_all_starred_by_group group, order_by = :created_at
-    sort_stream(collect_starred_stream_data_xxx(group), order_by)
+  def stream_by_group group, *args
+    options = args.extract_options!
+    order_by = options.delete(:order_by) || :created_at
+    sort_stream(collect_stream_items_by_group(group, options), order_by)
   end
 
   private
@@ -24,10 +26,10 @@ module ActiveMetadata::Streamable
     res
   end
 
-  def collect_starred_stream_data_xxx group
+  def collect_stream_items_by_group group, options
     res = []
     ActiveMetadata::CONFIG['streamables'].each do |model|
-      res.concat self.send("starred_#{model.to_s.pluralize}_by_group".to_sym, group).collect { |el| el }
+      res.concat self.send("#{model.to_s.pluralize}_by_group".to_sym, group, options).collect { |el| el }
     end
     res
   end

@@ -69,8 +69,10 @@ module ActiveMetadata::Persistence::Note
     end
 
     # return all starred notes for a given group
-    def starred_notes_by_group(group, order_by="updated_at DESC")
-      ActiveMetadata::Note.all(:conditions => {:starred => true, :group => group}, :order => order_by)
+    def notes_by_group(group, *args)
+      options = args.extract_options!
+      order_by = options.delete(:order_by) || "created_at DESC"
+      ActiveMetadata::Note.all(:conditions => options.merge(:group => group), :order => order_by)
     end
 
     # star a note
