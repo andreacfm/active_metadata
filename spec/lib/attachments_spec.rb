@@ -195,7 +195,7 @@ describe ActiveMetadata do
         @document.attachments_for(:name).last.group.should eq 'my_group'
       end
 
-      describe "starred_notes_by_group" do
+      describe ".by_group" do
 
         it "should return all the starred notes of a particular group" do
           @document.save_attachment_for :name, @attachment, false, 'my_group'
@@ -204,8 +204,8 @@ describe ActiveMetadata do
           @document.save_attachment_for :name, @attachment, false, 'your_group'
           @document.save_attachment_for :name, @attachment, true, 'your_group'
 
-          @document.attachments_by_group('my_group', :starred => true).count.should eq 2
-          @document.attachments_by_group('your_group', :starred => true).count.should eq 1
+          ActiveMetadata::Attachment.by_group('my_group', :starred => true).count.should eq 2
+          ActiveMetadata::Attachment.by_group('your_group', :starred => true).count.should eq 1
         end
       end
     end

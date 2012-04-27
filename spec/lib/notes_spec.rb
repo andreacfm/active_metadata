@@ -231,8 +231,8 @@ describe ActiveMetadata do
           @document.create_note_for :name, "starred note for name", false, 'your_group'
           @document.create_note_for :name, "starred note for name", true, 'your_group'
 
-          @document.notes_by_group('my_group', :starred => true).count.should eq 2
-          @document.notes_by_group('your_group', :starred => true, :order_by => "created_at ASC").count.should eq 1
+          ActiveMetadata::Note.by_group('my_group', :starred => true).count.should eq 2
+          ActiveMetadata::Note.by_group('your_group', :starred => true, :order_by => "created_at ASC").count.should eq 1
         end
       end
 

@@ -7,7 +7,7 @@ module ActiveMetadata
   module Base
 
     require 'active_metadata/helpers'
-    require 'active_metadata/streamable'
+    require 'active_metadata/stream'
     require 'paperclip'
     require 'active_metadata/persistence/persistence'
 
@@ -29,7 +29,7 @@ module ActiveMetadata
 
         include ActiveMetadata::Base::InstanceMethods
         include ActiveMetadata::Persistence
-        include ActiveMetadata::Streamable
+        include ActiveMetadata::Stream
 
       end
 

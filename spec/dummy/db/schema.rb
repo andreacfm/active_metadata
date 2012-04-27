@@ -82,6 +82,12 @@ ActiveRecord::Schema.define(:version => 2) do
   add_index "active_metadata_watchers", ["label"], :name => "index_active_metadata_watchers_on_label"
   add_index "active_metadata_watchers", ["owner_id"], :name => "index_active_metadata_watchers_on_owner_id"
 
+  create_table "chapters", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "documents", :force => true do |t|
     t.string   "name"
     t.string   "surname"

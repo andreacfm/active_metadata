@@ -1,16 +1,6 @@
 require "spec_helper"
 
-describe ActiveMetadata::Streamable do
-
-  describe "module" do
-
-    it "should respond to stream_for" do
-      ActiveMetadata::Streamable.instance_eval do
-        self.instance_methods.grep(/stream_for/).size.should == 1
-      end
-    end
-
-  end
+describe ActiveMetadata::Stream do
 
   describe "stream_for" do
 
@@ -40,12 +30,6 @@ describe ActiveMetadata::Streamable do
 
       describe "collect_data" do
 
-        it "should exists as private method" do
-          ActiveMetadata::Streamable.instance_eval do
-            self.private_instance_methods.grep(/collect_stream_data/).size.should == 1
-          end
-        end
-
         it "should return an array" do
           res = @document.send(:collect_stream_data, :name)
           res.should be_kind_of Array
@@ -69,13 +53,6 @@ describe ActiveMetadata::Streamable do
 
       describe "sort_stream" do
 
-        it "should exists as private method" do
-          ActiveMetadata::Streamable.instance_eval do
-            self.private_instance_methods.grep(/sort_stream/).size.should == 1
-          end
-        end
-
-
         it "should sort the stream by created_at DESC" do
           @document.save_attachment_for(:surname,test_pdf("pdf_test_1"))
           sleep 2.seconds
@@ -84,7 +61,7 @@ describe ActiveMetadata::Streamable do
           @document.save_attachment_for(:surname,test_pdf("pdf_test_2"))
 
           stream = @document.send(:collect_stream_data, :surname)
-          res = @document.send(:sort_stream, stream, :updated_at)
+          res = ActiveMetadata::Stream.sort_stream(stream, :updated_at)
 
           res[0].attach_file_name.should eq 'pdf_test_1.pdf'
           res[1].note.should eq 'surname note'
@@ -99,7 +76,7 @@ describe ActiveMetadata::Streamable do
           @document.save_attachment_for(:surname,test_pdf("pdf_test_1"))
 
           stream = @document.send(:collect_stream_data, :surname)
-          res = @document.send(:sort_stream, stream, :created_at)
+          res = ActiveMetadata::Stream.sort_stream(stream, :created_at)
 
           res[0].note.should eq 'surname note'
           res[1].attach_file_name.should eq 'pdf_test_2.pdf'
@@ -144,17 +121,17 @@ describe ActiveMetadata::Streamable do
       end
 
       it "should return 2 elements" do
-        @document.stream_by_group('my_group', :starred => true).count.should eq 2
+        ActiveMetadata::Stream.by_group('my_group', :starred => true).count.should eq 2
       end
 
       it "should return only the starred items" do
-        @document.stream_by_group('my_group', :starred => true).collect{|el| el.starred? }.count.should eq 2
+        ActiveMetadata::Stream.by_group('my_group', :starred => true).collect{|el| el.starred? }.count.should eq 2
       end
 
       it "should return the starred stream ordered by created_at DESC" do
-        items = @document.stream_by_group('my_group', :starred => true)
+        items = ActiveMetadata::Stream.by_group('my_group', :starred => true)
         items.first.should be_kind_of ActiveMetadata::Attachment
-        @document.stream_by_group('my_group', :starred => true).first.id.should eq items.first.id
+        ActiveMetadata::Stream.by_group('my_group', :starred => true).first.id.should eq items.first.id
       end
 
     end

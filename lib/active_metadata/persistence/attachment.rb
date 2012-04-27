@@ -62,12 +62,6 @@ module ActiveMetadata::Persistence::Attachment
       fetch_attachments_for field, true
     end
 
-    def attachments_by_group(group, *args)
-      options = args.extract_options!
-      order_by = options.delete(:order_by) || "created_at DESC"
-      ActiveMetadata::Attachment.all(:conditions => options.merge(:group => group), :order => order_by)
-    end
-
     def star_attachment(id)
       n = ActiveMetadata::Attachment.find(id)
       update_attachment id, n.attach, true

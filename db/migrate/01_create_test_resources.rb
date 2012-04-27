@@ -13,6 +13,11 @@ class CreateTestResources < ActiveRecord::Migration
       t.timestamps
     end
 
+    create_table :chapters do |t|
+      t.string :title
+      t.timestamps
+    end
+
     create_table :users do |t|
       t.string :email
       t.string :firstname
@@ -23,8 +28,9 @@ class CreateTestResources < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :documents
-    drop_table :sections
     drop_table :users
+    drop_table :chapters
+    drop_table :sections
+    drop_table :documents
   end
 end

@@ -1,6 +1,6 @@
 module ActiveMetadata::Persistence::Note
 
-  def self.included(receiver)
+  def self.included receiver
     receiver.send :include, InstanceMethods
   end
 
@@ -66,13 +66,6 @@ module ActiveMetadata::Persistence::Note
     # datas does not come from cache
     def starred_notes_for(field)
       fetch_notes_for field, true
-    end
-
-    # return all starred notes for a given group
-    def notes_by_group(group, *args)
-      options = args.extract_options!
-      order_by = options.delete(:order_by) || "created_at DESC"
-      ActiveMetadata::Note.all(:conditions => options.merge(:group => group), :order => order_by)
     end
 
     # star a note
