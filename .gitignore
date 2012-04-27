@@ -9,4 +9,4 @@ doc/*
 features/reports/
 spec/reports/
 spec/dummy/tmp/*
-
+*.iml
