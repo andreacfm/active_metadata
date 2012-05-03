@@ -9,7 +9,6 @@ module ActiveMetadata
     end
 
     def index_by_group
-
       @stream = ActiveMetadata::Stream.by_group params[:group], starred_condition
       render :index
     end

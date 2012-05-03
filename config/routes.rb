@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   namespace :active_metadata do
     #stream
     get ":model_name/:model_id/:field_name/stream" => 'stream#index', :as => 'stream'
-    get "stream/starred/group/:group_name" => 'stream#index', :as => 'group_stream_starred'
+    get "groups/:group/stream" => 'stream#index_by_group', :as => 'group_stream'
 
     #notes
     get ':model_name/:model_id/:field_name/notes' => 'notes#index', :as => "notes"
