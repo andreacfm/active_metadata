@@ -45,7 +45,7 @@ describe ActiveMetadata::StreamController do
           @document.create_note_for(:name, "grouped nota per name john", true, 'your_group')
         end
 
-        it "should return the stream of a prticular group" do
+        it "should return the stream of a particular group" do
           get 'index', :group => 'my_group'
           response.body.should match(/pdf_test_1.pdf/)
           response.body.should match(/pdf_test_2.pdf/)
