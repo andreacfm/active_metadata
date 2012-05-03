@@ -2,18 +2,20 @@ require 'spec_helper'
 
 describe ActiveMetadata::NotesController do
 
-  context "given 3 notes @document#name" do
-
-    render_views
 
     before(:each) do
       @document = Document.create! { |d| d.name = "John" }
-      (1..3).each do |i|
-        @document.create_note_for(:name, "note#{i}")
-      end
     end
 
     describe "GET 'index'" do
+
+      render_views
+
+      before(:each) do
+        (1..3).each do |i|
+          @document.create_note_for(:name, "note#{i}")
+        end
+      end
 
       it "should success" do
         get 'index', :model_name => 'document', :model_id => @document.id, :field_name => 'name'
@@ -35,7 +37,21 @@ describe ActiveMetadata::NotesController do
 
     end
 
-  end
+    describe "#create" do
+
+      it "should create a note for a passed group" do
+        post :create, :model_name => 'document', :model_id => @document.id, :field_name => 'name', :group => "my_group", :format => :js
+        response.should be_success
+        ActiveMetadata::Stream.by_group("my_group").count.should eq 1
+      end
+
+      it "should create a starred note" do
+        post :create, :model_name => 'document', :model_id => @document.id, :field_name => 'name', :starred => true, :format => :js
+        response.should be_success
+        @document.notes_for(:name).last.should be_starred
+      end
+
+    end
 
 
 end
