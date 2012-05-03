@@ -36,11 +36,12 @@ module ActiveMetadata::Persistence::Attachment
 
     def update_attachment(id, newfile, starred=nil)
       a = ActiveMetadata::Attachment.find(id)
+      puts a
       old_filename = a.attach.original_filename
       a.attach = newfile
       a.updated_by = current_user_id
       a.starred = starred if !starred.nil?
-      a.save
+      a.save!
       new_filename = a.attach.original_filename
 
       reload_attachments_cache_for a.label
