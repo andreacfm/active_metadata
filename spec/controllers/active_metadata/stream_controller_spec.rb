@@ -46,12 +46,18 @@ describe ActiveMetadata::StreamController do
         end
 
         it "should return the stream of a particular group" do
-          get 'index', :group => 'my_group'
+          get 'index_by_group', :group => 'my_group'
           response.body.should match(/pdf_test_1.pdf/)
           response.body.should match(/pdf_test_2.pdf/)
           response.body.should_not match(/grouped nota/)
         end
 
+        it "should return the stream of a particular group filtered by starred" do
+          get 'index_by_group', :group => 'my_group', :starred => true
+          response.body.should_not match(/pdf_test_1.pdf/)
+          response.body.should match(/pdf_test_2.pdf/)
+          response.body.should_not match(/grouped nota/)
+        end
       end
     end
 
