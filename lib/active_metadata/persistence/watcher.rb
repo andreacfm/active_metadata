@@ -14,10 +14,10 @@ module ActiveMetadata::Persistence::Watcher
     # query always match for the current model
     # matches are returned grouped by owner and contains records that define or not a particular model instance watching
     def watchers_for(field)
-      ActiveMetadata::Watcher.where(
+      ActiveMetadata::Watcher.select("distinct(owner_id)").where(
           "document_class = :document_class AND label = :label AND (document_id = :document_id OR document_id IS NULL)",
           { :document_class => metadata_class, :label => field, :document_id => metadata_id }
-          ).group("owner_id").all
+          )
     end
 
     def delete_watcher_for(field, owner)
