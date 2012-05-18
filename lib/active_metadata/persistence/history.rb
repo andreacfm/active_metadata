@@ -7,6 +7,7 @@ module ActiveMetadata::Persistence::History
   module InstanceMethods
 
     def save_history
+      return if ActiveMetadata.skip_history?
       self.changes.each do |key, value|
         next if ActiveMetadata::CONFIG['history_skip_fields'].include?(key)
         ActiveMetadata::History.create! :value => value[1],:document_class => metadata_class, :document_id => metadata_id,:label => key.to_s, :created_by => current_user_id

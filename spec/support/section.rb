@@ -2,6 +2,6 @@
 class Section < ActiveRecord::Base
   belongs_to :document
 
-  acts_as_metadata :active_metadata_ancestors => [:document]
+  acts_as_metadata :ancestors => [:document], :persists_ancestor => true
 
 end

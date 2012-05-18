@@ -4,7 +4,7 @@ require "time"
 
 describe ActiveMetadata do
 
-  context "model methods" do
+  context "class methods" do
 
     it "should exist a method acts_as_metadata in the model" do
       Document.respond_to?(:acts_as_metadata).should be_true
@@ -16,7 +16,7 @@ describe ActiveMetadata do
       @document.metadata_class.should eq @document.class.to_s
     end
 
-    it "should find the metadata_root.id if an active_metadata_ancestors params has been specified" do
+    it "should find the metadata_root.id if an active_metadata_ancestors params has been specified and persists_ancestor is true" do
       @document = Document.create! { |d| d.name = "John" }
       @section = @document.create_section :title => "new section"
       @section.metadata_id.should eq @document.id

@@ -3,6 +3,10 @@ module ActiveMetadata
   CONFIG = File.exists?('config/active_metadata.yml') ? YAML.load_file('config/active_metadata.yml')[Rails.env] : {}
   CONFIG['cache_expires_in'] ||= 60
 
+  def self.skip_history?
+    false
+  end
+
   ## Define ModelMethods
   module Base
 
@@ -20,12 +24,16 @@ module ActiveMetadata
     module Config
 
       def acts_as_metadata *args
+        options = args.extract_options!
+        options[:ancestors] ||= nil
+        options[:persists_ancestor] ||= false
+
         before_update :manage_concurrency
         after_save :save_history
         attr_accessor :conflicts
         attr_accessor :active_metadata_timestamp
 
-        class_variable_set("@@active_metadata_ancestors", args.empty? ? nil : args[0][:active_metadata_ancestors])
+        instance_variable_set("@active_metadata_options", options)
 
         include ActiveMetadata::Base::InstanceMethods
         include ActiveMetadata::Persistence
@@ -56,12 +64,16 @@ module ActiveMetadata
 
       end
 
-      def metadata_id
-        metadata_root.id
+      # if force is set to true go directly to the private find method
+      # options integrity will not be checked and ancestor will be looked also if option persists_ancestor is false
+      # usefull to get the ancestor instance also if is not persisted
+      def metadata_id force=false
+        force ? find_metadata_ancestor_instance.id : metadata_root.id
       end
 
-      def metadata_class
-        metadata_root.class.to_s
+      # same as #metadata_id
+      def metadata_class force=false
+        force ? find_metadata_ancestor_instance.class.to_s : metadata_root.class.to_s
       end
 
       # Normalize the active_metadata_timestamp into a float to be comparable with the history
@@ -80,14 +92,9 @@ module ActiveMetadata
       end
 
       def metadata_root
-        active_metadata_ancestors = self.class.class_variable_get("@@active_metadata_ancestors")
-        return self if active_metadata_ancestors.nil?
-        receiver = self
-        active_metadata_ancestors.each do |item|
-          receiver = receiver.send item
-        end
-        raise(RuntimeError.new,"[active_metdata] - Ancestor model is not yet persisted") unless receiver
-        receiver
+        options = self.class.instance_variable_get("@active_metadata_options")
+        return self unless (options[:persists_ancestor] && !options[:ancestors].nil?)
+        find_metadata_ancestor_instance
       end
 
       # Resolve concurrency using the provided timestamps and the active_metadata histories.
@@ -155,6 +162,17 @@ module ActiveMetadata
 
         end
 
+      end
+
+      private
+
+      def find_metadata_ancestor_instance
+        receiver = self
+        self.class.instance_variable_get("@active_metadata_options")[:ancestors].each do |item|
+          receiver = receiver.send item
+        end
+        raise(RuntimeError.new,"[active_metdata] - Ancestor model is not yet persisted") unless receiver
+        receiver
       end
 
     end # InstanceMethods
