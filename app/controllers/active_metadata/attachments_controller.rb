@@ -12,7 +12,7 @@ module ActiveMetadata
 
     def create
       @document = params[:model_name].to_class.find(params[:model_id])
-      @document.save_attachment_for(params[:field_name], params[:file])
+      @document.save_attachment_for(params[:field_name], params[:file], params[:starred], params[:group])
       
       #todo: if errors send back the correct answer
       respond_to do |format|

@@ -37,6 +37,28 @@ describe ActiveMetadata::StreamController do
         response.body.should match(/nota per name john/)
       end
 
+      describe "GET 'index by group'" do
+        before(:each) do
+          @chapter = Chapter.create! { |d| d.title = "Cool!" }
+          @document.save_attachment_for(:name, test_pdf("pdf_test_1"), false, 'my_group')
+          @chapter.save_attachment_for(:title, test_pdf("pdf_test_2"), true, 'my_group')
+          @document.create_note_for(:name, "grouped nota per name john", true, 'your_group')
+        end
+
+        it "should return the stream of a particular group" do
+          get 'index_by_group', :group => 'my_group'
+          response.body.should match(/pdf_test_1.pdf/)
+          response.body.should match(/pdf_test_2.pdf/)
+          response.body.should_not match(/grouped nota/)
+        end
+
+        it "should return the stream of a particular group filtered by starred" do
+          get 'index_by_group', :group => 'my_group', :starred => true
+          response.body.should_not match(/pdf_test_1.pdf/)
+          response.body.should match(/pdf_test_2.pdf/)
+          response.body.should_not match(/grouped nota/)
+        end
+      end
     end
 
   end

@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(:version => 2) do
     t.integer  "attach_file_size"
     t.datetime "attach_updated_at"
     t.boolean  "starred"
+    t.string   "group"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
   end
@@ -57,6 +58,7 @@ ActiveRecord::Schema.define(:version => 2) do
     t.integer  "created_by"
     t.integer  "updated_by"
     t.boolean  "starred"
+    t.string   "group"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
   end
@@ -79,6 +81,12 @@ ActiveRecord::Schema.define(:version => 2) do
   add_index "active_metadata_watchers", ["document_id"], :name => "index_active_metadata_watchers_on_document_id"
   add_index "active_metadata_watchers", ["label"], :name => "index_active_metadata_watchers_on_label"
   add_index "active_metadata_watchers", ["owner_id"], :name => "index_active_metadata_watchers_on_owner_id"
+
+  create_table "chapters", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "documents", :force => true do |t|
     t.string   "name"

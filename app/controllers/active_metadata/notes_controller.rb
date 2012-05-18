@@ -22,7 +22,7 @@ module ActiveMetadata
 
     def create
       @document = params[:model_name].to_class.find(params[:model_id])
-      @document.create_note_for(params[:field_name], params[:note])
+      @document.create_note_for(params[:field_name], params[:note], params[:starred], params[:group])
       respond_to do |format|
         # TODO redirect to edit
         format.js       

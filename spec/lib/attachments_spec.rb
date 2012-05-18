@@ -176,7 +176,38 @@ describe ActiveMetadata do
 
     end
 
+    describe "#starred_attachments" do
 
+      it "should return all the starred attachments for any model field" do
+        @document.save_attachment_for(:name, @attachment, true)
+        @document.save_attachment_for(:title, @attachment, true)
+        @document.save_attachment_for(:title, @attachment2 )
+
+        starred = @document.starred_attachments
+        starred.count.should eq 2
+        starred.find{|att| att.attach.instance_read(:file_name) == "pdf_test_2.pdf"}.should be_nil
+      end
+    end
+
+    describe "#group" do
+      it "should save the associated group when specified" do
+        @document.save_attachment_for(:name, @attachment, false, 'my_group')
+        @document.attachments_for(:name).last.group.should eq 'my_group'
+      end
+
+      describe ".by_group" do
+
+        it "should return all the starred notes of a particular group" do
+          @document.save_attachment_for :name, @attachment, false, 'my_group'
+          @document.save_attachment_for :title, @attachment, true, 'my_group'
+          @document.save_attachment_for :name, @attachment, true, 'my_group'
+          @document.save_attachment_for :name, @attachment, false, 'your_group'
+          @document.save_attachment_for :name, @attachment, true, 'your_group'
+
+          ActiveMetadata::Attachment.by_group('my_group', :starred => true).count.should eq 2
+          ActiveMetadata::Attachment.by_group('your_group', :starred => true).count.should eq 1
+        end
+      end
+    end
   end
-
 end

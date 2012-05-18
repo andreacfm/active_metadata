@@ -204,5 +204,39 @@ describe ActiveMetadata do
 
     end
 
+    describe "#starred_notes" do
+
+      it "should return all the starred notes for any model field" do
+        @document.create_note_for :name, "starred note for name", true
+        @document.create_note_for :title, "starred note for title", true
+        @document.create_note_for :title, "not starred note for title"
+
+        starred = @document.starred_notes
+        starred.count.should eq 2
+        starred.find{|note| note.note == "not starred note for title"}.should be_nil
+      end
+
+    end
+    describe "#group" do
+      it "should save the associated group when specified" do
+        @document.create_note_for :name, "starred note for name", false, 'my_group'
+        @document.notes_for(:name).last.group.should eq 'my_group'
+      end
+
+      describe "notes_by_group" do
+        it "should return all the starred notes of a particular group" do
+          @document.create_note_for :name, "starred note for name", false, 'my_group'
+          @document.create_note_for :title, "to be returned", true, 'my_group'
+          @document.create_note_for :name, "to be returned", true, 'my_group'
+          @document.create_note_for :name, "starred note for name", false, 'your_group'
+          @document.create_note_for :name, "starred note for name", true, 'your_group'
+
+          ActiveMetadata::Note.by_group('my_group', :starred => true).count.should eq 2
+          ActiveMetadata::Note.by_group('your_group', :starred => true, :order_by => "created_at ASC").count.should eq 1
+        end
+      end
+
+    end
+
   end
 end

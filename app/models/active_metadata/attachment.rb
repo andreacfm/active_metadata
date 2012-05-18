@@ -1,7 +1,7 @@
 module ActiveMetadata
 
   class Attachment < ActiveRecord::Base
-
+    self.table_name = "active_metadata_attachments"
     include ::Paperclip
     include ::Paperclip::Glue
 
@@ -20,7 +20,13 @@ module ActiveMetadata
     Paperclip.interpolates :document_class do |attachment, style|
       attachment.instance.document_class
     end
+    class << self
 
+      def by_group(group, *args)
+        options = args.extract_options!
+        order_by = options.delete(:order_by) || "created_at DESC"
+        ActiveMetadata::Attachment.all(:conditions => options.merge(:group => group), :order => order_by)
+      end
+    end
   end
-
 end
