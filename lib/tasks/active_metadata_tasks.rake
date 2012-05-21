@@ -5,7 +5,7 @@ namespace :active_metadata do
     ENV['RAILS_ENV'] ||= 'test'
 
     task :migrate do
-      Rake::Task["app:db:migrate"].invoke
+      Rake::Task["db:migrate"].invoke
     end
 
     task :rspec do
