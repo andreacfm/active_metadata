@@ -25,7 +25,7 @@ module ActiveMetadata
 
       def acts_as_metadata *args
         options = args.extract_options!
-        options[:ancestors] ||= nil
+        options[:ancestors] ||= []
         options[:persists_ancestor] ||= false
 
         before_update :manage_concurrency
@@ -93,7 +93,7 @@ module ActiveMetadata
 
       def metadata_root
         options = self.class.instance_variable_get("@active_metadata_options")
-        return self unless (options[:persists_ancestor] && !options[:ancestors].nil?)
+        return self unless (options[:persists_ancestor] && options[:ancestors].size > 0 )
         find_metadata_ancestor_instance
       end
 
@@ -169,7 +169,8 @@ module ActiveMetadata
       def find_metadata_ancestor_instance
         receiver = self
         self.class.instance_variable_get("@active_metadata_options")[:ancestors].each do |item|
-          receiver = receiver.send item
+          res = receiver.send item
+          receiver = res.is_a?(Array) ? res.first : res
         end
         raise(RuntimeError.new,"[active_metdata] - Ancestor model is not yet persisted") unless receiver
         receiver

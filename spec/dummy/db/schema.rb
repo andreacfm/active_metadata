@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 2) do
+ActiveRecord::Schema.define(:version => 1) do
 
   create_table "active_metadata_attachments", :force => true do |t|
     t.string   "label"
@@ -81,34 +81,5 @@ ActiveRecord::Schema.define(:version => 2) do
   add_index "active_metadata_watchers", ["document_id"], :name => "index_active_metadata_watchers_on_document_id"
   add_index "active_metadata_watchers", ["label"], :name => "index_active_metadata_watchers_on_label"
   add_index "active_metadata_watchers", ["owner_id"], :name => "index_active_metadata_watchers_on_owner_id"
-
-  create_table "chapters", :force => true do |t|
-    t.string   "title"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "documents", :force => true do |t|
-    t.string   "name"
-    t.string   "surname"
-    t.boolean  "keep_alive"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "sections", :force => true do |t|
-    t.string   "title"
-    t.integer  "document_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
-  create_table "users", :force => true do |t|
-    t.string   "email"
-    t.string   "firstname"
-    t.string   "lastname"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
 
 end

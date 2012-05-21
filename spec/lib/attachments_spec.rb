@@ -125,9 +125,9 @@ describe ActiveMetadata do
       end
 
       it "should has_notes_for verify if defined field has attachments" do
-        @document.has_attachments_for(:name).should be_false
-        @document.save_attachment_for(:name, @attachment)
-        @document.has_attachments_for(:name).should be_true
+        @document.has_attachments_for(:surname).should be_false
+        @document.save_attachment_for(:surname, @attachment)
+        @document.has_attachments_for(:surname).should be_true
       end
 
     end

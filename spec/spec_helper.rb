@@ -8,10 +8,9 @@ require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 require 'rails/all'
 require 'active_metadata'
 require 'rack/test/uploaded_file'
+require 'support/migrations'
 
 ENGINE_RAILS_ROOT=File.join(File.dirname(__FILE__), '../')
-Dir[File.join(ENGINE_RAILS_ROOT, "spec/support/**/*.rb")].each {|f| require f }
-
 require 'rspec/rails'
 
 
@@ -25,6 +24,11 @@ RSpec.configure do |config|
   # config.mock_with :rr
   config.mock_with :rspec
 
+  config.before(:suite) do
+    TestDb.up
+    Dir[File.join(ENGINE_RAILS_ROOT, "spec/support/**/*.rb")].each {|f| require f }
+  end
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   # config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
@@ -35,17 +39,18 @@ RSpec.configure do |config|
 
 
   config.before(:each) do
-    Document.delete_all
-    ActiveMetadata::Note.delete_all
-    ActiveMetadata::Watcher.delete_all
-    ActiveMetadata::Attachment.delete_all
-    ActiveMetadata::History.delete_all
-    FileUtils.remove_dir File.expand_path('public/system/') if Dir.exist?(File.expand_path('public/system/'))       
+    [Document, Section, Chapter, User, ActiveMetadata::Note,
+     ActiveMetadata::Watcher, ActiveMetadata::Attachment, ActiveMetadata::History].each do |i|
+      i.delete_all
+    end
+    FileUtils.remove_dir File.expand_path('public/system/') if Dir.exist?(File.expand_path('public/system/'))
+    Rails.cache.clear
   end
 
-  config.after(:suite) do  
-    # seems that closing the established connection isn't really necessary
+  config.after(:suite) do
+    TestDb.down
   end
+
 end
 
 def test_pdf name='pdf_test'

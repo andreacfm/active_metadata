@@ -5,7 +5,6 @@ describe ActiveMetadata do
 
   before(:each) do
     @document = Document.create! { |d| d.name = "John" }
-    @document.reload
   end
 
   describe "notes" do
@@ -152,6 +151,8 @@ describe ActiveMetadata do
       end
 
       it "should has_notes_for verify if defined field has notes" do
+        p ActiveMetadata::Note.count
+        p Document.count
         @document.has_notes_for(:name).should be_false
         @document.create_note_for(:name, "new note")
         @document.has_notes_for(:name).should be_true
