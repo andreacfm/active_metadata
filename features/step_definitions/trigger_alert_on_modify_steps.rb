@@ -84,3 +84,7 @@ end
 Then /^should record the current_user_id in the created_by$/ do
   @notifier.created_by.to_i.should == User.current.id
 end
+
+Then /^should record the "([^"]*)" in type$/ do |type|
+  @notifier.type.to_s.should eq type
+end

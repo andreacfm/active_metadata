@@ -20,7 +20,8 @@ Feature: Trigger alert on modify
 		And should record the "pippo" in the old_value 
 		And should record the "history_message" in the type
 		And should record the current_user_id in the created_by
-		
+		And should record the "history_message" in type
+
 	Scenario: receive a new alert in the inbox when a note of a field is added
 		Given a watcher on the "name" field 
 		When creating a new note on the "name" field with content "new note!"
@@ -29,10 +30,10 @@ Feature: Trigger alert on modify
 		And should record the "Document" model class 
 		And should record the "new note!" in the new_value
 		And should record the "" in the old_value 
-		And should record the "note_message" in the type
+		And should record the "new_note_message" in the type
 		And should record the current_user_id in the created_by
 
-	Scenario: receive a new alert in the inbox when a note of a field is updated
+  Scenario: receive a new alert in the inbox when a note of a field is updated
 		Given a watcher on the "name" field 
 		When creating a new note on the "name" field with content "new note!"
 		And afterwards I update the note on the field "name" with content "updated note!"
@@ -41,7 +42,7 @@ Feature: Trigger alert on modify
 		And should record the "Document" model class 
 		And should record the "new note!" in the old_value 
 		And should record the "updated note!" in the new_value
-		And should record the "note_message" in the type
+		And should record the "update_note_message" in the type
 		And should record the current_user_id in the created_by
 
 	Scenario: receive a new alert in the inbox when a note of a field is deleted
@@ -53,7 +54,7 @@ Feature: Trigger alert on modify
 		And should record the "Document" model class 
 		And should record the "new note!" in the old_value 
 		And should record the "" in the new_value
-		And should record the "note_message" in the type
+		And should record the "delete_note_message" in the type
 		And should record the current_user_id in the created_by
 
 	Scenario: receive a new alert in the inbox when a attachment of a field is created
@@ -64,7 +65,7 @@ Feature: Trigger alert on modify
 		And should record the "Document" model class 
 		And should record the "file.txt" in the new_value
 		And should record the "" in the old_value
-		And should record the "attachment_message" in the type
+		And should record the "new_attachment_message" in the type
 		And should record the current_user_id in the created_by
 
 	Scenario: receive a new alert in the inbox when a attachment of a field is updated
@@ -76,7 +77,7 @@ Feature: Trigger alert on modify
 		And should record the "Document" model class 
 		And should record the "updated_file.txt" in the new_value
 		And should record the "file.txt" in the old_value
-		And should record the "attachment_message" in the type
+		And should record the "update_attachment_message" in the type
 		And should record the current_user_id in the created_by
 
 	Scenario: receive a new alert in the inbox when a attachment of a field is deleted
@@ -88,5 +89,5 @@ Feature: Trigger alert on modify
 		And should record the "Document" model class 
 		And should record the "" in the new_value
 		And should record the "file.txt" in the old_value
-		And should record the "attachment_message" in the type
+		And should record the "delete_attachment_message" in the type
         And should record the current_user_id in the created_by

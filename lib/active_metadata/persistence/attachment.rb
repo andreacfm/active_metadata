@@ -17,7 +17,7 @@ module ActiveMetadata::Persistence::Attachment
               :group => group)
 
       reload_attachments_cache_for field
-      self.send(:send_notification, field, "", attachment.attach.original_filename, :attachment_message, current_user_id)
+      self.send(:send_notification, field, "", attachment.attach.original_filename, :new_attachment_message, current_user_id)
     end
 
     def attachments_for(field, order_by="updated_at DESC")
@@ -31,7 +31,7 @@ module ActiveMetadata::Persistence::Attachment
       filename, created_by = a.attach.original_filename, a.created_by
       a.destroy
       reload_attachments_cache_for a.label
-      self.send(:send_notification, a.label, filename, "", :attachment_message, created_by)
+      self.send(:send_notification, a.label, filename, "", :delete_attachment_message, created_by)
     end
 
     def update_attachment(id, newfile, starred=nil)
@@ -44,7 +44,7 @@ module ActiveMetadata::Persistence::Attachment
       new_filename = a.attach.original_filename
 
       reload_attachments_cache_for a.label
-      self.send(:send_notification, a.label, old_filename, new_filename, :attachment_message, current_user_id)
+      self.send(:send_notification, a.label, old_filename, new_filename, :update_attachment_message, current_user_id)
     end
 
     def has_attachments_for field

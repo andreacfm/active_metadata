@@ -17,7 +17,7 @@ module ActiveMetadata::Persistence::Note
           :group => group)
 
       reload_notes_cache_for field
-      self.send(:send_notification, field, "", note, :note_message, current_user_id)
+      self.send(:send_notification, field, "", note, :new_note_message, current_user_id)
     end
 
     def update_note(id, note, starred=nil)
@@ -30,7 +30,7 @@ module ActiveMetadata::Persistence::Note
       end
       n.update_attributes! attributes
       reload_notes_cache_for n.label
-      self.send(:send_notification, n.label, old_value, note, :note_message, current_user_id)
+      self.send(:send_notification, n.label, old_value, note, :update_note_message, current_user_id)
     end
 
     def notes_for(field, order_by="updated_at DESC")
@@ -52,7 +52,7 @@ module ActiveMetadata::Persistence::Note
       old_value, created_by = note.note, note.created_by
       note.destroy
       reload_notes_cache_for note.label
-      self.send(:send_notification, note.label, old_value, "", :note_message, created_by)
+      self.send(:send_notification, note.label, old_value, "", :delete_note_message, created_by)
     end
 
     def has_notes_for field

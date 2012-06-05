@@ -12,7 +12,7 @@ module ActiveMetadata::Persistence::History
         next if ActiveMetadata::CONFIG['history_skip_fields'].include?(key)
         ActiveMetadata::History.create! :value => value[1],:document_class => metadata_class, :document_id => metadata_id,:label => key.to_s, :created_by => current_user_id
         invalidate_history_cache_for key.to_s
-        self.send(:send_notification, key, value[0], value[1], :history_message,current_user_id) 
+        self.send(:send_notification, key, value[0], value[1], :history_message, current_user_id)
       end
     end
 

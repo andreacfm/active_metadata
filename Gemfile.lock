@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    active_metadata (0.7.6)
+    active_metadata (0.7.7)
       paperclip
       rails (~> 3.2.0)
 
