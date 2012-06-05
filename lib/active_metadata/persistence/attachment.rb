@@ -28,10 +28,10 @@ module ActiveMetadata::Persistence::Attachment
 
     def delete_attachment(id)
       a = ActiveMetadata::Attachment.find(id)
-      filename = a.attach.original_filename
+      filename, created_by = a.attach.original_filename, a.created_by
       a.destroy
       reload_attachments_cache_for a.label
-      self.send(:send_notification, a.label, filename, "", :attachment_message)
+      self.send(:send_notification, a.label, filename, "", :attachment_message, created_by)
     end
 
     def update_attachment(id, newfile, starred=nil)

@@ -49,10 +49,10 @@ module ActiveMetadata::Persistence::Note
 
     def delete_note(id)
       note = ActiveMetadata::Note.find(id)
-      old_value = note.note
+      old_value, created_by = note.note, note.created_by
       note.destroy
       reload_notes_cache_for note.label
-      self.send(:send_notification, note.label, old_value, "", :note_message)
+      self.send(:send_notification, note.label, old_value, "", :note_message, created_by)
     end
 
     def has_notes_for field
