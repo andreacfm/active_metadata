@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    active_metadata (0.7.7)
+    active_metadata (0.7.8)
       paperclip
       rails (~> 3.2.0)
 
@@ -81,7 +81,7 @@ GEM
     mime-types (1.18)
     multi_json (1.0.4)
     nokogiri (1.5.0)
-    paperclip (3.0.4)
+    paperclip (3.1.4)
       activemodel (>= 3.0.0)
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
