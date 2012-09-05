@@ -5,6 +5,9 @@ module TestDb
       t.string :name
       t.string :surname
       t.boolean :keep_alive
+      t.datetime :date
+      t.decimal :price, precision: 6, scale: 2
+      t.decimal :average, precision: 6, scale: 3
       t.timestamps
     end
 
