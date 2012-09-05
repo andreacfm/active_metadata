@@ -142,7 +142,7 @@ describe ActiveMetadata do
       it "should update an attachment as starred" do
         @document.save_attachment_for(:name, @attachment)
         attachment = @document.attachments_for(:name).first
-        @document.update_attachment(attachment.id, attachment.attach, true)
+        @document.update_attachment(attachment.id, attachment.attach, starred: true)
         @document.attachments_for(:name).first.starred?.should be_true
       end
 
@@ -173,6 +173,39 @@ describe ActiveMetadata do
         att = @document.find_attachment_by_id(att.id)
         att.starred?.should be_false
       end
+
+      context "when starring" do
+
+        it "should send a notification of type star_attachment_message" do
+          #watch
+          user = User.create!(:email => "email@email.it", :firstname => 'John', :lastname => 'smith' )
+          @document.create_watcher_for(:name, user)
+          # create note and star it
+          @document.save_attachment_for(:name, @attachment, true)
+          att = @document.attachments_for(:name).first
+
+          @document.star_attachment(att.id)
+          @document.notifier.type.should eq :star_attachment_message
+        end
+
+      end
+
+      context "when unstarring" do
+
+        it "should send a notification of type unstar_attachment_message" do
+          #watch
+          user = User.create!(:email => "email@email.it", :firstname => 'John', :lastname => 'smith' )
+          @document.create_watcher_for(:name, user)
+          # create note and star it
+          @document.save_attachment_for(:name, @attachment, true)
+          att = @document.attachments_for(:name).first
+
+          @document.unstar_attachment(att.id)
+          @document.notifier.type.should eq :unstar_attachment_message
+        end
+
+      end
+
 
     end
 

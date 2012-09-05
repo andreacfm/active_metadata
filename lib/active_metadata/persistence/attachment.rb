@@ -34,17 +34,30 @@ module ActiveMetadata::Persistence::Attachment
       self.send(:send_notification, a.label, filename, "", :delete_attachment_message, created_by)
     end
 
-    def update_attachment(id, newfile, starred=nil)
+    # Update an attachment replacing the old file
+    # Fires a notification.
+    # When is used to star or unstar fires a notification of the correct type
+    # The cache is reloaded any time an operation is completed
+    def update_attachment(id, newfile, *args)
+      options = args.last.is_a?(Hash) ? args.last : {}
+      options[:message_type] ||= :update_attachment_message
+
       a = ActiveMetadata::Attachment.find(id)
       old_filename = a.attach.original_filename
       a.attach = newfile
       a.updated_by = current_user_id
-      a.starred = starred if !starred.nil?
+
+      #mass assign starred inly if provided
+      unless options[:starred].nil?
+        a[:starred] = options[:starred]
+        options[:message_type] = options[:starred] ? :star_attachment_message : :unstar_attachment_message
+      end
+
       a.save!
       new_filename = a.attach.original_filename
-
       reload_attachments_cache_for a.label
-      self.send(:send_notification, a.label, old_filename, new_filename, :update_attachment_message, current_user_id)
+
+      self.send(:send_notification, a.label, old_filename, new_filename, options[:message_type], current_user_id)
     end
 
     def has_attachments_for field
@@ -71,12 +84,12 @@ module ActiveMetadata::Persistence::Attachment
 
     def star_attachment(id)
       n = ActiveMetadata::Attachment.find(id)
-      update_attachment id, n.attach, true
+      update_attachment id, n.attach, starred: true
     end
 
     def unstar_attachment(id)
       n = ActiveMetadata::Attachment.find(id)
-      update_attachment id, n.attach, false
+      update_attachment id, n.attach, starred: false
     end
 
     private

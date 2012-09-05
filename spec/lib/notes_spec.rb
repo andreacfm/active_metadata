@@ -168,7 +168,7 @@ describe ActiveMetadata do
       it "should update a note as starred" do
         @document.create_note_for(:name, "nuova nota")
         note = @document.notes_for(:name).first
-        @document.update_note(note.id, note.note, true)
+        @document.update_note(note.id, note.note, starred: true)
         @document.notes_for(:name).first.starred?.should be_true
       end
 
@@ -199,6 +199,36 @@ describe ActiveMetadata do
 
         nota = @document.find_note_by_id(nota.id)
         nota.starred?.should be_false
+      end
+
+      context "when starring a note" do
+
+        it "should send a notification of type star_note_message" do
+          #watch
+          user = User.create!(:email => "email@email.it", :firstname => 'John', :lastname => 'smith' )
+          @document.create_watcher_for(:name, user)
+          # create note and star it
+          @document.create_note_for(:name, "nota 1")
+          nota = @document.notes_for(:name).first
+          @document.star_note(nota.id)
+          @document.notifier.type.should eq :star_note_message
+        end
+
+      end
+
+      context "when unstarring a note" do
+
+        it "should send a notification of type unstar_note_message" do
+          #watch
+          user = User.create!(:email => "email@email.it", :firstname => 'John', :lastname => 'smith' )
+          @document.create_watcher_for(:name, user)
+          # create note and unstar it
+          @document.create_note_for(:name, "nota 1")
+          nota = @document.notes_for(:name).first
+          @document.unstar_note(nota.id)
+          @document.notifier.type.should eq :unstar_note_message
+        end
+
       end
 
     end

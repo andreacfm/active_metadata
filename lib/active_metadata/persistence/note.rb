@@ -20,17 +20,29 @@ module ActiveMetadata::Persistence::Note
       self.send(:send_notification, field, "", note, :new_note_message, current_user_id)
     end
 
-    def update_note(id, note, starred=nil)
+    #
+    # Update a note
+    # *update the record and recreate the cache
+    # *send and update_note_meesage notification
+    # *if update is starring or unstarring is sent a message of the correct type
+    def update_note(id, note, *args)
+
+      options = options = args.last.is_a?(Hash) ? args.last : {}
+      options[:message_type] ||= :update_note_message
+
       n = ActiveMetadata::Note.find(id)
       old_value = n.note
       attributes = {:note => note, :updated_by => current_user_id, :updated_at => Time.now.utc}
+
       #mass assign starred inly if provided
-      unless starred.nil?
-        attributes[:starred] = starred
+      unless options[:starred].nil?
+        attributes[:starred] = options[:starred]
+        options[:message_type] = options[:starred] ? :star_note_message : :unstar_note_message
       end
+
       n.update_attributes! attributes
       reload_notes_cache_for n.label
-      self.send(:send_notification, n.label, old_value, note, :update_note_message, current_user_id)
+      self.send(:send_notification, n.label, old_value, note, options[:message_type], current_user_id)
     end
 
     def notes_for(field, order_by="updated_at DESC")
@@ -79,14 +91,14 @@ module ActiveMetadata::Persistence::Note
     # reload the cache calling update
     def star_note(id)
       n = ActiveMetadata::Note.find(id)
-      update_note id, n.note, true
+      update_note id, n.note, starred: true
     end
 
     # unstar a note
     # reload the cache calling update
     def unstar_note(id)
       n = ActiveMetadata::Note.find(id)
-      update_note id, n.note, false
+      update_note id, n.note, starred: false
     end
 
     private
