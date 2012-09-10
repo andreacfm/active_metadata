@@ -19,7 +19,7 @@ describe ActiveMetadata do
     end
 
     it "should verify that histories are created for the correct model" do
-      @document.history_for(:name)[0].document_class.should eq(@document.class.to_s)
+      @document.history_for(:name)[0].model_class.should eq(@document.class.to_s)
     end
 
     it "should save the craeted_at datetime anytime an history entry is created" do
@@ -46,10 +46,10 @@ describe ActiveMetadata do
 
       # expectations
       @document.history_for(:name).count.should eq(1)
-      @document.history_for(:name).last.document_id.should eq @document.id
+      @document.history_for(:name).last.model_id.should eq @document.id
 
       @section.history_for(:title).count.should eq(1)
-      @section.history_for(:title).last.document_id.should eq @document.id
+      @section.history_for(:title).last.model_id.should eq @document.id
     end
 
     it "should verify that history_for sort by created_at descending" do

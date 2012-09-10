@@ -7,7 +7,7 @@ module ActiveMetadata::Persistence::Watcher
   module InstanceMethods
     def create_watcher_for(field, owner)
       raise RuntimeError, "The object id MUST be valued" unless self.id
-      ActiveMetadata::Watcher.create! :document_class => metadata_class, :document_id => metadata_id, :label => field, :owner_id => owner.id
+      ActiveMetadata::Watcher.create! :model_class => metadata_class, :model_id => metadata_id, :label => field, :owner_id => owner.id
     end                      
 
     # return all the watches related to a passed field.
@@ -15,19 +15,19 @@ module ActiveMetadata::Persistence::Watcher
     # matches are returned grouped by owner and contains records that define or not a particular model instance watching
     def watchers_for(field)
       ActiveMetadata::Watcher.select("distinct(owner_id)").where(
-          "document_class = :document_class AND label = :label AND (document_id = :document_id OR document_id IS NULL)",
-          { :document_class => metadata_class, :label => field, :document_id => metadata_id }
+          "model_class = :model_class AND label = :label AND (model_id = :model_id OR model_id IS NULL)",
+          { :model_class => metadata_class, :label => field, :model_id => metadata_id }
           )
     end
 
     def delete_watcher_for(field, owner)
-      ActiveMetadata::Watcher.where(:document_id => metadata_id, :label => field, :owner_id => owner.id).each do |watcher|
+      ActiveMetadata::Watcher.where(:model_id => metadata_id, :label => field, :owner_id => owner.id).each do |watcher|
         watcher.destroy
       end   
     end    
     
     def is_watched_by(field,owner)
-      ActiveMetadata::Watcher.where(:document_class => metadata_class, :document_id => metadata_id, :label => field, :owner_id => owner.id).empty? ? false : true
+      ActiveMetadata::Watcher.where(:model_class => metadata_class, :model_id => metadata_id, :label => field, :owner_id => owner.id).empty? ? false : true
     end                    
 
     def send_notification(field, old_value, new_value, type=:default_message, created_by=nil)   

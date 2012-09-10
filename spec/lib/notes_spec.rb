@@ -24,7 +24,7 @@ describe ActiveMetadata do
 
       it "should verify that notes are created for the correct model" do
         @document.create_note_for(:name, "Very important note!")
-        @document.notes_for(:name).last.document_class.should eq(@document.class.to_s)
+        @document.notes_for(:name).last.model_class.should eq(@document.class.to_s)
       end
 
       it "should verify the created_by of a note created" do
@@ -101,8 +101,8 @@ describe ActiveMetadata do
         @section.create_note_for(:title, "Very important note for section!")
 
         # expectations
-        @document.notes_for(:name).last.document_id.should eq @document.id
-        @section.notes_for(:title).last.document_id.should eq @document.id
+        @document.notes_for(:name).last.model_id.should eq @document.id
+        @section.notes_for(:title).last.model_id.should eq @document.id
       end
 
       it "should delete a note id" do

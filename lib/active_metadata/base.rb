@@ -14,6 +14,7 @@ module ActiveMetadata
     require 'active_metadata/stream'
     require 'paperclip'
     require 'active_metadata/persistence/persistence'
+    require 'active_metadata/value_formatter'
 
     def self.included(klass)
       klass.class_eval do

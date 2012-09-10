@@ -8,8 +8,8 @@ module ActiveMetadata::Persistence::Note
 
     def create_note_for(field, note, starred=nil, group=nil)
       ActiveMetadata::Note.create!(
-          :document_id => metadata_id,
-          :document_class => metadata_class,
+          :model_id => metadata_id,
+          :model_class => metadata_class,
           :label => field.to_s,
           :note => note,
           :created_by => current_user_id,
@@ -108,7 +108,7 @@ module ActiveMetadata::Persistence::Note
     end
 
     def fetch_notes_for(field, starred=nil, order_by="updated_at DESC")
-      conditions = {:document_class => metadata_class, :document_id => metadata_id}
+      conditions = {:model_class => metadata_class, :model_id => metadata_id}
       conditions[:label] = field  unless field.nil?
       conditions[:starred] = starred  unless starred.nil?
       ActiveMetadata::Note.all(:conditions => conditions, :order => order_by)

@@ -65,7 +65,7 @@ describe ActiveMetadata do
         @user = User.create!(:email => "email@email.it", :firstname => 'John', :lastname => 'smith' )
         @another_user = User.create!(:email => "email2@email.it", :firstname => 'George', :lastname => 'Washington' )
         @document.create_watcher_for(:name, @user)
-        ActiveMetadata::Watcher.create! :document_class => "Document", :label => :name, :owner_id => @another_user.id
+        ActiveMetadata::Watcher.create! :model_class => "Document", :label => :name, :owner_id => @another_user.id
       end
 
       it "should return all the records that match model/field" do
@@ -75,7 +75,7 @@ describe ActiveMetadata do
 
       it "should group result by owner" do
         @document.create_watcher_for(:name, @another_user)
-        ActiveMetadata::Watcher.create! :document_class => "Document", :label => :name, :owner_id => @user.id
+        ActiveMetadata::Watcher.create! :model_class => "Document", :label => :name, :owner_id => @user.id
         docs = @document.watchers_for(:name)
         docs.count.should eq 2
       end

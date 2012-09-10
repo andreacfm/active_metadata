@@ -8,8 +8,8 @@ module ActiveMetadata::Persistence::Attachment
 
     def save_attachment_for(field, file, starred=false, group=nil)
       attachment = ActiveMetadata::Attachment.create!(
-              :document_class => metadata_class,
-              :document_id => metadata_id,
+              :model_class => metadata_class,
+              :model_id => metadata_id,
               :label => field,
               :attach => file,
               :starred => !!starred,
@@ -100,7 +100,7 @@ module ActiveMetadata::Persistence::Attachment
     end
 
     def fetch_attachments_for(field, starred=nil, order_by="updated_at DESC")
-      conditions = {:document_class => metadata_class, :document_id => metadata_id}
+      conditions = {:model_class => metadata_class, :model_id => metadata_id}
       conditions[:label] = field unless field.nil?
       conditions[:starred] = starred unless starred.nil?
       ActiveMetadata::Attachment.all(:conditions => conditions, :order => order_by)

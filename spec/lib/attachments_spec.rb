@@ -25,7 +25,7 @@ describe ActiveMetadata do
 
       it "should verify that the attachment metadata id refers to the correct self id" do
         @document.save_attachment_for(:name, @attachment)
-        @document.attachments_for(:name).last.document_id.should eq @document.id
+        @document.attachments_for(:name).last.model_id.should eq @document.id
       end
 
       it "should verify that the attachment file name is correctly saved" do
@@ -51,7 +51,7 @@ describe ActiveMetadata do
       it "should verify that the document has been saved in the correct position on filesystem" do
         @document.save_attachment_for(:name, @attachment)
         att = @document.attachments_for(:name).first
-        expected_path = File.expand_path "#{ActiveMetadata::CONFIG['attachment_base_path']}/#{att.document_class}/#{@document.id}/#{:name.to_s}/#{att.id}/#{@attachment.original_filename}"
+        expected_path = File.expand_path "#{ActiveMetadata::CONFIG['attachment_base_path']}/#{att.model_class}/#{@document.id}/#{:name.to_s}/#{att.id}/#{@attachment.original_filename}"
         File.exists?(expected_path).should be_true
       end
 
