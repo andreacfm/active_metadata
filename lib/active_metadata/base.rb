@@ -15,6 +15,7 @@ module ActiveMetadata
     require 'paperclip'
     require 'active_metadata/persistence/persistence'
     require 'active_metadata/value_formatter'
+    require 'active_metadata/exceptions'
 
     def self.included(klass)
       klass.class_eval do
@@ -173,7 +174,7 @@ module ActiveMetadata
           res = receiver.send item
           receiver = res.is_a?(Array) ? res.first : res
         end
-        raise(RuntimeError.new,"[active_metdata] - Ancestor model is not yet persisted") unless receiver
+        raise(AncestorNotYetPersistedException.new,"[active_metdata] - Ancestor model is not yet persisted") unless receiver
         receiver
       end
 
