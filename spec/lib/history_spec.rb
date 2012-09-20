@@ -3,12 +3,13 @@ require "time"
 
 describe ActiveMetadata do
 
-  before(:each) do
-    @document = Document.create! { |d| d.name = "John" }
-    @document.reload
-  end
 
   describe "history" do
+
+    before(:each) do
+      @document = Document.create! { |d| d.name = "John" }
+      @document.reload
+    end
 
     it "should create history when a document is created" do
       @document.history_for(:name).should have(1).record
@@ -77,5 +78,31 @@ describe ActiveMetadata do
     end
 
   end
+
+  describe "skip_history_notification" do
+
+    context "given an user that watch Document#name" do
+
+      before do
+        @user = User.create!(:email => "email@email.it", :firstname => 'John', :lastname => 'smith')
+        ActiveMetadata::Watcher.create! :model_class => "Document", :label => :name, :owner_id => @user.id
+      end
+
+      it "and skip_history_notification false creating a Document with name not null should save the history and generate a notification" do
+        @document = Document.create! name: "John"
+        @document.history_for(:name)[0].value.should eq(@document.name)
+        @document.notifier.should_not be_nil
+      end
+
+      it "when true creating a Document with name not null should save the history but do not generate any notification" do
+        @document = Document.create! name: "John", skip_history_notification: true
+        @document.history_for(:name)[0].value.should eq(@document.name)
+        @document.notifier.should be_nil
+      end
+
+    end
+
+  end
+
 
 end

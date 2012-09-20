@@ -32,8 +32,9 @@ module ActiveMetadata
 
         before_update :manage_concurrency
         after_save :save_history
-        attr_accessor :conflicts
-        attr_accessor :active_metadata_timestamp
+        attr_accessor :conflicts, :active_metadata_timestamp, :skip_history_notification
+
+        alias_method :skip_history_notification?, :skip_history_notification
 
         instance_variable_set("@active_metadata_options", options)
 

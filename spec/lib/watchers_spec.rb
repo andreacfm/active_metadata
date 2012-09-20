@@ -3,11 +3,12 @@ require "time"
 
 describe ActiveMetadata do
 
-  before(:each) do
-    @document = Document.create! { |d| d.name = "John" }
-  end
 
   describe "watchers" do
+
+    before(:each) do
+      @document = Document.create! { |d| d.name = "John" }
+    end
 
     it "should create a watcher for a given field" do
       user = User.create!(:email => "email@email.it", :firstname => 'John', :lastname => 'smith' )
@@ -33,28 +34,6 @@ describe ActiveMetadata do
       @document.is_watched_by(:name,another_user).should be_false
     end
 
-
-    it "should create an unread message by default" do
-      pending "to be moved in virgilio project"
-      user = User.create!(:email => "email@email.it", :firstname => 'John', :lastname => 'smith' )
-      @document.create_watcher_for(:name, user)
-      @document.update_attribute(:name, 'new_value')
-
-
-      user.inbox.messages.should have(1).record
-      user.inbox.messages.first.read.should be_false
-    end
-
-    it "should read an unread message" do
-      pending "to be moved in virgilio project"
-      user = User.create!(:email => "email@email.it", :firstname => 'John', :lastname => 'smith' )
-      @document.create_watcher_for(:name, user)
-      @document.update_attribute(:name, 'new_value')
-      alert_message = user.inbox.messages.first
-      alert_message.mark_as_read
-      user.inbox.messages.first.read.should be_true
-    end
-
   end
 
   describe "#watchers_for" do
@@ -64,6 +43,7 @@ describe ActiveMetadata do
       before do
         @user = User.create!(:email => "email@email.it", :firstname => 'John', :lastname => 'smith' )
         @another_user = User.create!(:email => "email2@email.it", :firstname => 'George', :lastname => 'Washington' )
+        @document = Document.create! { |d| d.name = "John" }
         @document.create_watcher_for(:name, @user)
         ActiveMetadata::Watcher.create! :model_class => "Document", :label => :name, :owner_id => @another_user.id
       end
