@@ -5,7 +5,7 @@ class WatcherNotifier
     puts "---------------------------------------->"
   end
 
-  def notify(matched_label, old_value, new_value, model_class, model_id,owner_id,type, created_by)          
+  def notify(matched_label, old_value, new_value, model_class, model_id,owner_id,type, created_by)
      @matched_label= matched_label
      @old_value = old_value
      @new_value = new_value

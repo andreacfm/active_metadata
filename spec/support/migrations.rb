@@ -18,6 +18,12 @@ module TestDb
       t.timestamps
     end
 
+    ActiveRecord::Base.connection.create_table :authors, force: true do |t|
+      t.string :name
+      t.integer :document_id
+      t.timestamps
+    end
+
     ActiveRecord::Base.connection.create_table :chapters, force: true do |t|
       t.string :title
       t.timestamps

@@ -102,6 +102,29 @@ describe ActiveMetadata do
 
     end
 
+    context "given an user that watch Author#name (does not persist ancestor)" do
+
+      before do
+        @user = User.create!(:email => "email@email.it", :firstname => 'John', :lastname => 'smith')
+        ActiveMetadata::Watcher.create! :model_class => "Author", :label => :name, :owner_id => @user.id
+      end
+
+      it "when a new record is craeted by the parent document instance should save history and generate a notification" do
+        @document = Document.create! name: "John"
+        @author = @document.create_author name: "my title"
+        @author.history_for(:name)[0].value.should eq(@author.name)
+        @author.notifier.should_not be_nil
+      end
+
+      it "when a new record is craeted by the parent document skipping notifications should save history and not generate any notification" do
+        @document = Document.create! name: "John"
+        @author = @document.create_author name: "my title", skip_history_notification: true
+        @author.history_for(:name)[0].value.should eq(@author.name)
+        @author.notifier.should be_nil
+      end
+
+    end
+
   end
 
 

@@ -30,7 +30,7 @@ module ActiveMetadata::Persistence::Watcher
       ActiveMetadata::Watcher.where(:model_class => metadata_class, :model_id => metadata_id, :label => field, :owner_id => owner.id).empty? ? false : true
     end                    
 
-    def send_notification(field, old_value, new_value, type=:default_message, created_by=nil)   
+    def send_notification(field, old_value, new_value, type=:default_message, created_by=nil)
       watchers_for(field).each { |watch| notify_changes(field, old_value, new_value, self.class.to_s, self.id, watch.owner_id, type, created_by) }
     end
           
