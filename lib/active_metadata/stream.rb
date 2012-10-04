@@ -13,7 +13,7 @@ module ActiveMetadata
       end
 
       def sort_stream stream, order_by
-        stream.sort { |a, b| a.send(order_by) <=> b.send(order_by) }
+        stream.sort { |b, a| a.send(order_by) <=> b.send(order_by) }
       end
 
       def collect_stream_items_by_group group, options
