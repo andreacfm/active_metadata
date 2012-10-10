@@ -53,7 +53,7 @@ describe ActiveMetadata::Stream do
 
       describe "sort_stream" do
 
-        it "should sort the stream by created_at DESC" do
+        it "should sort the stream by created_at ASC" do
           @document.save_attachment_for(:surname,test_pdf("pdf_test_1"))
           sleep 2.seconds
           @document.create_note_for(:surname, "surname note")
@@ -63,12 +63,12 @@ describe ActiveMetadata::Stream do
           stream = @document.send(:collect_stream_data, :surname)
           res = ActiveMetadata::Stream.sort_stream(stream, :updated_at)
 
-          res[0].attach_file_name.should eq 'pdf_test_1.pdf'
+          res[0].attach_file_name.should eq 'pdf_test_2.pdf'
           res[1].note.should eq 'surname note'
-          res[2].attach_file_name.should eq 'pdf_test_2.pdf'
+          res[2].attach_file_name.should eq 'pdf_test_1.pdf'
         end
 
-        it "should sort the stream by created_at DESC" do
+        it "should sort the stream by created_at ASC" do
           @document.create_note_for(:surname, "surname note")
           sleep 2.seconds
           @document.save_attachment_for(:surname,test_pdf("pdf_test_2"))
@@ -78,9 +78,9 @@ describe ActiveMetadata::Stream do
           stream = @document.send(:collect_stream_data, :surname)
           res = ActiveMetadata::Stream.sort_stream(stream, :created_at)
 
-          res[0].note.should eq 'surname note'
+          res[2].note.should eq 'surname note'
           res[1].attach_file_name.should eq 'pdf_test_2.pdf'
-          res[2].attach_file_name.should eq 'pdf_test_1.pdf'
+          res[0].attach_file_name.should eq 'pdf_test_1.pdf'
         end
 
       end
@@ -130,7 +130,7 @@ describe ActiveMetadata::Stream do
 
       it "should return the starred stream ordered by created_at DESC" do
         items = ActiveMetadata::Stream.by_group('my_group', :starred => true)
-        items.first.should be_kind_of ActiveMetadata::Attachment
+        items.first.should be_kind_of ActiveMetadata::Note
         ActiveMetadata::Stream.by_group('my_group', :starred => true).first.id.should eq items.first.id
       end
 

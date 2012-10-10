@@ -31,9 +31,9 @@ ActiveRecord::Schema.define(:version => 1) do
   end
 
   add_index "active_metadata_attachments", ["attach_updated_at"], :name => "index_active_metadata_attachments_on_attach_updated_at"
+  add_index "active_metadata_attachments", ["label"], :name => "index_active_metadata_attachments_on_label"
   add_index "active_metadata_attachments", ["model_class"], :name => "index_active_metadata_attachments_on_model_class"
   add_index "active_metadata_attachments", ["model_id"], :name => "index_active_metadata_attachments_on_model_id"
-  add_index "active_metadata_attachments", ["label"], :name => "index_active_metadata_attachments_on_label"
 
   create_table "active_metadata_histories", :force => true do |t|
     t.text     "value"
@@ -59,13 +59,13 @@ ActiveRecord::Schema.define(:version => 1) do
     t.integer  "updated_by"
     t.boolean  "starred"
     t.string   "group"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
+  add_index "active_metadata_notes", ["label"], :name => "index_active_metadata_notes_on_label"
   add_index "active_metadata_notes", ["model_class"], :name => "index_active_metadata_notes_on_model_class"
   add_index "active_metadata_notes", ["model_id"], :name => "index_active_metadata_notes_on_model_id"
-  add_index "active_metadata_notes", ["label"], :name => "index_active_metadata_notes_on_label"
   add_index "active_metadata_notes", ["updated_at"], :name => "index_active_metadata_notes_on_updated_at"
 
   create_table "active_metadata_watchers", :force => true do |t|
@@ -73,46 +73,13 @@ ActiveRecord::Schema.define(:version => 1) do
     t.string   "label"
     t.string   "model_class"
     t.integer  "model_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-  end
-
-  add_index "active_metadata_watchers", ["created_at"], :name => "index_active_metadata_watchers_on_created_at"
-  add_index "active_metadata_watchers", ["model_id"], :name => "index_active_metadata_watchers_on_model_id"
-  add_index "active_metadata_watchers", ["label"], :name => "index_active_metadata_watchers_on_label"
-  add_index "active_metadata_watchers", ["owner_id"], :name => "index_active_metadata_watchers_on_owner_id"
-
-  create_table "chapters", :force => true do |t|
-    t.string   "title"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "documents", :force => true do |t|
-    t.string   "name"
-    t.string   "surname"
-    t.boolean  "keep_alive"
-    t.datetime "date"
-    t.decimal  "price",      :precision => 6, :scale => 2
-    t.decimal  "average",    :precision => 6, :scale => 3
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
-  end
-
-  create_table "sections", :force => true do |t|
-    t.string   "title"
-    t.integer  "model_id"
-    t.integer  "chapter_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
 
-  create_table "users", :force => true do |t|
-    t.string   "email"
-    t.string   "firstname"
-    t.string   "lastname"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
+  add_index "active_metadata_watchers", ["created_at"], :name => "index_active_metadata_watchers_on_created_at"
+  add_index "active_metadata_watchers", ["label"], :name => "index_active_metadata_watchers_on_label"
+  add_index "active_metadata_watchers", ["model_id"], :name => "index_active_metadata_watchers_on_model_id"
+  add_index "active_metadata_watchers", ["owner_id"], :name => "index_active_metadata_watchers_on_owner_id"
 
 end
