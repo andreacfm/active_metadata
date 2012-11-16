@@ -117,11 +117,13 @@ describe ActiveMetadata::Stream do
         (1..2).each do |i|
           @document.save_attachment_for(:name,test_pdf("pdf_test_#{i}"), i.odd?, 'my_group' )
           @document.create_note_for(:name, "note_#{i}", i.odd?, 'my_group' )
+          @document.create_note_for(:name, "note_#{i}", i.odd?, 10 )
         end
       end
 
       it "should return 2 elements" do
         ActiveMetadata::Stream.by_group('my_group', :starred => true).count.should eq 2
+        ActiveMetadata::Stream.by_group(10, :starred => true).count.should eq 1
       end
 
       it "should return only the starred items" do

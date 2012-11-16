@@ -19,7 +19,7 @@ module ActiveMetadata
       def collect_stream_items_by_group group, options
         res = []
         ActiveMetadata::CONFIG['streamables'].each do |model|
-          res.concat "ActiveMetadata::#{model.to_s.capitalize}".to_class.send(:by_group, group, options).collect { |el| el }
+          res.concat "ActiveMetadata::#{model.to_s.capitalize}".to_class.send(:by_group, group.to_s, options).collect { |el| el }
         end
         res
       end
