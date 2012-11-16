@@ -43,7 +43,7 @@ module ActiveMetadata::Persistence::Watcher
       raise "A watcher notifier class must be implemented" unless WatcherNotifier
 
       @notifier = WatcherNotifier.new
-      @notifier.notify(matched_label.to_s, old_value, new_value, model_class, model_id,owner_id,type, created_by)                                                                               
+      @notifier.notify(matched_label.to_s, old_value, new_value, model_class, model_id,owner_id,type, created_by)
     end
     
   end
