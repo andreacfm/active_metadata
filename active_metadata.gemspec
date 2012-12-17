@@ -27,4 +27,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "cucumber-rails"
   s.add_development_dependency "ci_reporter"
   s.add_dependency "paperclip"
+  s.add_dependency "mime-types"
 end

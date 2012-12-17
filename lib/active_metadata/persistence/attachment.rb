@@ -7,6 +7,7 @@ module ActiveMetadata::Persistence::Attachment
   module InstanceMethods
 
     def save_attachment_for(field, file, starred=false, group=nil)
+      file.content_type = MIME::Types.type_for(file.original_filename)[0]
       attachment = ActiveMetadata::Attachment.create!(
               :model_class => metadata_class,
               :model_id => metadata_id,
