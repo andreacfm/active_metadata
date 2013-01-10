@@ -9,6 +9,8 @@ module ActiveMetadata::Persistence::History
     def save_history
       return if ActiveMetadata.skip_history?
       self.changes.each do |key, value|
+        # Do not go on in case if new and old values are nil
+        return if value.compact.empty?
         next if ActiveMetadata::CONFIG['history_skip_fields'].include?(key)
         ActiveMetadata::History.create! :value => value[1],:model_class => metadata_class, :model_id => metadata_id,:label => key.to_s, :created_by => current_user_id
         invalidate_history_cache_for key.to_s
@@ -26,11 +28,11 @@ module ActiveMetadata::Persistence::History
 
     def invalidate_history_cache_for field
       Rails.cache.delete history_cache_key(field)
-    end  
+    end
 
     def fetch_histories_for field, order
       ActiveMetadata::History.all(:conditions => {:model_class => metadata_class, :model_id => metadata_id,:label => field}, :order => order)
-    end  
+    end
 
 
   end
