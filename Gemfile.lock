@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    active_metadata (0.8.5)
+    active_metadata (0.8.5.1)
       mime-types
       paperclip
       rails (= 3.2.10)
