@@ -1,30 +1,31 @@
 namespace :active_metadata do
+
   namespace :ci do
-    ENV['COVERAGE'] = 'on'
-    ENV['JCI'] = 'on'
-    ENV['RAILS_ENV'] ||= 'test'
 
-    task :migrate, :environment do
-      sh "mkdir -p spec/dummy/tmp/cache"
-      Rake::Task["app:db:create"].invoke
-      Rake::Task["app:db:migrate"].invoke
+    Rails.env = "test"
+
+    RSpec::Core::RakeTask.new(:spec_run) do |t|
+      t.rspec_opts = ["-fp", "--format RspecJunitFormatter", "--out spec/reports/rspec.xml"]
     end
 
-    task :rspec do
-      Rake::Task["ci:setup:rspec"].invoke
-      Rake::Task["spec"].invoke
+    Cucumber::Rake::Task.new(:cucumber_run) do |task|
+      format_output = ENV['CUCUMBER_FORMAT'] || 'progress'
+      task.cucumber_opts = ["--format #{format_output}", "--format junit", "--out features/reports", "--format html", "--out features/reports/cucumber.html"]
+      task.cucumber_opts.push("-p #{ENV['CUCUMBER_PROFILE']}") if ENV['CUCUMBER_PROFILE']
     end
 
-    task :cucumber do
-      ENV["CUCUMBER_OPTS"] = "--format junit --out features/reports --format html --out features/reports/cucumber.ht"
-      Rake::Task["app:cucumber"].invoke
+    task :rspec do :environment
+      rm_rf "spec/reports"
+      Rake::Task["app:active_metadata:ci:spec_run"].invoke
     end
+
+    task :cucumber do :environment
+      Rake::Task["app:active_metadata:ci:cucumber_run"].invoke
+    end
+
   end
-end
 
-task "active_metadata:ci" => ["app:active_metadata:ci:migrate", "app:active_metadata:ci:rspec", "app:active_metadata:ci:cucumber"]
-
-namespace :active_metadata do
+  task :ci => ["active_metadata:ci:rspec", "active_metadata:ci:cucumber"]
 
   desc "Install the active_metadata gem requirements file ***TASK IS ON ALPHA STAGE***"
   task :install do

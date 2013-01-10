@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rspec-rails"
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "cucumber-rails"
-  s.add_development_dependency "ci_reporter"
+  s.add_development_dependency "rspec_junit_formatter"
   s.add_dependency "paperclip"
   s.add_dependency "mime-types"
 end
