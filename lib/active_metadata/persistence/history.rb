@@ -10,6 +10,7 @@ module ActiveMetadata::Persistence::History
       return if ActiveMetadata.skip_history?
       self.changes.each do |key, value|
         # Do not go on in case if new and old values are nil
+        # https://github.com/rails/rails/issues/8874
         return if value.compact.empty?
         next if ActiveMetadata::CONFIG['history_skip_fields'].include?(key)
         ActiveMetadata::History.create! :value => value[1],:model_class => metadata_class, :model_id => metadata_id,:label => key.to_s, :created_by => current_user_id

@@ -27,6 +27,17 @@ describe ActiveMetadata do
       @document.history_for(:name)[0].created_at.should be_a_kind_of Time
     end
 
+    it "should not save the history and send any notification if new value and old are both nil" do
+      # see
+      # https://github.com/rails/rails/issues/8874
+      @user = User.create!(:email => "email@email.it", :firstname => 'John', :lastname => 'smith')
+      ActiveMetadata::Watcher.create! :model_class => "Document", :label => :date, :owner_id => @user.id
+      @document.date = ""
+      @document.save
+      @document.notifier.should be_nil
+      @document.history_for(:date).should be_empty
+    end
+
     it "should verify that history return records only for the self document" do
       # fixtures
       @another_doc = Document.create :name => "Andrea"
