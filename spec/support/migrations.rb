@@ -1,6 +1,9 @@
+require 'rake'
+
 module TestDb
 
   def self.up
+
     ActiveRecord::Base.connection.create_table :documents, force: true do |t|
       t.string :name
       t.string :surname
