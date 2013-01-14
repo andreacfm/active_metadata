@@ -1,3 +1,3 @@
 module ActiveMetadata
-  VERSION = "0.8.5.2"
+  VERSION = "0.8.6"
 end
