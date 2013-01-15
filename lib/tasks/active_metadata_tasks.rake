@@ -5,7 +5,7 @@ namespace :active_metadata do
 
   namespace :ci do
 
-    Rails.env = "test"
+    ENV['RAILS_ENV'] ||= 'test'
 
     RSpec::Core::RakeTask.new(:spec_run) do |t|
       t.rspec_opts = ["-fp", "--format RspecJunitFormatter", "--out spec/reports/rspec.xml"]
