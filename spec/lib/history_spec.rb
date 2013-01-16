@@ -3,7 +3,6 @@ require "time"
 
 describe ActiveMetadata do
 
-
   describe "history" do
 
     before(:each) do
@@ -28,14 +27,21 @@ describe ActiveMetadata do
     end
 
     it "should not save the history and send any notification if new value and old are both nil" do
-      # see
-      # https://github.com/rails/rails/issues/8874
       @user = User.create!(:email => "email@email.it", :firstname => 'John', :lastname => 'smith')
       ActiveMetadata::Watcher.create! :model_class => "Document", :label => :date, :owner_id => @user.id
       @document.date = ""
       @document.save
       @document.notifier.should be_nil
       @document.history_for(:date).should be_empty
+    end
+
+    it "should not save the history and send any notification if changes is [nil,""]" do
+      @user = User.create!(:email => "email@email.it", :lastname => 'smith')
+      ActiveMetadata::Watcher.create! :model_class => "Document", :label => :date, :owner_id => @user.id
+      @document.surname = ""
+      @document.save
+      @document.notifier.should be_nil
+      @document.history_for(:surname).should be_empty
     end
 
     it "should verify that history return records only for the self document" do
