@@ -8,17 +8,17 @@ Gem::Specification.new do |s|
   s.name        = "active_metadata"
   s.version     = ActiveMetadata::VERSION
   s.authors     = ["Andrea Campolonghi", "Gian Carlo Pace"]
-  s.email       = ["acampolonghi@gmail.com", "giancarlo.pace@gmail.com"]
+  s.email       = %w(acampolonghi@gmail.com giancarlo.pace@gmail.com)
   s.homepage    = ""
   s.summary     = %q{Add metadata to fields in an active record model}
-  s.description = %q{First implementation will write metadata on mongodb}
+  s.description = %q{Pulled out of a bigger codebase. Still not ready to be easily reused!}
 
   s.rubyforge_project = "active_metadata"
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["Rakefile", "README.md"]
+  s.files = Dir["{app,config,db,lib}/**/*"] + %w(Rakefile README.md)
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
-  s.require_paths = ["lib"]
+  s.require_paths = %w(lib)
 
   s.add_dependency "rails", "~> 3.2.10"
   s.add_development_dependency "sqlite3"

@@ -2,6 +2,7 @@ module ActiveMetadata
 
   CONFIG = File.exists?('config/active_metadata.yml') ? YAML.load_file('config/active_metadata.yml')[Rails.env] : {}
   CONFIG['cache_expires_in'] ||= 60
+  CONFIG['cache_prefix'] ||= ""
 
   def self.skip_history?
     false
@@ -54,7 +55,7 @@ module ActiveMetadata
 
         [:notes, :attachments, :history].each do |item|
           klass.send(:define_method, "#{item.to_s}_cache_key".to_sym) do |field|
-            "#{Rails.env}/active_metadata/#{item.to_s}/#{self.class}/#{metadata_id}/#{field}/"
+            "#{CONFIG['cache_prefix'] + Rails.env}:active_metadata/#{item.to_s}/#{self.class}/#{metadata_id}/#{field}/"
           end
         end
 
